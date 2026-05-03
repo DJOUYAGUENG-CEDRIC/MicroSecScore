@@ -1,0 +1,140 @@
+# =============================================================================
+# BankSecure — Manifestes Kubernetes (NetworkPolicies)
+# Fichier : data/input/k8s/networkpolicies.yaml
+# Définit les communications autorisées entre services
+# Ces policies remplacent les depends_on de Docker Compose
+# =============================================================================
+
+# api-gateway peut recevoir des requêtes de auth-service, account-service,
+# transaction-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-gateway-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: api-gateway
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: auth-service
+    - podSelector:
+        matchLabels:
+          app: account-service
+    - podSelector:
+        matchLabels:
+          app: transaction-service
+
+---
+# auth-service peut recevoir de api-gateway
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auth-service-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: auth-service
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+
+---
+# account-service peut recevoir de api-gateway et auth-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: account-service-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: account-service
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    - podSelector:
+        matchLabels:
+          app: auth-service
+
+---
+# transaction-service peut recevoir de api-gateway et account-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: transaction-service-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: transaction-service
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    - podSelector:
+        matchLabels:
+          app: account-service
+
+---
+# user-db accessible uniquement par auth-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: user-db-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: user-db
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: auth-service
+
+---
+# account-db accessible uniquement par account-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: account-db-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: account-db
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: account-service
+
+---
+# transaction-db accessible par transaction-service et fraud-detection
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: transaction-db-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: transaction-db
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: transaction-service
+    - podSelector:
+        matchLabels:
+          app: fraud-detection

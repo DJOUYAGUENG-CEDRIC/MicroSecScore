@@ -1,0 +1,123 @@
+version: '3.8'
+
+# ============================================================
+# Phase 2 — MicroSecScore
+# Infrastructure Kafka pour la collecte des événements runtime
+# DJOUYAGUENG SADE CEDRIC — Master II RSD — Université de Dschang
+# ============================================================
+
+services:
+
+  # ─────────────────────────────────────────
+  # Zookeeper — Coordinateur du cluster Kafka
+  # ─────────────────────────────────────────
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: microsecure-zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+    networks:
+      - microsecure-net
+    healthcheck:
+      test: ["CMD", "bash", "-c", "echo ruok | nc localhost 2181"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────
+  # Kafka Broker — Bus d'événements central
+  # 3 topics : logs | métriques | alertes
+  # ─────────────────────────────────────────
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: microsecure-kafka
+    depends_on:
+      zookeeper:
+        condition: service_healthy
+    ports:
+      - "9092:9092"
+      - "9101:9101"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+      KAFKA_LOG_RETENTION_HOURS: 24
+      KAFKA_LOG_SEGMENT_BYTES: 104857600
+    networks:
+      - microsecure-net
+    healthcheck:
+      test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+
+  # ─────────────────────────────────────────
+  # Kafka Init — Création automatique des topics
+  # ─────────────────────────────────────────
+  kafka-init:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: microsecure-kafka-init
+    depends_on:
+      kafka:
+        condition: service_healthy
+    networks:
+      - microsecure-net
+    entrypoint: ["/bin/sh", "-c"]
+    command: |
+      "
+      echo '>>> Création des topics MicroSecScore...'
+
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists \
+        --topic logs-applicatifs \
+        --partitions 3 \
+        --replication-factor 1 \
+        --config retention.ms=86400000
+
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists \
+        --topic metriques-systeme \
+        --partitions 3 \
+        --replication-factor 1 \
+        --config retention.ms=86400000
+
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists \
+        --topic alertes-securite \
+        --partitions 3 \
+        --replication-factor 1 \
+        --config retention.ms=86400000
+
+      echo '>>> Topics créés :'
+      kafka-topics --bootstrap-server kafka:29092 --list
+      echo '>>> Kafka prêt pour MicroSecScore.'
+      "
+
+  # ─────────────────────────────────────────
+  # Kafka UI — Interface web de visualisation
+  # Accessible sur http://localhost:8090
+  # ─────────────────────────────────────────
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: microsecure-kafka-ui
+    depends_on:
+      kafka:
+        condition: service_healthy
+    ports:
+      - "8090:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: microsecure
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    networks:
+      - microsecure-net
+
+networks:
+  microsecure-net:
+    name: microsecure-net
+    driver: bridge

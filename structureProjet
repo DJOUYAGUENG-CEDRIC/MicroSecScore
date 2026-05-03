@@ -1,0 +1,34 @@
+microsecScore/
+│
+├── phase1_graph/              ← Phase 1 : autonome et testable seule
+│   ├── topology_parser.py     # Lit docker-compose.yml → extrait services
+│   ├── vuln_scanner.py        # Simule/appelle Trivy → scores CVE
+│   ├── graph_builder.py       # Construit G₀ dans Neo4j
+│   └── test_phase1.py         # Validation : G₀ correct ? BFS fonctionne ?
+│
+├── phase2_collect/            ← Phase 2 : autonome et testable seule
+│   ├── log_collector.py       # Collecte logs Docker
+│   ├── metrics_collector.py   # Collecte Prometheus/cAdvisor
+│   ├── falco_consumer.py      # Consomme alertes Falco
+│   ├── kafka_producer.py      # Publie tout sur Kafka
+│   └── test_phase2.py         # Validation : événements bien en queue ?
+│
+├── phase3_cep/                ← Phase 3 : autonome et testable seule
+│   ├── cep_engine.py          # Moteur à fenêtre temporelle
+│   ├── rules/
+│   │   ├── p1_scan.py         # Règle T1046
+│   │   ├── p2_bruteforce.py   # Règle T1110
+│   │   └── p3_lateral.py      # Règle T1550
+│   └── test_phase3.py         # Validation : patterns détectés sur données simulées
+│
+├── phase4_correlation/        ← Phase 4 : autonome et testable seule
+│   ├── correlator.py          # Fusionne alertes CEP + G₀ via Cypher
+│   ├── scorer.py              # Calcul S_global, niveaux SAIN/DÉGRADÉ/CRITIQUE
+│   ├── remediator.py          # Actions proportionnelles
+│   └── test_phase4.py         # Validation : score correct, prédiction cible juste ?
+│
+├── data/
+│   ├── mock_events/           # Événements simulés pour tests sans infra réelle
+│   └── sock_shop/             # Données réelles issues de Sock Shop
+│
+└── run_pipeline.py            ← Orchestrateur final : chaîne les 4 phases

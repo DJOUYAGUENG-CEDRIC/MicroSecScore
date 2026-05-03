@@ -1,0 +1,94 @@
+version: '3'
+services:
+  front-end:
+    image: weaveworksdemos/front-end:0.3.12
+    ports:
+      - "80:8079"
+    networks:
+      - front-tier
+      - back-tier
+    depends_on:
+      - catalogue
+      - orders
+      - cart
+      - user
+
+  catalogue:
+    image: weaveworksdemos/catalogue:0.3.5
+    networks:
+      - back-tier
+    depends_on:
+      - catalogue-db
+
+  catalogue-db:
+    image: weaveworksdemos/catalogue-db:0.3.0
+    networks:
+      - back-tier
+
+  orders:
+    image: weaveworksdemos/orders:0.4.7
+    networks:
+      - back-tier
+    depends_on:
+      - orders-db
+      - rabbitmq
+
+  orders-db:
+    image: mongo:3.4
+    networks:
+      - back-tier
+
+  cart:
+    image: weaveworksdemos/cart:0.4.8
+    networks:
+      - back-tier
+    depends_on:
+      - cart-db
+
+  cart-db:
+    image: redis:alpine
+    networks:
+      - back-tier
+
+  user:
+    image: weaveworksdemos/user:0.4.7
+    networks:
+      - back-tier
+    depends_on:
+      - user-db
+
+  user-db:
+    image: weaveworksdemos/user-db:0.4.0
+    networks:
+      - back-tier
+
+  payment:
+    image: weaveworksdemos/payment:0.4.3
+    networks:
+      - back-tier
+
+  shipping:
+    image: weaveworksdemos/shipping:0.4.8
+    networks:
+      - back-tier
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3.6.8
+    networks:
+      - back-tier
+
+  edge-router:
+    image: weaveworksdemos/edge-router:0.1.1
+    ports:
+      - "8080:8080"
+    networks:
+      - front-tier
+      - back-tier
+    depends_on:
+      - front-end
+
+networks:
+  front-tier:
+  back-tier:

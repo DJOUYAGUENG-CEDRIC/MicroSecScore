@@ -1,0 +1,132 @@
+2026-04-28 13:19:34,815 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:19:34,819 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:19:34,821 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:19:34,926 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:19:34,927 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:19:34,928 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:19:35,032 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:19:35,032 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:19:35,038 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:19:35,038 | INFO     | kafka.conn                     | Probing node 1 broker version
+2026-04-28 13:19:35,040 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:19:35,040 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:19:35,144 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:19:35,144 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:19:35,147 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:21:25,715 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:21:25,716 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:21:25,717 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:21:25,822 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:21:25,822 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:21:25,822 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:21:25,928 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:21:25,929 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:21:25,937 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:21:25,937 | INFO     | kafka.conn                     | Probing node 1 broker version
+2026-04-28 13:21:25,939 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:21:25,940 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:21:26,045 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:21:26,045 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:21:26,051 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:22:24,769 | INFO     | phase2.main                    | Phase 2 MicroSecScore — Démarrage
+2026-04-28 13:22:24,777 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:22:24,777 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:22:24,779 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:22:24,883 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:22:24,883 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:22:24,885 | INFO     | phase2.main                    | Producteur Kafka connecté (localhost:9092)
+2026-04-28 13:22:24,887 | ERROR    | phase2.docker_collector        | Impossible de se connecter à Docker : Install pypiwin32 package to enable npipe:// support
+2026-04-28 13:22:24,924 | INFO     | kafka.producer.kafka           | Closing the Kafka producer with 0 secs timeout.
+2026-04-28 13:22:24,924 | INFO     | kafka.producer.kafka           | Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+2026-04-28 13:22:54,464 | INFO     | phase2.main                    | Phase 2 MicroSecScore — Démarrage
+2026-04-28 13:22:54,469 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:22:54,469 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:22:54,470 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:22:54,581 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:22:54,582 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:22:54,587 | INFO     | phase2.main                    | Producteur Kafka connecté (localhost:9092)
+2026-04-28 13:22:54,590 | ERROR    | phase2.docker_collector        | Impossible de se connecter à Docker : Install pypiwin32 package to enable npipe:// support
+2026-04-28 13:22:54,607 | INFO     | kafka.producer.kafka           | Closing the Kafka producer with 0 secs timeout.
+2026-04-28 13:22:54,608 | INFO     | kafka.producer.kafka           | Proceeding to force close the producer since pending requests could not be completed within timeout 0.
+2026-04-28 13:38:39,748 | INFO     | phase2.main                    | Phase 2 MicroSecScore — Démarrage
+2026-04-28 13:38:39,761 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:38:39,762 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:38:39,764 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:38:39,875 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:38:39,882 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:38:39,887 | INFO     | phase2.main                    | Producteur Kafka connecté (localhost:9092)
+2026-04-28 13:38:39,942 | INFO     | phase2.docker_collector        | Docker Engine API connecté.
+2026-04-28 13:38:39,943 | INFO     | phase2.main                    | Injection d'un scénario APT complet...
+2026-04-28 13:38:39,944 | INFO     | phase2.normalizer              | Normaliseur démarré — consommation des 3 topics.
+2026-04-28 13:38:39,949 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:38:39,950 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:38:39,953 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:38:40,062 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:38:40,062 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:38:40,064 | INFO     | kafka.consumer.subscription_state | Updating subscribed topics to: ('logs-applicatifs', 'metriques-systeme', 'alertes-securite')
+2026-04-28 13:38:40,401 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:38:40,403 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:38:40,404 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:38:40,945 | INFO     | phase2.falco_generator         | Injection manuelle scénario : full
+2026-04-28 13:38:40,947 | INFO     | phase2.falco_generator         |   → SCAN injecté : edge-router
+2026-04-28 13:38:40,949 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:38:40,949 | INFO     | phase2.falco_generator         |   → BRUTE injecté : edge-router
+2026-04-28 13:38:40,950 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:38:40,951 | INFO     | phase2.falco_generator         |   → LATERAL injecté : cart → orders-db
+2026-04-28 13:38:40,952 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:38:42,100 | INFO     | kafka.cluster                  | Group coordinator for microsecure-normalizer is BrokerMetadata(nodeId='coordinator-1', host='localhost', port=9092, rack=None)
+2026-04-28 13:38:42,100 | INFO     | kafka.coordinator              | Discovered coordinator coordinator-1 for group microsecure-normalizer
+2026-04-28 13:38:42,101 | INFO     | kafka.coordinator              | Starting new heartbeat thread
+2026-04-28 13:38:42,102 | INFO     | kafka.coordinator.consumer     | Revoking previously assigned partitions set() for group microsecure-normalizer
+2026-04-28 13:38:42,103 | INFO     | kafka.conn                     | <BrokerConnection node_id=coordinator-1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:38:42,103 | INFO     | kafka.conn                     | <BrokerConnection node_id=coordinator-1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:38:42,204 | INFO     | kafka.coordinator              | (Re-)joining group microsecure-normalizer
+2026-04-28 13:38:43,955 | INFO     | kafka.producer.kafka           | Closing the Kafka producer with 4294967.0 secs timeout.
+2026-04-28 13:38:43,957 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:38:43,957 | INFO     | phase2.main                    | Scénario APT injecté. Vérifiez data/output/events_collected.jsonl
+2026-04-28 13:44:08,094 | INFO     | phase2.main                    | Phase 2 MicroSecScore — Démarrage
+2026-04-28 13:44:08,100 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:44:08,100 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:44:08,101 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:44:08,206 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:44:08,206 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:44:08,209 | INFO     | phase2.main                    | Producteur Kafka connecté (localhost:9092)
+2026-04-28 13:44:08,234 | INFO     | phase2.docker_collector        | Docker Engine API connecté.
+2026-04-28 13:44:08,234 | INFO     | phase2.main                    | Injection d'un scénario APT complet...
+2026-04-28 13:44:08,234 | INFO     | phase2.normalizer              | Normaliseur démarré — consommation des 3 topics.
+2026-04-28 13:44:08,238 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:44:08,239 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-04-28 13:44:08,240 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:44:08,344 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-04-28 13:44:08,345 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-04-28 13:44:08,346 | INFO     | kafka.consumer.subscription_state | Updating subscribed topics to: ('logs-applicatifs', 'metriques-systeme', 'alertes-securite')
+2026-04-28 13:44:08,351 | INFO     | kafka.cluster                  | Group coordinator for microsecure-normalizer is BrokerMetadata(nodeId='coordinator-1', host='localhost', port=9092, rack=None)
+2026-04-28 13:44:08,353 | INFO     | kafka.coordinator              | Discovered coordinator coordinator-1 for group microsecure-normalizer
+2026-04-28 13:44:08,354 | INFO     | kafka.coordinator              | Starting new heartbeat thread
+2026-04-28 13:44:08,356 | INFO     | kafka.coordinator.consumer     | Revoking previously assigned partitions set() for group microsecure-normalizer
+2026-04-28 13:44:08,359 | INFO     | kafka.conn                     | <BrokerConnection node_id=coordinator-1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:44:08,361 | INFO     | kafka.conn                     | <BrokerConnection node_id=coordinator-1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:44:08,363 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:44:08,470 | INFO     | kafka.coordinator              | (Re-)joining group microsecure-normalizer
+2026-04-28 13:44:09,235 | INFO     | phase2.falco_generator         | Injection manuelle scénario : full
+2026-04-28 13:44:09,237 | INFO     | phase2.falco_generator         |   → SCAN injecté : front-end
+2026-04-28 13:44:09,238 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:44:09,238 | INFO     | phase2.falco_generator         |   → BRUTE injecté : front-end
+2026-04-28 13:44:09,239 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:44:09,240 | INFO     | phase2.falco_generator         |   → LATERAL injecté : user → catalogue
+2026-04-28 13:44:09,241 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:44:11,499 | INFO     | kafka.coordinator              | Elected group leader -- performing partition assignments using range
+2026-04-28 13:44:11,501 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-04-28 13:44:11,502 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-04-28 13:44:11,518 | INFO     | kafka.coordinator              | Successfully joined group microsecure-normalizer with generation 3
+2026-04-28 13:44:11,518 | INFO     | kafka.consumer.subscription_state | Updated partition assignment: [TopicPartition(topic='alertes-securite', partition=0), TopicPartition(topic='alertes-securite', partition=1), TopicPartition(topic='alertes-securite', partition=2), TopicPartition(topic='logs-applicatifs', partition=0), TopicPartition(topic='logs-applicatifs', partition=1), TopicPartition(topic='logs-applicatifs', partition=2), TopicPartition(topic='metriques-systeme', partition=0), TopicPartition(topic='metriques-systeme', partition=1), TopicPartition(topic='metriques-systeme', partition=2)]
+2026-04-28 13:44:11,519 | INFO     | kafka.coordinator.consumer     | Setting newly assigned partitions {TopicPartition(topic='logs-applicatifs', partition=2), TopicPartition(topic='metriques-systeme', partition=1), TopicPartition(topic='alertes-securite', partition=0), TopicPartition(topic='logs-applicatifs', partition=1), TopicPartition(topic='metriques-systeme', partition=0), TopicPartition(topic='logs-applicatifs', partition=0), TopicPartition(topic='alertes-securite', partition=2), TopicPartition(topic='metriques-systeme', partition=2), TopicPartition(topic='alertes-securite', partition=1)} for group microsecure-normalizer
+2026-04-28 13:44:11,577 | WARNING  | phase2.normalizer              | [CRITICAL] ALERT_LATERAL sur catalogue @ 2026-04-28T12:44:09.240Z
+2026-04-28 13:44:11,578 | WARNING  | phase2.normalizer              | [CRITICAL] ALERT_LATERAL sur orders-db @ 2026-04-28T12:38:40.950Z
+2026-04-28 13:44:11,578 | WARNING  | phase2.normalizer              | [CRITICAL] ALERT_BRUTE sur front-end @ 2026-04-28T12:44:09.238Z
+2026-04-28 13:44:11,578 | WARNING  | phase2.normalizer              | [CRITICAL] ALERT_BRUTE sur edge-router @ 2026-04-28T12:38:40.948Z
+2026-04-28 13:44:19,244 | INFO     | kafka.producer.kafka           | Closing the Kafka producer with 4294967.0 secs timeout.
+2026-04-28 13:44:19,245 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-04-28 13:44:19,247 | INFO     | phase2.main                    | Scénario APT injecté. Vérifiez data/output/events_collected.jsonl
+2026-05-01 12:39:16,586 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-05-01 12:39:16,588 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version

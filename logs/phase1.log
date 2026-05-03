@@ -1,0 +1,1423 @@
+[2026-04-27 10:02:03] [INFO    ] [test_rapide] Logger fonctionne
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.detector] Recherche du fichier docker-compose.yml : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.detector] Recherche du fichier docker-compose.yml : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector] → Environnement détecté     : Docker Compose
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector] → Environnement détecté     : Docker Compose
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector] Fichier trouvé : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:02:03] [INFO    ] [parsers.detector] Fichier trouvé : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:02:03] [INFO    ] [parsers] Parseur sélectionné : Docker Compose
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.docker_parser] Fichier YAML chargé avec succès
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.docker_parser] Fichier YAML chargé avec succès
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.docker_parser] 13 services bruts trouvés dans le YAML
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.docker_parser] 13 services bruts trouvés dans le YAML
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : front-end → ports [80]
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : front-end → ports [80]
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : edge-router → ports [8080]
+[2026-04-27 10:02:03] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : edge-router → ports [8080]
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] → Services détectés         : 13
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] → Services détectés         : 13
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] → Services exposés          : ['front-end', 'edge-router']
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] → Services exposés          : ['front-end', 'edge-router']
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 14 (dont Outside)
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 14 (dont Outside)
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 13
+[2026-04-27 10:02:03] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 13
+[2026-04-27 10:02:05] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-04-27 10:02:05] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder] DiGraph initialisé
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder] Ajout de 13 noeuds microservices
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : front-end
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : catalogue
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : catalogue-db
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : orders
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : orders-db
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : cart
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : cart-db
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : user
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : user-db
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : payment
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : shipping
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : rabbitmq
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Noeud ajouté : edge-router
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder] Noeud spécial ajouté : Outside
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder] Ajout des arêtes DEPENDS_ON
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → catalogue
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → orders
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → cart
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → user
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : catalogue → catalogue-db
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : orders → orders-db
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : orders → rabbitmq
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : cart → cart-db
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : user → user-db
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : shipping → rabbitmq
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : edge-router → front-end
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder] Ajout des arêtes PEUT_ATTAQUER
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → front-end
+[2026-04-27 10:02:05] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → edge-router
+[2026-04-27 10:02:05] [INFO    ] [graph.builder] → Noeuds dans G0            : 14
+[2026-04-27 10:02:05] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 11
+[2026-04-27 10:02:05] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-27 10:02:05] [INFO    ] [graph.builder] → Total arêtes              : 13
+[2026-04-27 10:02:05] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   front-end            in=1 out=4 total=5 → criticité=4
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   catalogue            in=1 out=1 total=2 → criticité=3
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'catalogue-db'
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   catalogue-db         in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   orders               in=1 out=2 total=3 → criticité=3
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'orders-db'
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   orders-db            in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   cart                 in=1 out=1 total=2 → criticité=3
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'cart-db'
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   cart-db              in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user'
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   user                 in=1 out=1 total=2 → criticité=4
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user-db'
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   user-db              in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'payment'
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   payment              in=0 out=0 total=0 → criticité=2
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   shipping             in=0 out=1 total=1 → criticité=2
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   rabbitmq             in=2 out=0 total=2 → criticité=3
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   edge-router          in=0 out=1 total=1 → criticité=2
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer] → Criticités calculées      : 14 noeuds
+[2026-04-27 10:02:05] [WARNING ] [cve.cve_scorer] MODE SIMULATION — scores CVE simulés (Sock Shop réels)
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : front-end → 48.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : catalogue → 68.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : catalogue-db → 50.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : orders → 76.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : orders-db → 24.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : cart → 86.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : cart-db → 92.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : user → 62.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : user-db → 42.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : payment → 14.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : shipping → 78.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : rabbitmq → 60.0/100
+[2026-04-27 10:02:05] [DEBUG   ] [cve.cve_scorer]   Simulation : edge-router → 76.0/100
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   front-end            score_cve=48.0 criticite=4 contribution=192.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   catalogue            score_cve=68.0 criticite=3 contribution=204.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   catalogue-db         score_cve=50.0 criticite=3 contribution=150.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   orders               score_cve=76.0 criticite=3 contribution=228.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   orders-db            score_cve=24.0 criticite=3 contribution=72.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   cart                 score_cve=86.0 criticite=3 contribution=258.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   cart-db              score_cve=92.0 criticite=3 contribution=276.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   user                 score_cve=62.0 criticite=4 contribution=248.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   user-db              score_cve=42.0 criticite=3 contribution=126.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   payment              score_cve=14.0 criticite=2 contribution=28.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   shipping             score_cve=78.0 criticite=2 contribution=156.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   rabbitmq             score_cve=60.0 criticite=3 contribution=180.0
+[2026-04-27 10:02:05] [DEBUG   ] [graph.scorer]   edge-router          score_cve=76.0 criticite=2 contribution=152.0
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer] → Score global              : 59.7/100
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer] → Niveau sécurité           : DEGRADE
+[2026-04-27 10:02:05] [INFO    ] [graph.scorer] → Services évalués          : 13
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] → Taille                    : 5.7 Ko
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] → Noeuds                    : 14
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] → Arêtes                    : 13
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] → CSV exporté               : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 10:02:05] [INFO    ] [graph.exporter] → Services évalués          : 13
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [__main__] Mode simulation   : OUI
+[2026-04-27 10:09:02] [INFO    ] [__main__] Sync Neo4j        : NON
+[2026-04-27 10:09:02] [INFO    ] [__main__] Visualisation     : NON
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-27 10:09:02] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [DEBUG   ] [parsers.detector] Recherche du fichier docker-compose.yml : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:09:02] [INFO    ] [parsers.detector] → Environnement détecté     : Docker Compose
+[2026-04-27 10:09:02] [INFO    ] [parsers.detector] Fichier trouvé : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:09:02] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-04-27 10:09:02] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-27 10:09:02] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:09:02] [DEBUG   ] [parsers.docker_parser] Fichier YAML chargé avec succès
+[2026-04-27 10:09:02] [DEBUG   ] [parsers.docker_parser] 13 services bruts trouvés dans le YAML
+[2026-04-27 10:09:02] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : front-end → ports [80]
+[2026-04-27 10:09:02] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : edge-router → ports [8080]
+[2026-04-27 10:09:02] [INFO    ] [parsers.docker_parser] → Services détectés         : 13
+[2026-04-27 10:09:02] [INFO    ] [parsers.docker_parser] → Services exposés          : ['front-end', 'edge-router']
+[2026-04-27 10:09:02] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 14 (dont Outside)
+[2026-04-27 10:09:02] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 13
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Environnement             : Docker Compose
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Services parsés           : 13 services
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Services exposés          : ['front-end', 'edge-router']
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Durée étape 1             : 0.02s
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-04-27 10:09:02] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder] DiGraph initialisé
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder] Ajout de 13 noeuds microservices
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : front-end
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : catalogue
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : catalogue-db
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : orders
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : orders-db
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : cart
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : cart-db
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : user
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : user-db
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : payment
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : shipping
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : rabbitmq
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Noeud ajouté : edge-router
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder] Noeud spécial ajouté : Outside
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder] Ajout des arêtes DEPENDS_ON
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → catalogue
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → orders
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → cart
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → user
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : catalogue → catalogue-db
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : orders → orders-db
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : orders → rabbitmq
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : cart → cart-db
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : user → user-db
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : shipping → rabbitmq
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : edge-router → front-end
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder] Ajout des arêtes PEUT_ATTAQUER
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → front-end
+[2026-04-27 10:09:02] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → edge-router
+[2026-04-27 10:09:02] [INFO    ] [graph.builder] → Noeuds dans G0            : 14
+[2026-04-27 10:09:02] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 11
+[2026-04-27 10:09:02] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-27 10:09:02] [INFO    ] [graph.builder] → Total arêtes              : 13
+[2026-04-27 10:09:02] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Noeuds dans G0            : 14 (dont Outside)
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Arêtes DEPENDS_ON         : 11
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Total arêtes              : 13
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Durée étape 2             : 0.01s
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   front-end            in=1 out=4 total=5 → criticité=4
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   catalogue            in=1 out=1 total=2 → criticité=3
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'catalogue-db'
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   catalogue-db         in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   orders               in=1 out=2 total=3 → criticité=3
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'orders-db'
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   orders-db            in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   cart                 in=1 out=1 total=2 → criticité=3
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'cart-db'
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   cart-db              in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user'
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   user                 in=1 out=1 total=2 → criticité=4
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user-db'
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   user-db              in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'payment'
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   payment              in=0 out=0 total=0 → criticité=2
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   shipping             in=0 out=1 total=1 → criticité=2
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   rabbitmq             in=2 out=0 total=2 → criticité=3
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   edge-router          in=0 out=1 total=1 → criticité=2
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer] → Criticités calculées      : 14 noeuds
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Criticités calculées      : 14 noeuds
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Durée étape 3             : 0.00s
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [WARNING ] [__main__] MODE SIMULATION ACTIVÉ — scores CVE réels de Sock Shop injectés sans appel API
+[2026-04-27 10:09:02] [WARNING ] [cve.cve_scorer] MODE SIMULATION — scores CVE simulés (Sock Shop réels)
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : front-end → 48.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : catalogue → 68.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : catalogue-db → 50.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : orders → 76.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : orders-db → 24.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : cart → 86.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : cart-db → 92.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : user → 62.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : user-db → 42.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : payment → 14.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : shipping → 78.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : rabbitmq → 60.0/100
+[2026-04-27 10:09:02] [DEBUG   ] [cve.cve_scorer]   Simulation : edge-router → 76.0/100
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Durée étape 4             : 0.00s
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [__main__]   ÉTAPE 5 — CALCUL DU SCORE GLOBAL
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   front-end            score_cve=48.0 criticite=4 contribution=192.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   catalogue            score_cve=68.0 criticite=3 contribution=204.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   catalogue-db         score_cve=50.0 criticite=3 contribution=150.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   orders               score_cve=76.0 criticite=3 contribution=228.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   orders-db            score_cve=24.0 criticite=3 contribution=72.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   cart                 score_cve=86.0 criticite=3 contribution=258.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   cart-db              score_cve=92.0 criticite=3 contribution=276.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   user                 score_cve=62.0 criticite=4 contribution=248.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   user-db              score_cve=42.0 criticite=3 contribution=126.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   payment              score_cve=14.0 criticite=2 contribution=28.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   shipping             score_cve=78.0 criticite=2 contribution=156.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   rabbitmq             score_cve=60.0 criticite=3 contribution=180.0
+[2026-04-27 10:09:02] [DEBUG   ] [graph.scorer]   edge-router          score_cve=76.0 criticite=2 contribution=152.0
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer] → Score global              : 59.7/100
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer] → Niveau sécurité           : DEGRADE
+[2026-04-27 10:09:02] [INFO    ] [graph.scorer] → Services évalués          : 13
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Score global              : 59.7/100
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Niveau sécurité           : DEGRADE
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Durée étape 5             : 0.01s
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [__main__]   ÉTAPE 7 — EXPORT DES FICHIERS
+[2026-04-27 10:09:02] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] → Taille                    : 5.7 Ko
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] → Noeuds                    : 14
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] → Arêtes                    : 13
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] → CSV exporté               : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 10:09:02] [INFO    ] [graph.exporter] → Services évalués          : 13
+[2026-04-27 10:09:02] [INFO    ] [__main__] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Scores exportés           : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 10:09:02] [INFO    ] [__main__] → Durée étape 7             : 0.02s
+[2026-04-27 10:09:02] [INFO    ] [__main__] ============================================================
+[2026-04-27 10:09:02] [INFO    ] [__main__]   RÉSUMÉ — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-27 10:09:02] [INFO    ] [__main__] ============================================================
+[2026-04-27 10:09:02] [INFO    ] [__main__] 
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → Environnement   : Docker Compose
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → Services parsés : 13 services
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → Noeuds dans G0  : 14 (dont Outside)
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → Arêtes dans G0  : 13
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → Services exposés: ['front-end', 'edge-router']
+[2026-04-27 10:09:02] [INFO    ] [__main__] 
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → G0 sauvegardé   : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → Scores CVE      : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 10:09:02] [INFO    ] [__main__] 
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → Score global    : 59.7/100 → DEGRADE !
+[2026-04-27 10:09:02] [INFO    ] [__main__] 
+[2026-04-27 10:09:02] [INFO    ] [__main__]   Services les plus vulnérables :
+[2026-04-27 10:09:02] [INFO    ] [__main__]     payment              score=14.0/100  criticité=2
+[2026-04-27 10:09:02] [INFO    ] [__main__]     orders-db            score=24.0/100  criticité=3
+[2026-04-27 10:09:02] [INFO    ] [__main__]     user-db              score=42.0/100  criticité=3
+[2026-04-27 10:09:02] [INFO    ] [__main__] 
+[2026-04-27 10:09:02] [INFO    ] [__main__]   → Durée totale    : 0.1s
+[2026-04-27 10:09:02] [INFO    ] [__main__] ============================================================
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [__main__] Mode simulation   : OUI
+[2026-04-27 10:10:44] [INFO    ] [__main__] Sync Neo4j        : NON
+[2026-04-27 10:10:44] [INFO    ] [__main__] Visualisation     : NON
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-27 10:10:44] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [DEBUG   ] [parsers.detector] Recherche du fichier docker-compose.yml : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:10:44] [INFO    ] [parsers.detector] → Environnement détecté     : Docker Compose
+[2026-04-27 10:10:44] [INFO    ] [parsers.detector] Fichier trouvé : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:10:44] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-04-27 10:10:44] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-27 10:10:44] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 10:10:44] [DEBUG   ] [parsers.docker_parser] Fichier YAML chargé avec succès
+[2026-04-27 10:10:44] [DEBUG   ] [parsers.docker_parser] 12 services bruts trouvés dans le YAML
+[2026-04-27 10:10:44] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : api-gateway → ports [80, 443]
+[2026-04-27 10:10:44] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : admin-dashboard → ports [8080]
+[2026-04-27 10:10:44] [INFO    ] [parsers.docker_parser] → Services détectés         : 12
+[2026-04-27 10:10:44] [INFO    ] [parsers.docker_parser] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-04-27 10:10:44] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 13 (dont Outside)
+[2026-04-27 10:10:44] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 19
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Environnement             : Docker Compose
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Services parsés           : 12 services
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Durée étape 1             : 0.05s
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-04-27 10:10:44] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder] DiGraph initialisé
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder] Ajout de 12 noeuds microservices
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : api-gateway
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : auth-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : account-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : notification-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : fraud-detection
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : admin-dashboard
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : user-db
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : account-db
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-db
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : redis-cache
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Noeud ajouté : message-broker
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder] Noeud spécial ajouté : Outside
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder] Ajout des arêtes DEPENDS_ON
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → auth-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → account-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → transaction-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → user-db
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → redis-cache
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → account-db
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → auth-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → transaction-db
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → account-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → notification-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → message-broker
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : notification-service → message-broker
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : fraud-detection → transaction-db
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : fraud-detection → message-broker
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → auth-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → account-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → transaction-service
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder] Ajout des arêtes PEUT_ATTAQUER
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → api-gateway
+[2026-04-27 10:10:44] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → admin-dashboard
+[2026-04-27 10:10:44] [INFO    ] [graph.builder] → Noeuds dans G0            : 13
+[2026-04-27 10:10:44] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 17
+[2026-04-27 10:10:44] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-27 10:10:44] [INFO    ] [graph.builder] → Total arêtes              : 19
+[2026-04-27 10:10:44] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Noeuds dans G0            : 13 (dont Outside)
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Arêtes DEPENDS_ON         : 17
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Total arêtes              : 19
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Durée étape 2             : 0.01s
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   api-gateway          in=0 out=3 total=3 → criticité=3
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   auth-service         in=3 out=2 total=5 → criticité=4
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   account-service      in=3 out=2 total=5 → criticité=4
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   transaction-service  in=2 out=4 total=6 → criticité=5
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   notification-service in=1 out=1 total=2 → criticité=3
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   fraud-detection      in=0 out=2 total=2 → criticité=3
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   admin-dashboard      in=0 out=3 total=3 → criticité=3
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user-db'
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   user-db              in=1 out=0 total=1 → criticité=3
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   account-db           in=1 out=0 total=1 → criticité=2
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   transaction-db       in=2 out=0 total=2 → criticité=3
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   redis-cache          in=1 out=0 total=1 → criticité=2
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   message-broker       in=3 out=0 total=3 → criticité=3
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer] → Criticités calculées      : 13 noeuds
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Criticités calculées      : 13 noeuds
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Durée étape 3             : 0.00s
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [WARNING ] [__main__] MODE SIMULATION ACTIVÉ — scores CVE réels de Sock Shop injectés sans appel API
+[2026-04-27 10:10:44] [WARNING ] [cve.cve_scorer] MODE SIMULATION — scores CVE simulés (Sock Shop réels)
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : api-gateway → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : auth-service → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : account-service → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : transaction-service → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : notification-service → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : fraud-detection → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : admin-dashboard → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : user-db → 42.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : account-db → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : transaction-db → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : redis-cache → 70.0/100
+[2026-04-27 10:10:44] [DEBUG   ] [cve.cve_scorer]   Simulation : message-broker → 70.0/100
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Durée étape 4             : 0.00s
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [__main__]   ÉTAPE 5 — CALCUL DU SCORE GLOBAL
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   api-gateway          score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   auth-service         score_cve=70.0 criticite=4 contribution=280.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   account-service      score_cve=70.0 criticite=4 contribution=280.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   transaction-service  score_cve=70.0 criticite=5 contribution=350.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   notification-service score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   fraud-detection      score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   admin-dashboard      score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   user-db              score_cve=42.0 criticite=3 contribution=126.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   account-db           score_cve=70.0 criticite=2 contribution=140.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   transaction-db       score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   redis-cache          score_cve=70.0 criticite=2 contribution=140.0
+[2026-04-27 10:10:44] [DEBUG   ] [graph.scorer]   message-broker       score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer] → Score global              : 67.8/100
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer] → Niveau sécurité           : DEGRADE
+[2026-04-27 10:10:44] [INFO    ] [graph.scorer] → Services évalués          : 12
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Score global              : 67.8/100
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Niveau sécurité           : DEGRADE
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Durée étape 5             : 0.00s
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [__main__]   ÉTAPE 7 — EXPORT DES FICHIERS
+[2026-04-27 10:10:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] → Taille                    : 6.5 Ko
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] → Noeuds                    : 13
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] → Arêtes                    : 19
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] → CSV exporté               : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 10:10:44] [INFO    ] [graph.exporter] → Services évalués          : 12
+[2026-04-27 10:10:44] [INFO    ] [__main__] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Scores exportés           : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 10:10:44] [INFO    ] [__main__] → Durée étape 7             : 0.03s
+[2026-04-27 10:10:44] [INFO    ] [__main__] ============================================================
+[2026-04-27 10:10:44] [INFO    ] [__main__]   RÉSUMÉ — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-27 10:10:44] [INFO    ] [__main__] ============================================================
+[2026-04-27 10:10:44] [INFO    ] [__main__] 
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → Environnement   : Docker Compose
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → Services parsés : 12 services
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → Noeuds dans G0  : 13 (dont Outside)
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → Arêtes dans G0  : 19
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → Services exposés: ['api-gateway', 'admin-dashboard']
+[2026-04-27 10:10:44] [INFO    ] [__main__] 
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → G0 sauvegardé   : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → Scores CVE      : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 10:10:44] [INFO    ] [__main__] 
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → Score global    : 67.8/100 → DEGRADE !
+[2026-04-27 10:10:44] [INFO    ] [__main__] 
+[2026-04-27 10:10:44] [INFO    ] [__main__]   Services les plus vulnérables :
+[2026-04-27 10:10:44] [INFO    ] [__main__]     user-db              score=42.0/100  criticité=3
+[2026-04-27 10:10:44] [INFO    ] [__main__]     api-gateway          score=70.0/100  criticité=3
+[2026-04-27 10:10:44] [INFO    ] [__main__]     auth-service         score=70.0/100  criticité=4
+[2026-04-27 10:10:44] [INFO    ] [__main__] 
+[2026-04-27 10:10:44] [INFO    ] [__main__]   → Durée totale    : 0.1s
+[2026-04-27 10:10:44] [INFO    ] [__main__] ============================================================
+[2026-04-27 14:23:36] [INFO    ] [neo4j_db.connector] ────────────────────────────────────────────────────────────
+[2026-04-27 14:23:36] [INFO    ] [neo4j_db.connector]   CONNEXION NEO4J
+[2026-04-27 14:23:36] [INFO    ] [neo4j_db.connector] ────────────────────────────────────────────────────────────
+[2026-04-27 14:23:36] [INFO    ] [neo4j_db.connector] URI         : neo4j://127.0.0.1:7687
+[2026-04-27 14:23:36] [INFO    ] [neo4j_db.connector] Utilisateur : neo4j
+[2026-04-27 14:23:36] [INFO    ] [neo4j_db.connector] → Statut connexion          : CONNECTÉ
+[2026-04-27 14:23:43] [DEBUG   ] [neo4j_db.connector] Test de connexion Neo4j : OK
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [__main__] Mode simulation   : OUI
+[2026-04-27 14:24:04] [INFO    ] [__main__] Sync Neo4j        : OUI
+[2026-04-27 14:24:04] [INFO    ] [__main__] Visualisation     : NON
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-27 14:24:04] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [DEBUG   ] [parsers.detector] Recherche du fichier docker-compose.yml : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 14:24:04] [INFO    ] [parsers.detector] → Environnement détecté     : Docker Compose
+[2026-04-27 14:24:04] [INFO    ] [parsers.detector] Fichier trouvé : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 14:24:04] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-04-27 14:24:04] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-27 14:24:04] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-27 14:24:04] [DEBUG   ] [parsers.docker_parser] Fichier YAML chargé avec succès
+[2026-04-27 14:24:04] [DEBUG   ] [parsers.docker_parser] 12 services bruts trouvés dans le YAML
+[2026-04-27 14:24:04] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : api-gateway → ports [80, 443]
+[2026-04-27 14:24:04] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : admin-dashboard → ports [8080]
+[2026-04-27 14:24:04] [INFO    ] [parsers.docker_parser] → Services détectés         : 12
+[2026-04-27 14:24:04] [INFO    ] [parsers.docker_parser] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-04-27 14:24:04] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 13 (dont Outside)
+[2026-04-27 14:24:04] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 19
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Environnement             : Docker Compose
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Services parsés           : 12 services
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Durée étape 1             : 0.04s
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-04-27 14:24:04] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder] DiGraph initialisé
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder] Ajout de 12 noeuds microservices
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : api-gateway
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : auth-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : account-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : notification-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : fraud-detection
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : admin-dashboard
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : user-db
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : account-db
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-db
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : redis-cache
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Noeud ajouté : message-broker
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder] Noeud spécial ajouté : Outside
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder] Ajout des arêtes DEPENDS_ON
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → auth-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → account-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → transaction-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → user-db
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → redis-cache
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → account-db
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → auth-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → transaction-db
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → account-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → notification-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → message-broker
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : notification-service → message-broker
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : fraud-detection → transaction-db
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : fraud-detection → message-broker
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → auth-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → account-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → transaction-service
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder] Ajout des arêtes PEUT_ATTAQUER
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → api-gateway
+[2026-04-27 14:24:04] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → admin-dashboard
+[2026-04-27 14:24:04] [INFO    ] [graph.builder] → Noeuds dans G0            : 13
+[2026-04-27 14:24:04] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 17
+[2026-04-27 14:24:04] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-27 14:24:04] [INFO    ] [graph.builder] → Total arêtes              : 19
+[2026-04-27 14:24:04] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Noeuds dans G0            : 13 (dont Outside)
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Arêtes DEPENDS_ON         : 17
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Total arêtes              : 19
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Durée étape 2             : 0.01s
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   api-gateway          in=0 out=3 total=3 → criticité=3
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   auth-service         in=3 out=2 total=5 → criticité=4
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   account-service      in=3 out=2 total=5 → criticité=4
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   transaction-service  in=2 out=4 total=6 → criticité=5
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   notification-service in=1 out=1 total=2 → criticité=3
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   fraud-detection      in=0 out=2 total=2 → criticité=3
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   admin-dashboard      in=0 out=3 total=3 → criticité=3
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user-db'
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   user-db              in=1 out=0 total=1 → criticité=3
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   account-db           in=1 out=0 total=1 → criticité=2
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   transaction-db       in=2 out=0 total=2 → criticité=3
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   redis-cache          in=1 out=0 total=1 → criticité=2
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   message-broker       in=3 out=0 total=3 → criticité=3
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer] → Criticités calculées      : 13 noeuds
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Criticités calculées      : 13 noeuds
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Durée étape 3             : 0.01s
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [WARNING ] [__main__] MODE SIMULATION ACTIVÉ — scores CVE réels de Sock Shop injectés sans appel API
+[2026-04-27 14:24:04] [WARNING ] [cve.cve_scorer] MODE SIMULATION — scores CVE simulés (Sock Shop réels)
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : api-gateway → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : auth-service → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : account-service → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : transaction-service → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : notification-service → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : fraud-detection → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : admin-dashboard → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : user-db → 42.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : account-db → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : transaction-db → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : redis-cache → 70.0/100
+[2026-04-27 14:24:04] [DEBUG   ] [cve.cve_scorer]   Simulation : message-broker → 70.0/100
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Durée étape 4             : 0.01s
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [__main__]   ÉTAPE 5 — CALCUL DU SCORE GLOBAL
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   api-gateway          score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   auth-service         score_cve=70.0 criticite=4 contribution=280.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   account-service      score_cve=70.0 criticite=4 contribution=280.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   transaction-service  score_cve=70.0 criticite=5 contribution=350.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   notification-service score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   fraud-detection      score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   admin-dashboard      score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   user-db              score_cve=42.0 criticite=3 contribution=126.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   account-db           score_cve=70.0 criticite=2 contribution=140.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   transaction-db       score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   redis-cache          score_cve=70.0 criticite=2 contribution=140.0
+[2026-04-27 14:24:04] [DEBUG   ] [graph.scorer]   message-broker       score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer] → Score global              : 67.8/100
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer] → Niveau sécurité           : DEGRADE
+[2026-04-27 14:24:04] [INFO    ] [graph.scorer] → Services évalués          : 12
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Score global              : 67.8/100
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Niveau sécurité           : DEGRADE
+[2026-04-27 14:24:04] [INFO    ] [__main__] → Durée étape 5             : 0.01s
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [__main__]   ÉTAPE 6 — SYNCHRONISATION NEO4J
+[2026-04-27 14:24:04] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.connector] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.connector]   CONNEXION NEO4J
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.connector] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.connector] URI         : neo4j://127.0.0.1:7687
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.connector] Utilisateur : neo4j
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.connector] → Statut connexion          : CONNECTÉ
+[2026-04-27 14:24:04] [DEBUG   ] [neo4j_db.connector] Test de connexion Neo4j : OK
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.sync] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.sync]   SYNCHRONISATION G0 → NEO4J
+[2026-04-27 14:24:04] [INFO    ] [neo4j_db.sync] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:11] [INFO    ] [neo4j_db.sync] → Noeuds synchronisés       : 13
+[2026-04-27 14:24:11] [INFO    ] [neo4j_db.sync] → Relations DEPENDS_ON      : 17
+[2026-04-27 14:24:11] [INFO    ] [neo4j_db.sync] → Relations PEUT_ATTAQUER   : 2
+[2026-04-27 14:24:11] [INFO    ] [neo4j_db.sync] → Statut                    : SUCCÈS
+[2026-04-27 14:24:12] [INFO    ] [neo4j_db.sync] → Noeuds NetworkX / Neo4j   : 13 / 13
+[2026-04-27 14:24:12] [INFO    ] [neo4j_db.sync] → Arêtes NetworkX / Neo4j   : 19 / 19
+[2026-04-27 14:24:12] [INFO    ] [neo4j_db.sync] → Cohérence                 : OK
+[2026-04-27 14:24:12] [INFO    ] [__main__] → Neo4j                     : G0 synchronisé avec succès
+[2026-04-27 14:24:12] [INFO    ] [__main__] → Durée étape 6             : 8.02s
+[2026-04-27 14:24:12] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:12] [INFO    ] [__main__]   ÉTAPE 7 — EXPORT DES FICHIERS
+[2026-04-27 14:24:12] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] → Taille                    : 6.5 Ko
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] → Noeuds                    : 13
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] → Arêtes                    : 19
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] → CSV exporté               : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 14:24:12] [INFO    ] [graph.exporter] → Services évalués          : 12
+[2026-04-27 14:24:12] [INFO    ] [__main__] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 14:24:12] [INFO    ] [__main__] → Scores exportés           : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 14:24:12] [INFO    ] [__main__] → Durée étape 7             : 0.07s
+[2026-04-27 14:24:12] [INFO    ] [__main__] ============================================================
+[2026-04-27 14:24:12] [INFO    ] [__main__]   RÉSUMÉ — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-27 14:24:12] [INFO    ] [__main__] ============================================================
+[2026-04-27 14:24:12] [INFO    ] [__main__] 
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → Environnement   : Docker Compose
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → Services parsés : 12 services
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → Noeuds dans G0  : 13 (dont Outside)
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → Arêtes dans G0  : 19
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → Services exposés: ['api-gateway', 'admin-dashboard']
+[2026-04-27 14:24:12] [INFO    ] [__main__] 
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → G0 sauvegardé   : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → Scores CVE      : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-27 14:24:12] [INFO    ] [__main__] 
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → Score global    : 67.8/100 → DEGRADE !
+[2026-04-27 14:24:12] [INFO    ] [__main__] 
+[2026-04-27 14:24:12] [INFO    ] [__main__]   Services les plus vulnérables :
+[2026-04-27 14:24:12] [INFO    ] [__main__]     user-db              score=42.0/100  criticité=3
+[2026-04-27 14:24:12] [INFO    ] [__main__]     api-gateway          score=70.0/100  criticité=3
+[2026-04-27 14:24:12] [INFO    ] [__main__]     auth-service         score=70.0/100  criticité=4
+[2026-04-27 14:24:12] [INFO    ] [__main__] 
+[2026-04-27 14:24:12] [INFO    ] [__main__]   → Durée totale    : 8.2s
+[2026-04-27 14:24:12] [INFO    ] [__main__] ============================================================
+[2026-04-27 14:24:12] [INFO    ] [neo4j_db.connector] Connexion Neo4j fermée proprement
+[2026-04-28 10:33:44] [INFO    ] [test_rapide] Logger fonctionne
+[2026-04-28 10:33:44] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:44] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:44] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-28 10:33:44] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-28 10:33:44] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:44] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:44] [DEBUG   ] [parsers.detector] Recherche du fichier docker-compose.yml : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-28 10:33:44] [DEBUG   ] [parsers.detector] Recherche du fichier docker-compose.yml : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-28 10:33:44] [DEBUG   ] [parsers.detector] docker-compose.yml introuvable à : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\data\input\docker-compose.yml
+[2026-04-28 10:33:44] [DEBUG   ] [parsers.detector] docker-compose.yml introuvable à : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\data\input\docker-compose.yml
+[2026-04-28 10:33:44] [DEBUG   ] [parsers.detector] docker-compose.yml absent — test de kubectl...
+[2026-04-28 10:33:44] [DEBUG   ] [parsers.detector] docker-compose.yml absent — test de kubectl...
+[2026-04-28 10:33:45] [INFO    ] [parsers.detector] → Environnement détecté     : Kubernetes
+[2026-04-28 10:33:45] [INFO    ] [parsers.detector] → Environnement détecté     : Kubernetes
+[2026-04-28 10:33:45] [INFO    ] [parsers.detector] kubectl opérationnel — cluster Kubernetes accessible
+[2026-04-28 10:33:45] [INFO    ] [parsers.detector] kubectl opérationnel — cluster Kubernetes accessible
+[2026-04-28 10:33:45] [INFO    ] [parsers] Parseur sélectionné : Kubernetes
+[2026-04-28 10:33:49] [INFO    ] [parsers.kubernetes_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:49] [INFO    ] [parsers.kubernetes_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:49] [INFO    ] [parsers.kubernetes_parser]   PARSING KUBERNETES
+[2026-04-28 10:33:49] [INFO    ] [parsers.kubernetes_parser]   PARSING KUBERNETES
+[2026-04-28 10:33:49] [INFO    ] [parsers.kubernetes_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:49] [INFO    ] [parsers.kubernetes_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:49] [INFO    ] [parsers.kubernetes_parser] Namespace cible : default
+[2026-04-28 10:33:49] [INFO    ] [parsers.kubernetes_parser] Namespace cible : default
+[2026-04-28 10:33:49] [DEBUG   ] [parsers.kubernetes_parser] Kubeconfig chargé avec succès
+[2026-04-28 10:33:49] [DEBUG   ] [parsers.kubernetes_parser] Kubeconfig chargé avec succès
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] 12 deployments trouvés dans le namespace 'default'
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] 12 deployments trouvés dans le namespace 'default'
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] 13 services Kubernetes extraits
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] 13 services Kubernetes extraits
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] 7 NetworkPolicies trouvées
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] 7 NetworkPolicies trouvées
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] Service exposé : admin-dashboard → ports [30880]
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] Service exposé : admin-dashboard → ports [30880]
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] Service exposé : api-gateway → ports [30080, 30443]
+[2026-04-28 10:33:50] [DEBUG   ] [parsers.kubernetes_parser] Service exposé : api-gateway → ports [30080, 30443]
+[2026-04-28 10:33:50] [INFO    ] [parsers.kubernetes_parser] → Deployments détectés      : 12
+[2026-04-28 10:33:50] [INFO    ] [parsers.kubernetes_parser] → Deployments détectés      : 12
+[2026-04-28 10:33:50] [INFO    ] [parsers.kubernetes_parser] → Services exposés          : ['admin-dashboard', 'api-gateway']
+[2026-04-28 10:33:50] [INFO    ] [parsers.kubernetes_parser] → Services exposés          : ['admin-dashboard', 'api-gateway']
+[2026-04-28 10:33:50] [INFO    ] [parsers.kubernetes_parser] → Noeuds dans G0            : 13 (dont Outside)
+[2026-04-28 10:33:50] [INFO    ] [parsers.kubernetes_parser] → Noeuds dans G0            : 13 (dont Outside)
+[2026-04-28 10:33:50] [INFO    ] [parsers.kubernetes_parser] → Arêtes détectées          : 14
+[2026-04-28 10:33:50] [INFO    ] [parsers.kubernetes_parser] → Arêtes détectées          : 14
+[2026-04-28 10:33:55] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-04-28 10:33:55] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder] DiGraph initialisé
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder] Ajout de 12 noeuds microservices
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : account-db
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : account-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : admin-dashboard
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : api-gateway
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : auth-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : fraud-detection
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : message-broker
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : notification-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : redis-cache
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-db
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Noeud ajouté : user-db
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder] Noeud spécial ajouté : Outside
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder] Ajout des arêtes DEPENDS_ON
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-db → account-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → api-gateway
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → auth-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → auth-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → account-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → transaction-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → api-gateway
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-db → transaction-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-db → fraud-detection
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → api-gateway
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → account-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : user-db → auth-service
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder] Ajout des arêtes PEUT_ATTAQUER
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → admin-dashboard
+[2026-04-28 10:33:55] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → api-gateway
+[2026-04-28 10:33:55] [INFO    ] [graph.builder] → Noeuds dans G0            : 13
+[2026-04-28 10:33:55] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 12
+[2026-04-28 10:33:55] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-28 10:33:55] [INFO    ] [graph.builder] → Total arêtes              : 14
+[2026-04-28 10:33:55] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   account-db           in=0 out=1 total=1 → criticité=2
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   account-service      in=3 out=2 total=5 → criticité=4
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   admin-dashboard      in=0 out=0 total=0 → criticité=1
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   api-gateway          in=3 out=3 total=6 → criticité=5
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   auth-service         in=3 out=1 total=4 → criticité=4
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   fraud-detection      in=1 out=0 total=1 → criticité=2
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   message-broker       in=0 out=0 total=0 → criticité=1
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   notification-service in=0 out=0 total=0 → criticité=1
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   redis-cache          in=0 out=0 total=0 → criticité=1
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   transaction-db       in=0 out=2 total=2 → criticité=3
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   transaction-service  in=2 out=2 total=4 → criticité=4
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user-db'
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   user-db              in=0 out=1 total=1 → criticité=3
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer] → Criticités calculées      : 13 noeuds
+[2026-04-28 10:33:55] [WARNING ] [cve.cve_scorer] MODE SIMULATION — scores CVE simulés (Sock Shop réels)
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : account-db → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : account-service → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : admin-dashboard → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : api-gateway → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : auth-service → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : fraud-detection → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : message-broker → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : notification-service → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : redis-cache → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : transaction-db → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : transaction-service → 70.0/100
+[2026-04-28 10:33:55] [DEBUG   ] [cve.cve_scorer]   Simulation : user-db → 42.0/100
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   account-db           score_cve=70.0 criticite=2 contribution=140.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   account-service      score_cve=70.0 criticite=4 contribution=280.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   admin-dashboard      score_cve=70.0 criticite=1 contribution=70.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   api-gateway          score_cve=70.0 criticite=5 contribution=350.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   auth-service         score_cve=70.0 criticite=4 contribution=280.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   fraud-detection      score_cve=70.0 criticite=2 contribution=140.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   message-broker       score_cve=70.0 criticite=1 contribution=70.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   notification-service score_cve=70.0 criticite=1 contribution=70.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   redis-cache          score_cve=70.0 criticite=1 contribution=70.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   transaction-db       score_cve=70.0 criticite=3 contribution=210.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   transaction-service  score_cve=70.0 criticite=4 contribution=280.0
+[2026-04-28 10:33:55] [DEBUG   ] [graph.scorer]   user-db              score_cve=42.0 criticite=3 contribution=126.0
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer] → Score global              : 67.3/100
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer] → Niveau sécurité           : DEGRADE
+[2026-04-28 10:33:55] [INFO    ] [graph.scorer] → Services évalués          : 12
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] → Taille                    : 5.7 Ko
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] → Noeuds                    : 13
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] → Arêtes                    : 14
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] → CSV exporté               : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-28 10:33:55] [INFO    ] [graph.exporter] → Services évalués          : 12
+[2026-04-28 11:29:07] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:29:07] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-28 11:29:07] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:29:07] [INFO    ] [__main__] Mode simulation   : NON
+[2026-04-28 11:29:07] [INFO    ] [__main__] Sync Neo4j        : OUI
+[2026-04-28 11:29:07] [INFO    ] [__main__] Visualisation     : NON
+[2026-04-28 11:29:07] [INFO    ] [__main__] Environnement     : FORCÉ → DOCKER
+[2026-04-28 11:29:07] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:29:07] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-04-28 11:29:07] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:29:07] [INFO    ] [parsers.detector] Environnement forcé manuellement : docker
+[2026-04-28 11:29:07] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:29:07] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-28 11:29:07] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:29:07] [INFO    ] [parsers.detector] → Environnement forcé       : DOCKER
+[2026-04-28 11:29:07] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-04-28 11:29:07] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 11:29:07] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-28 11:29:07] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 11:29:07] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-28 11:29:07] [ERROR   ] [parsers.docker_parser] Fichier introuvable : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-28 11:29:07] [CRITICAL] [__main__] Parsing échoué. Conseil : utilisez --env docker ou --env kubernetes pour forcer l'environnement.
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [__main__] Mode simulation   : NON
+[2026-04-28 11:32:22] [INFO    ] [__main__] Sync Neo4j        : OUI
+[2026-04-28 11:32:22] [INFO    ] [__main__] Visualisation     : NON
+[2026-04-28 11:32:22] [INFO    ] [__main__] Environnement     : FORCÉ → DOCKER
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [parsers.detector] Environnement forcé manuellement : docker
+[2026-04-28 11:32:22] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-28 11:32:22] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [parsers.detector] → Environnement forcé       : DOCKER
+[2026-04-28 11:32:22] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-04-28 11:32:22] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-28 11:32:22] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-28 11:32:22] [DEBUG   ] [parsers.docker_parser] Fichier YAML chargé avec succès
+[2026-04-28 11:32:22] [DEBUG   ] [parsers.docker_parser] 12 services bruts trouvés dans le YAML
+[2026-04-28 11:32:22] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : api-gateway → ports [80, 443]
+[2026-04-28 11:32:22] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : admin-dashboard → ports [8080]
+[2026-04-28 11:32:22] [INFO    ] [parsers.docker_parser] → Services détectés         : 12
+[2026-04-28 11:32:22] [INFO    ] [parsers.docker_parser] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-04-28 11:32:22] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 13 (dont Outside)
+[2026-04-28 11:32:22] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 19
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Environnement             : Docker Compose
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Services parsés           : 12
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Durée                     : 0.03s
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-04-28 11:32:22] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder] DiGraph initialisé
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder] Ajout de 12 noeuds microservices
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : api-gateway
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : auth-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : account-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : notification-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : fraud-detection
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : admin-dashboard
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : user-db
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : account-db
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-db
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : redis-cache
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Noeud ajouté : message-broker
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder] Noeud spécial ajouté : Outside
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder] Ajout des arêtes DEPENDS_ON
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → auth-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → account-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → transaction-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → user-db
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → redis-cache
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → account-db
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → auth-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → transaction-db
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → account-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → notification-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → message-broker
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : notification-service → message-broker
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : fraud-detection → transaction-db
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : fraud-detection → message-broker
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → auth-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → account-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → transaction-service
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder] Ajout des arêtes PEUT_ATTAQUER
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → api-gateway
+[2026-04-28 11:32:22] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → admin-dashboard
+[2026-04-28 11:32:22] [INFO    ] [graph.builder] → Noeuds dans G0            : 13
+[2026-04-28 11:32:22] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 17
+[2026-04-28 11:32:22] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-28 11:32:22] [INFO    ] [graph.builder] → Total arêtes              : 19
+[2026-04-28 11:32:22] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Noeuds                    : 13 (dont Outside)
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Arêtes                    : 19
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Durée                     : 0.01s
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-04-28 11:32:22] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   api-gateway          in=0 out=3 total=3 → criticité=3
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   auth-service         in=3 out=2 total=5 → criticité=4
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   account-service      in=3 out=2 total=5 → criticité=4
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   transaction-service  in=2 out=4 total=6 → criticité=5
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   notification-service in=1 out=1 total=2 → criticité=3
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   fraud-detection      in=0 out=2 total=2 → criticité=3
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   admin-dashboard      in=0 out=3 total=3 → criticité=3
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user-db'
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   user-db              in=1 out=0 total=1 → criticité=3
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   account-db           in=1 out=0 total=1 → criticité=2
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   transaction-db       in=2 out=0 total=2 → criticité=3
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   redis-cache          in=1 out=0 total=1 → criticité=2
+[2026-04-28 11:32:22] [DEBUG   ] [graph.scorer]   message-broker       in=3 out=0 total=3 → criticité=3
+[2026-04-28 11:32:22] [INFO    ] [graph.scorer] → Criticités calculées      : 13 noeuds
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Criticités                : 13 noeuds
+[2026-04-28 11:32:22] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-04-28 11:32:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [__main__] Interrogation APIs CVE (OSV.dev → NVD NIST)...
+[2026-04-28 11:32:22] [INFO    ] [__main__] Patience — 3 à 10 minutes selon la connexion internet
+[2026-04-28 11:32:22] [INFO    ] [cve.cve_scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [INFO    ] [cve.cve_scorer]   CALCUL DES SCORES CVE
+[2026-04-28 11:32:22] [INFO    ] [cve.cve_scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:22] [DEBUG   ] [cve.cve_scorer] Scan CVE : api-gateway (nginx:1.19.0)
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [__main__] Mode simulation   : NON
+[2026-04-28 11:32:44] [INFO    ] [__main__] Sync Neo4j        : OUI
+[2026-04-28 11:32:44] [INFO    ] [__main__] Visualisation     : NON
+[2026-04-28 11:32:44] [INFO    ] [__main__] Environnement     : FORCÉ → DOCKER
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [parsers.detector] Environnement forcé manuellement : docker
+[2026-04-28 11:32:44] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-28 11:32:44] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [parsers.detector] → Environnement forcé       : DOCKER
+[2026-04-28 11:32:44] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-04-28 11:32:44] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-28 11:32:44] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-28 11:32:44] [DEBUG   ] [parsers.docker_parser] Fichier YAML chargé avec succès
+[2026-04-28 11:32:44] [DEBUG   ] [parsers.docker_parser] 12 services bruts trouvés dans le YAML
+[2026-04-28 11:32:44] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : api-gateway → ports [80, 443]
+[2026-04-28 11:32:44] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : admin-dashboard → ports [8080]
+[2026-04-28 11:32:44] [INFO    ] [parsers.docker_parser] → Services détectés         : 12
+[2026-04-28 11:32:44] [INFO    ] [parsers.docker_parser] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-04-28 11:32:44] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 13 (dont Outside)
+[2026-04-28 11:32:44] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 19
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Environnement             : Docker Compose
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Services parsés           : 12
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Durée                     : 0.02s
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-04-28 11:32:44] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder] DiGraph initialisé
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder] Ajout de 12 noeuds microservices
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : api-gateway
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : auth-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : account-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : notification-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : fraud-detection
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : admin-dashboard
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : user-db
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : account-db
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : transaction-db
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : redis-cache
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Noeud ajouté : message-broker
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder] Noeud spécial ajouté : Outside
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder] Ajout des arêtes DEPENDS_ON
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → auth-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → account-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : api-gateway → transaction-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → user-db
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : auth-service → redis-cache
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → account-db
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : account-service → auth-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → transaction-db
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → account-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → notification-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : transaction-service → message-broker
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : notification-service → message-broker
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : fraud-detection → transaction-db
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : fraud-detection → message-broker
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → auth-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → account-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : admin-dashboard → transaction-service
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder] Ajout des arêtes PEUT_ATTAQUER
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → api-gateway
+[2026-04-28 11:32:44] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → admin-dashboard
+[2026-04-28 11:32:44] [INFO    ] [graph.builder] → Noeuds dans G0            : 13
+[2026-04-28 11:32:44] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 17
+[2026-04-28 11:32:44] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-28 11:32:44] [INFO    ] [graph.builder] → Total arêtes              : 19
+[2026-04-28 11:32:44] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Noeuds                    : 13 (dont Outside)
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Arêtes                    : 19
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-04-28 11:32:44] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   api-gateway          in=0 out=3 total=3 → criticité=3
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   auth-service         in=3 out=2 total=5 → criticité=4
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   account-service      in=3 out=2 total=5 → criticité=4
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   transaction-service  in=2 out=4 total=6 → criticité=5
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   notification-service in=1 out=1 total=2 → criticité=3
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   fraud-detection      in=0 out=2 total=2 → criticité=3
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   admin-dashboard      in=0 out=3 total=3 → criticité=3
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user-db'
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   user-db              in=1 out=0 total=1 → criticité=3
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   account-db           in=1 out=0 total=1 → criticité=2
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   transaction-db       in=2 out=0 total=2 → criticité=3
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   redis-cache          in=1 out=0 total=1 → criticité=2
+[2026-04-28 11:32:44] [DEBUG   ] [graph.scorer]   message-broker       in=3 out=0 total=3 → criticité=3
+[2026-04-28 11:32:44] [INFO    ] [graph.scorer] → Criticités calculées      : 13 noeuds
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Criticités                : 13 noeuds
+[2026-04-28 11:32:44] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-04-28 11:32:44] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [__main__] Interrogation APIs CVE (OSV.dev → NVD NIST)...
+[2026-04-28 11:32:44] [INFO    ] [__main__] Patience — 3 à 10 minutes selon la connexion internet
+[2026-04-28 11:32:44] [INFO    ] [cve.cve_scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [INFO    ] [cve.cve_scorer]   CALCUL DES SCORES CVE
+[2026-04-28 11:32:44] [INFO    ] [cve.cve_scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:32:44] [DEBUG   ] [cve.cve_scorer] Scan CVE : api-gateway (nginx:1.19.0)
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [__main__] Mode simulation   : NON
+[2026-04-28 11:37:32] [INFO    ] [__main__] Sync Neo4j        : OUI
+[2026-04-28 11:37:32] [INFO    ] [__main__] Visualisation     : NON
+[2026-04-28 11:37:32] [INFO    ] [__main__] Environnement     : FORCÉ → DOCKER
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [parsers.detector] Environnement forcé manuellement : docker
+[2026-04-28 11:37:32] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-04-28 11:37:32] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [parsers.detector] → Environnement forcé       : DOCKER
+[2026-04-28 11:37:32] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-04-28 11:37:32] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-04-28 11:37:32] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\input\docker-compose.yml
+[2026-04-28 11:37:32] [DEBUG   ] [parsers.docker_parser] Fichier YAML chargé avec succès
+[2026-04-28 11:37:32] [DEBUG   ] [parsers.docker_parser] 13 services bruts trouvés dans le YAML
+[2026-04-28 11:37:32] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : front-end → ports [80]
+[2026-04-28 11:37:32] [DEBUG   ] [parsers.docker_parser] Service exposé détecté : edge-router → ports [8080]
+[2026-04-28 11:37:32] [INFO    ] [parsers.docker_parser] → Services détectés         : 13
+[2026-04-28 11:37:32] [INFO    ] [parsers.docker_parser] → Services exposés          : ['front-end', 'edge-router']
+[2026-04-28 11:37:32] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 14 (dont Outside)
+[2026-04-28 11:37:32] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 13
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Environnement             : Docker Compose
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Services parsés           : 13
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Services exposés          : ['front-end', 'edge-router']
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Durée                     : 0.01s
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-04-28 11:37:32] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder] DiGraph initialisé
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder] Ajout de 13 noeuds microservices
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : front-end
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : catalogue
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : catalogue-db
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : orders
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : orders-db
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : cart
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : cart-db
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : user
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : user-db
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : payment
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : shipping
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : rabbitmq
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Noeud ajouté : edge-router
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder] Noeud spécial ajouté : Outside
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder] Ajout des arêtes DEPENDS_ON
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → catalogue
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → orders
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → cart
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : front-end → user
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : catalogue → catalogue-db
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : orders → orders-db
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : orders → rabbitmq
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : cart → cart-db
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : user → user-db
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : shipping → rabbitmq
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête DEPENDS_ON : edge-router → front-end
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder] Ajout des arêtes PEUT_ATTAQUER
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → front-end
+[2026-04-28 11:37:32] [DEBUG   ] [graph.builder]   Arête PEUT_ATTAQUER : Outside → edge-router
+[2026-04-28 11:37:32] [INFO    ] [graph.builder] → Noeuds dans G0            : 14
+[2026-04-28 11:37:32] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 11
+[2026-04-28 11:37:32] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-04-28 11:37:32] [INFO    ] [graph.builder] → Total arêtes              : 13
+[2026-04-28 11:37:32] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Noeuds                    : 14 (dont Outside)
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Arêtes                    : 13
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Durée                     : 0.01s
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-04-28 11:37:32] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   front-end            in=1 out=4 total=5 → criticité=4
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   catalogue            in=1 out=1 total=2 → criticité=3
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'catalogue-db'
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   catalogue-db         in=1 out=0 total=1 → criticité=3
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   orders               in=1 out=2 total=3 → criticité=3
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'orders-db'
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   orders-db            in=1 out=0 total=1 → criticité=3
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   cart                 in=1 out=1 total=2 → criticité=3
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'cart-db'
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   cart-db              in=1 out=0 total=1 → criticité=3
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user'
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   user                 in=1 out=1 total=2 → criticité=4
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'user-db'
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   user-db              in=1 out=0 total=1 → criticité=3
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   Bonus sensible appliqué à 'payment'
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   payment              in=0 out=0 total=0 → criticité=2
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   shipping             in=0 out=1 total=1 → criticité=2
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   rabbitmq             in=2 out=0 total=2 → criticité=3
+[2026-04-28 11:37:32] [DEBUG   ] [graph.scorer]   edge-router          in=0 out=1 total=1 → criticité=2
+[2026-04-28 11:37:32] [INFO    ] [graph.scorer] → Criticités calculées      : 14 noeuds
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Criticités                : 14 noeuds
+[2026-04-28 11:37:32] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-04-28 11:37:32] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [__main__] Interrogation APIs CVE (OSV.dev → NVD NIST)...
+[2026-04-28 11:37:32] [INFO    ] [__main__] Patience — 3 à 10 minutes selon la connexion internet
+[2026-04-28 11:37:32] [INFO    ] [cve.cve_scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [INFO    ] [cve.cve_scorer]   CALCUL DES SCORES CVE
+[2026-04-28 11:37:32] [INFO    ] [cve.cve_scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:37:32] [DEBUG   ] [cve.cve_scorer] Scan CVE : front-end (weaveworksdemos/front-end:0.3.12)
+[2026-04-28 11:37:32] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/front-end:0.3.12
+[2026-04-28 11:37:34] [DEBUG   ] [cve.cve_client] Package 'front-end' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:37:34] [INFO    ] [cve.cve_client] 'weaveworksdemos/front-end:0.3.12' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:37:50] [DEBUG   ] [cve.cve_client]   NVD NIST → C=27 H=28 M=36 L=1
+[2026-04-28 11:37:50] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=27×10 + H=28×7 + M=36×4 + L=1×1 = pénalité 611 → score 0.0/100
+[2026-04-28 11:37:50] [INFO    ] [cve.cve_scorer]   front-end            C=27 H=28 M=36 L=1 → score=0.0/100 [source:nvd]
+[2026-04-28 11:37:50] [DEBUG   ] [cve.cve_scorer] Scan CVE : catalogue (weaveworksdemos/catalogue:0.3.5)
+[2026-04-28 11:37:50] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/catalogue:0.3.5
+[2026-04-28 11:37:54] [DEBUG   ] [cve.cve_client] Package 'catalogue' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:37:54] [INFO    ] [cve.cve_client] 'weaveworksdemos/catalogue:0.3.5' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:38:06] [DEBUG   ] [cve.cve_client]   NVD NIST → C=2 H=1 M=7 L=0
+[2026-04-28 11:38:06] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=2×10 + H=1×7 + M=7×4 + L=0×1 = pénalité 55 → score 45.0/100
+[2026-04-28 11:38:06] [INFO    ] [cve.cve_scorer]   catalogue            C=2 H=1 M=7 L=0 → score=45.0/100 [source:nvd]
+[2026-04-28 11:38:06] [DEBUG   ] [cve.cve_scorer] Scan CVE : catalogue-db (weaveworksdemos/catalogue-db:0.3.0)
+[2026-04-28 11:38:06] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/catalogue-db:0.3.0
+[2026-04-28 11:38:09] [DEBUG   ] [cve.cve_client] Package 'catalogue-db' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:38:09] [INFO    ] [cve.cve_client] 'weaveworksdemos/catalogue-db:0.3.0' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:38:21] [DEBUG   ] [cve.cve_client]   NVD NIST → C=0 H=0 M=0 L=0
+[2026-04-28 11:38:21] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=0×10 + H=0×7 + M=0×4 + L=0×1 = pénalité 0 → score 100.0/100
+[2026-04-28 11:38:21] [INFO    ] [cve.cve_scorer]   catalogue-db         C=0 H=0 M=0 L=0 → score=100.0/100 [source:nvd]
+[2026-04-28 11:38:21] [DEBUG   ] [cve.cve_scorer] Scan CVE : orders (weaveworksdemos/orders:0.4.7)
+[2026-04-28 11:38:21] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/orders:0.4.7
+[2026-04-28 11:38:23] [DEBUG   ] [cve.cve_client] Package 'orders' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:38:23] [INFO    ] [cve.cve_client] 'weaveworksdemos/orders:0.4.7' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:38:27] [DEBUG   ] [cve.cve_client] NVD rate limit — pause 30s
+[2026-04-28 11:39:09] [DEBUG   ] [cve.cve_client]   NVD NIST → C=6 H=30 M=54 L=2
+[2026-04-28 11:39:09] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=6×10 + H=30×7 + M=54×4 + L=2×1 = pénalité 488 → score 0.0/100
+[2026-04-28 11:39:09] [INFO    ] [cve.cve_scorer]   orders               C=6 H=30 M=54 L=2 → score=0.0/100 [source:nvd]
+[2026-04-28 11:39:09] [DEBUG   ] [cve.cve_scorer] Scan CVE : orders-db (mongo:3.4)
+[2026-04-28 11:39:09] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : mongo:3.4
+[2026-04-28 11:39:12] [DEBUG   ] [cve.cve_client] Package 'mongo' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:39:12] [INFO    ] [cve.cve_client] 'mongo:3.4' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:39:21] [DEBUG   ] [cve.cve_client] NVD rate limit — pause 30s
+[2026-04-28 11:39:53] [DEBUG   ] [cve.cve_client]   NVD NIST → C=46 H=78 M=81 L=7
+[2026-04-28 11:39:53] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=46×10 + H=78×7 + M=81×4 + L=7×1 = pénalité 1337 → score 0.0/100
+[2026-04-28 11:39:53] [INFO    ] [cve.cve_scorer]   orders-db            C=46 H=78 M=81 L=7 → score=0.0/100 [source:nvd]
+[2026-04-28 11:39:53] [DEBUG   ] [cve.cve_scorer] Scan CVE : cart (weaveworksdemos/cart:0.4.8)
+[2026-04-28 11:39:53] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/cart:0.4.8
+[2026-04-28 11:39:55] [DEBUG   ] [cve.cve_client] Package 'cart' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:39:55] [INFO    ] [cve.cve_client] 'weaveworksdemos/cart:0.4.8' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:40:12] [DEBUG   ] [cve.cve_client]   NVD NIST → C=46 H=58 M=75 L=1
+[2026-04-28 11:40:12] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=46×10 + H=58×7 + M=75×4 + L=1×1 = pénalité 1167 → score 0.0/100
+[2026-04-28 11:40:12] [INFO    ] [cve.cve_scorer]   cart                 C=46 H=58 M=75 L=1 → score=0.0/100 [source:nvd]
+[2026-04-28 11:40:12] [DEBUG   ] [cve.cve_scorer] Scan CVE : cart-db (redis:alpine)
+[2026-04-28 11:40:12] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : redis:alpine
+[2026-04-28 11:40:13] [DEBUG   ] [cve.cve_client] Package 'redis' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:40:13] [INFO    ] [cve.cve_client] 'redis:alpine' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:40:18] [DEBUG   ] [cve.cve_client] NVD rate limit — pause 30s
+[2026-04-28 11:40:57] [DEBUG   ] [cve.cve_client]   NVD NIST → C=27 H=66 M=46 L=5
+[2026-04-28 11:40:57] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=27×10 + H=66×7 + M=46×4 + L=5×1 = pénalité 921 → score 0.0/100
+[2026-04-28 11:40:57] [INFO    ] [cve.cve_scorer]   cart-db              C=27 H=66 M=46 L=5 → score=0.0/100 [source:nvd]
+[2026-04-28 11:40:57] [DEBUG   ] [cve.cve_scorer] Scan CVE : user (weaveworksdemos/user:0.4.7)
+[2026-04-28 11:40:57] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/user:0.4.7
+[2026-04-28 11:40:58] [DEBUG   ] [cve.cve_client] Package 'user' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:40:58] [INFO    ] [cve.cve_client] 'weaveworksdemos/user:0.4.7' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:43:36] [DEBUG   ] [cve.cve_client]   NVD NIST → C=4965 H=21466 M=27523 L=1193
+[2026-04-28 11:43:36] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=4965×10 + H=21466×7 + M=27523×4 + L=1193×1 = pénalité 311197 → score 0.0/100
+[2026-04-28 11:43:36] [INFO    ] [cve.cve_scorer]   user                 C=4965 H=21466 M=27523 L=1193 → score=0.0/100 [source:nvd]
+[2026-04-28 11:43:36] [DEBUG   ] [cve.cve_scorer] Scan CVE : user-db (weaveworksdemos/user-db:0.4.0)
+[2026-04-28 11:43:36] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/user-db:0.4.0
+[2026-04-28 11:43:38] [DEBUG   ] [cve.cve_client] Package 'user-db' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:43:38] [INFO    ] [cve.cve_client] 'weaveworksdemos/user-db:0.4.0' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:43:48] [DEBUG   ] [cve.cve_client]   NVD NIST → C=0 H=0 M=0 L=0
+[2026-04-28 11:43:48] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=0×10 + H=0×7 + M=0×4 + L=0×1 = pénalité 0 → score 100.0/100
+[2026-04-28 11:43:48] [INFO    ] [cve.cve_scorer]   user-db              C=0 H=0 M=0 L=0 → score=100.0/100 [source:nvd]
+[2026-04-28 11:43:48] [DEBUG   ] [cve.cve_scorer] Scan CVE : payment (weaveworksdemos/payment:0.4.3)
+[2026-04-28 11:43:48] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/payment:0.4.3
+[2026-04-28 11:43:49] [DEBUG   ] [cve.cve_client] Package 'payment' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:43:49] [INFO    ] [cve.cve_client] 'weaveworksdemos/payment:0.4.3' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:44:08] [DEBUG   ] [cve.cve_client]   NVD NIST → C=47 H=124 M=196 L=7
+[2026-04-28 11:44:08] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=47×10 + H=124×7 + M=196×4 + L=7×1 = pénalité 2129 → score 0.0/100
+[2026-04-28 11:44:08] [INFO    ] [cve.cve_scorer]   payment              C=47 H=124 M=196 L=7 → score=0.0/100 [source:nvd]
+[2026-04-28 11:44:08] [DEBUG   ] [cve.cve_scorer] Scan CVE : shipping (weaveworksdemos/shipping:0.4.8)
+[2026-04-28 11:44:08] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/shipping:0.4.8
+[2026-04-28 11:44:11] [DEBUG   ] [cve.cve_client] Package 'shipping' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:44:11] [INFO    ] [cve.cve_client] 'weaveworksdemos/shipping:0.4.8' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:44:26] [DEBUG   ] [cve.cve_client]   NVD NIST → C=6 H=19 M=43 L=0
+[2026-04-28 11:44:26] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=6×10 + H=19×7 + M=43×4 + L=0×1 = pénalité 365 → score 0.0/100
+[2026-04-28 11:44:26] [INFO    ] [cve.cve_scorer]   shipping             C=6 H=19 M=43 L=0 → score=0.0/100 [source:nvd]
+[2026-04-28 11:44:26] [DEBUG   ] [cve.cve_scorer] Scan CVE : rabbitmq (rabbitmq:3.6.8)
+[2026-04-28 11:44:26] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : rabbitmq:3.6.8
+[2026-04-28 11:44:28] [DEBUG   ] [cve.cve_client] Package 'rabbitmq' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:44:28] [INFO    ] [cve.cve_client] 'rabbitmq:3.6.8' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:44:36] [DEBUG   ] [cve.cve_client] NVD rate limit — pause 30s
+[2026-04-28 11:45:10] [DEBUG   ] [cve.cve_client]   NVD NIST → C=14 H=14 M=20 L=1
+[2026-04-28 11:45:10] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=14×10 + H=14×7 + M=20×4 + L=1×1 = pénalité 319 → score 0.0/100
+[2026-04-28 11:45:10] [INFO    ] [cve.cve_scorer]   rabbitmq             C=14 H=14 M=20 L=1 → score=0.0/100 [source:nvd]
+[2026-04-28 11:45:10] [DEBUG   ] [cve.cve_scorer] Scan CVE : edge-router (weaveworksdemos/edge-router:0.1.1)
+[2026-04-28 11:45:10] [DEBUG   ] [cve.cve_client] Interrogation CVE pour : weaveworksdemos/edge-router:0.1.1
+[2026-04-28 11:45:11] [DEBUG   ] [cve.cve_client] Package 'edge-router' absent de OSV.dev (probablement propriétaire)
+[2026-04-28 11:45:11] [INFO    ] [cve.cve_client] 'weaveworksdemos/edge-router:0.1.1' non indexé dans OSV.dev (image propriétaire) — consultation NVD NIST
+[2026-04-28 11:45:25] [DEBUG   ] [cve.cve_client] NVD timeout niveau HIGH (tentative 1)
+[2026-04-28 11:45:41] [DEBUG   ] [cve.cve_client] NVD timeout niveau MEDIUM (tentative 1)
+[2026-04-28 11:45:59] [DEBUG   ] [cve.cve_client]   NVD NIST → C=0 H=0 M=0 L=0
+[2026-04-28 11:45:59] [DEBUG   ] [cve.cve_scorer] Calcul Score_CVE : C=0×10 + H=0×7 + M=0×4 + L=0×1 = pénalité 0 → score 100.0/100
+[2026-04-28 11:45:59] [INFO    ] [cve.cve_scorer]   edge-router          C=0 H=0 M=0 L=0 → score=100.0/100 [source:nvd]
+[2026-04-28 11:45:59] [INFO    ] [cve.cve_scorer] → Services scannés          : 13
+[2026-04-28 11:45:59] [INFO    ] [cve.cve_scorer] → Erreurs API               : 0
+[2026-04-28 11:45:59] [INFO    ] [__main__] → Durée                     : 506.45s
+[2026-04-28 11:45:59] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:45:59] [INFO    ] [__main__]   ÉTAPE 5 — CALCUL DU SCORE GLOBAL
+[2026-04-28 11:45:59] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:45:59] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:45:59] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-04-28 11:45:59] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   front-end            score_cve=0.0 criticite=4 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   catalogue            score_cve=45.0 criticite=3 contribution=135.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   catalogue-db         score_cve=100.0 criticite=3 contribution=300.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   orders               score_cve=0.0 criticite=3 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   orders-db            score_cve=0.0 criticite=3 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   cart                 score_cve=0.0 criticite=3 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   cart-db              score_cve=0.0 criticite=3 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   user                 score_cve=0.0 criticite=4 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   user-db              score_cve=100.0 criticite=3 contribution=300.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   payment              score_cve=0.0 criticite=2 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   shipping             score_cve=0.0 criticite=2 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   rabbitmq             score_cve=0.0 criticite=3 contribution=0.0
+[2026-04-28 11:45:59] [DEBUG   ] [graph.scorer]   edge-router          score_cve=100.0 criticite=2 contribution=200.0
+[2026-04-28 11:45:59] [INFO    ] [graph.scorer] → Score global              : 24.6/100
+[2026-04-28 11:45:59] [INFO    ] [graph.scorer] → Niveau sécurité           : CRITIQUE
+[2026-04-28 11:45:59] [INFO    ] [graph.scorer] → Services évalués          : 13
+[2026-04-28 11:45:59] [INFO    ] [__main__] → Score global              : 24.6/100
+[2026-04-28 11:45:59] [INFO    ] [__main__] → Niveau sécurité           : CRITIQUE
+[2026-04-28 11:45:59] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-04-28 11:45:59] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:45:59] [INFO    ] [__main__]   ÉTAPE 6 — SYNCHRONISATION NEO4J
+[2026-04-28 11:45:59] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:45:59] [INFO    ] [neo4j_db.connector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:45:59] [INFO    ] [neo4j_db.connector]   CONNEXION NEO4J
+[2026-04-28 11:45:59] [INFO    ] [neo4j_db.connector] ────────────────────────────────────────────────────────────
+[2026-04-28 11:45:59] [INFO    ] [neo4j_db.connector] URI         : neo4j://127.0.0.1:7687
+[2026-04-28 11:45:59] [INFO    ] [neo4j_db.connector] Utilisateur : neo4j
+[2026-04-28 11:46:01] [ERROR   ] [neo4j_db.connector] Neo4j inaccessible sur neo4j://127.0.0.1:7687 — vérifiez que le service Neo4j est démarré
+[2026-04-28 11:46:01] [WARNING ] [__main__] Neo4j inaccessible — synchronisation ignorée
+[2026-04-28 11:46:01] [INFO    ] [__main__] → Durée                     : 2.05s
+[2026-04-28 11:46:01] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:46:01] [INFO    ] [__main__]   ÉTAPE 7 — EXPORT DES FICHIERS
+[2026-04-28 11:46:01] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] → Taille                    : 5.7 Ko
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] → Noeuds                    : 14
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] → Arêtes                    : 13
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] → CSV exporté               : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-28 11:46:01] [INFO    ] [graph.exporter] → Services évalués          : 13
+[2026-04-28 11:46:01] [INFO    ] [__main__] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-28 11:46:01] [INFO    ] [__main__] → Scores exportés           : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-28 11:46:01] [INFO    ] [__main__] → Durée                     : 0.01s
+[2026-04-28 11:46:01] [INFO    ] [__main__] ============================================================
+[2026-04-28 11:46:01] [INFO    ] [__main__]   RÉSUMÉ — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-04-28 11:46:01] [INFO    ] [__main__] ============================================================
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → Environnement   : Docker Compose
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → Services parsés : 13 services
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → Noeuds dans G0  : 14 (dont Outside)
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → Arêtes dans G0  : 13
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → Services exposés: ['front-end', 'edge-router']
+[2026-04-28 11:46:01] [INFO    ] [__main__] 
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → G0 sauvegardé   : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → Scores CVE      : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-04-28 11:46:01] [INFO    ] [__main__] 
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → Score global    : 24.6/100 → CRITIQUE ✗
+[2026-04-28 11:46:01] [INFO    ] [__main__] 
+[2026-04-28 11:46:01] [INFO    ] [__main__]   Services les plus vulnérables :
+[2026-04-28 11:46:01] [INFO    ] [__main__]     front-end            score=0.0/100  criticité=4
+[2026-04-28 11:46:01] [INFO    ] [__main__]     orders               score=0.0/100  criticité=3
+[2026-04-28 11:46:01] [INFO    ] [__main__]     orders-db            score=0.0/100  criticité=3
+[2026-04-28 11:46:01] [INFO    ] [__main__] 
+[2026-04-28 11:46:01] [INFO    ] [__main__]   → Durée totale    : 508.6s
+[2026-04-28 11:46:01] [INFO    ] [__main__] ============================================================

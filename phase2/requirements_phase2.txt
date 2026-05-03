@@ -1,0 +1,16 @@
+# Phase 2 — MicroSecScore — Dépendances Python
+# Installer avec : pip install -r requirements_phase2.txt
+
+# Bus d'événements
+kafka-python-ng==2.2.3
+
+# Docker Engine API
+docker==7.1.0
+
+# Requêtes HTTP (cAdvisor, Prometheus)
+requests==2.31.0
+
+# Déjà installé depuis Phase 1 (rappel)
+# pyyaml==6.0.1
+# networkx==3.2.1
+# neo4j==5.15.0
