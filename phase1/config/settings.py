@@ -99,13 +99,20 @@ SERVICES_SENSIBLES = [
 OUTSIDE_NODE = "Outside"
 
 # =============================================================================
-# SECTION 7 — PARAMÈTRES API CVE
+# SECTION 7 — PARAMÈTRES SCANNER CVE (TRIVY)
 # =============================================================================
 
+# Trivy CLI — scanner principal (remplace OSV.dev / NVD NIST)
+# Installation : https://github.com/aquasecurity/trivy/releases
+# Windows      : choco install trivy
+TRIVY_TIMEOUT     = 120   # secondes max par image scannée
+TRIVY_MAX_WORKERS = 4     # nombre de scans Trivy en parallèle
+
+# Anciens paramètres API conservés pour compatibilité
 OSV_API_URL = "https://api.osv.dev/v1/query"
 NVD_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
-API_TIMEOUT = 10    # secondes avant timeout
-API_RETRIES = 3     # nombre de tentatives avant fallback
+API_TIMEOUT = 10
+API_RETRIES = 3
 
 # =============================================================================
 # SECTION 8 — PARAMÈTRES KUBERNETES WATCHER

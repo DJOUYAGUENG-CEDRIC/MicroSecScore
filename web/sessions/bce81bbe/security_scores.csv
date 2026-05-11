@@ -1,0 +1,13 @@
+service,image,score_cve,criticite,niveau,ports,privileged
+api-gateway,nginx:1.19.0,0.0,5,CRITIQUE,[30080],False
+auth-service,node:14.17.0-alpine,0.0,4,CRITIQUE,[],False
+account-service,python:3.8.0-slim,0.0,4,CRITIQUE,[],False
+notification-service,python:3.7.0-slim,0.0,3,CRITIQUE,[],False
+admin-dashboard,node:12.18.0-alpine,0.0,1,CRITIQUE,[30880],False
+fraud-detection,python:3.6.0-slim,0.0,2,CRITIQUE,[],False
+user-db,postgres:9.6.0,0.0,3,CRITIQUE,[],False
+account-db,postgres:11.5.0,0.0,2,CRITIQUE,[],False
+redis-cache,redis:5.0.0-alpine,0.0,2,CRITIQUE,[],False
+transaction-db,mongo:4.4.0,0.0,3,CRITIQUE,[],False
+message-broker,rabbitmq:3.7.0-management,0.0,3,CRITIQUE,[],False
+transaction-service,openjdk:11.0.8-jre-slim,11.0,5,CRITIQUE,[],False

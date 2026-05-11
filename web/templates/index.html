@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MicroSecScore — Analyser une application</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body { background: #f0f2f5; }
+    .hero { background: linear-gradient(135deg, #1a237e, #283593); color: white; padding: 3rem 0 2rem; }
+    .card-upload { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+    .tab-pane { padding-top: 1.5rem; }
+    .nav-pills .nav-link.active { background-color: #1a237e; }
+    .nav-pills .nav-link { color: #1a237e; border: 1px solid #1a237e; margin-right: .4rem; }
+    .drop-zone {
+      border: 2px dashed #90a4ae;
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      color: #607d8b;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .drop-zone:hover, .drop-zone.dragover { border-color: #1a237e; background: #e8eaf6; color: #1a237e; }
+    .drop-zone input[type=file] { display: none; }
+    .badge-option { font-size: .75rem; }
+    .btn-analyze { background: #1a237e; border: none; padding: .7rem 2.5rem; font-size: 1.05rem; border-radius: 8px; }
+    .btn-analyze:hover { background: #283593; }
+    footer { color: #78909c; font-size: .85rem; }
+  </style>
+</head>
+<body>
+
+<!-- Overlay de chargement -->
+<div id="loadingOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6);
+     z-index:9999; flex-direction:column; align-items:center; justify-content:center; color:white;">
+  <div class="spinner-border mb-3" style="width:3rem;height:3rem;" role="status"></div>
+  <h5>Analyse en cours…</h5>
+  <p class="opacity-75 small">Cela peut prendre 30 à 60 secondes en mode simulation.<br>
+  Consultez le terminal Flask pour suivre la progression.</p>
+</div>
+
+<!-- En-tête -->
+<div class="hero text-center">
+  <h1 class="fw-bold mb-1">MicroSecScore</h1>
+  <p class="lead mb-0">Analyse de sécurité de vos architectures microservices</p>
+  <small class="opacity-75">Master II RSD — Université de Dschang</small>
+</div>
+
+<div class="container py-4" style="max-width:720px">
+
+  <!-- Messages flash -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for msg in messages %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ msg }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="card card-upload p-4">
+    <h5 class="fw-semibold mb-3">Déposer vos fichiers de configuration</h5>
+
+    <!-- Onglets Docker / Kubernetes -->
+    <ul class="nav nav-pills mb-2" id="envTabs">
+      <li class="nav-item">
+        <button class="nav-link active" id="docker-tab"
+                data-bs-toggle="pill" data-bs-target="#dockerPane" type="button">
+          Docker Compose
+        </button>
+      </li>
+      <li class="nav-item">
+        <button class="nav-link" id="k8s-tab"
+                data-bs-toggle="pill" data-bs-target="#k8sPane" type="button">
+          Kubernetes
+        </button>
+      </li>
+    </ul>
+
+    <form method="POST" action="/analyze" enctype="multipart/form-data" id="uploadForm">
+
+      <div class="tab-content">
+
+        <!-- ── DOCKER ──────────────────────────────────────────────── -->
+        <div class="tab-pane fade show active" id="dockerPane">
+          <input type="hidden" name="env_type" value="docker" id="envTypeInput"/>
+          <label class="form-label fw-medium">Fichier <code>docker-compose.yml</code></label>
+          <div class="drop-zone" id="dockerDrop" onclick="document.getElementById('composeInput').click()">
+            <div class="fs-2 mb-1">📄</div>
+            <p class="mb-1">Cliquer ou glisser votre <strong>docker-compose.yml</strong> ici</p>
+            <small class="text-muted">Formats acceptés : .yml, .yaml</small>
+            <input type="file" id="composeInput" name="compose_file" accept=".yml,.yaml" required/>
+          </div>
+          <div id="dockerFileName" class="text-success mt-2 small"></div>
+        </div>
+
+        <!-- ── KUBERNETES ──────────────────────────────────────────── -->
+        <div class="tab-pane fade" id="k8sPane">
+          <p class="text-muted small mb-3">
+            Uploadez vos manifestes Kubernetes séparément.
+            <strong>deployments.yaml</strong> est obligatoire ; les deux autres sont optionnels.
+          </p>
+
+          {% set k8s_fields = [
+            ("deployments_file",     "deployments.yaml",      "Obligatoire — liste des Deployments", True),
+            ("services_file",        "services.yaml",         "Optionnel — ports exposés (NodePort/LoadBalancer)", False),
+            ("networkpolicies_file", "networkpolicies.yaml",  "Optionnel — communications autorisées", False),
+          ] %}
+
+          {% for field_name, label, hint, required in k8s_fields %}
+          <div class="mb-3">
+            <label class="form-label fw-medium">
+              {{ label }}
+              {% if required %}<span class="badge bg-danger badge-option ms-1">Obligatoire</span>
+              {% else %}<span class="badge bg-secondary badge-option ms-1">Optionnel</span>{% endif %}
+            </label>
+            <input type="file" class="form-control" name="{{ field_name }}"
+                   accept=".yml,.yaml"/>
+            <div class="form-text">{{ hint }}</div>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div><!-- /tab-content -->
+
+      <!-- Options -->
+      <hr class="my-3"/>
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" name="simulation" id="simCheck" checked/>
+            <label class="form-check-label" for="simCheck">
+              Mode simulation
+              <span class="text-muted small">(scores CVE simulés, plus rapide)</span>
+            </label>
+          </div>
+        </div>
+        <div class="col text-end">
+          <button type="submit" class="btn btn-primary btn-analyze text-white">
+            Analyser →
+          </button>
+        </div>
+      </div>
+
+    </form>
+  </div><!-- /card -->
+
+  <!-- Info -->
+  <div class="mt-3 p-3 bg-white rounded-3 shadow-sm small text-muted">
+    <strong>Comment ça fonctionne ?</strong><br>
+    MicroSecScore construit un graphe de sécurité G0 à partir de vos fichiers,
+    calcule les scores CVE de chaque image Docker, détecte les chemins d'attaque
+    possibles et produit un tableau de bord visuel interactif.
+    Sans simulation : les scores CVE réels sont interrogés via OSV.dev / NVD NIST
+    (nécessite une connexion internet, 3–10 minutes).
+  </div>
+
+  <footer class="text-center mt-4 pb-3 footer">
+    MicroSecScore — DJOUYAGUENG SADE CEDRIC — Master II RSD — Université de Dschang
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Mise à jour du champ env_type selon l'onglet actif
+  document.querySelectorAll('[data-bs-toggle="pill"]').forEach(btn => {
+    btn.addEventListener('shown.bs.tab', e => {
+      const isK8s = e.target.id === 'k8s-tab';
+      document.getElementById('envTypeInput').value = isK8s ? 'kubernetes' : 'docker';
+
+      // Ajuster le required selon l'onglet
+      const composeInput = document.getElementById('composeInput');
+      composeInput.required = !isK8s;
+    });
+  });
+
+  // Affichage du nom de fichier docker-compose
+  document.getElementById('composeInput').addEventListener('change', function () {
+    const el = document.getElementById('dockerFileName');
+    el.textContent = this.files[0] ? '✓ ' + this.files[0].name : '';
+  });
+
+  // Drag & Drop zone Docker
+  const dropZone = document.getElementById('dockerDrop');
+  ['dragenter','dragover'].forEach(e => dropZone.addEventListener(e, ev => {
+    ev.preventDefault(); dropZone.classList.add('dragover');
+  }));
+  ['dragleave','drop'].forEach(e => dropZone.addEventListener(e, ev => {
+    ev.preventDefault(); dropZone.classList.remove('dragover');
+  }));
+  dropZone.addEventListener('drop', ev => {
+    const file = ev.dataTransfer.files[0];
+    if (file) {
+      const input = document.getElementById('composeInput');
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      document.getElementById('dockerFileName').textContent = '✓ ' + file.name;
+    }
+  });
+
+  // Overlay de chargement pendant l'analyse
+  document.getElementById('uploadForm').addEventListener('submit', function () {
+    const btn = this.querySelector('button[type=submit]');
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Analyse en cours…';
+    btn.disabled = true;
+
+    // Afficher un overlay d'attente
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.style.display = 'flex';
+  });
+</script>
+</body>
+</html>

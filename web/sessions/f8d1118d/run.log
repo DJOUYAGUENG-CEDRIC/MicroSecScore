@@ -1,0 +1,164 @@
+Commande : C:\Users\LABO-INFOS\AppData\Local\Programs\Python\Python313\python.exe phase1_topology.py --no-neo4j --file c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\f8d1118d\docker-compose.yml --env docker
+Code retour : 0
+
+=== STDOUT ===
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [__main__] Mode simulation   : NON
+[2026-05-08 08:45:17] [INFO    ] [__main__] Sync Neo4j        : NON
+[2026-05-08 08:45:17] [INFO    ] [__main__] Visualisation     : OUI
+[2026-05-08 08:45:17] [INFO    ] [__main__] Fichier Docker    : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\f8d1118d\docker-compose.yml
+[2026-05-08 08:45:17] [INFO    ] [__main__] Environnement     : FORCÉ → DOCKER
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [parsers.detector] Environnement forcé manuellement : docker
+[2026-05-08 08:45:17] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-05-08 08:45:17] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [parsers.detector] → Environnement forcé       : DOCKER
+[2026-05-08 08:45:17] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-05-08 08:45:17] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-05-08 08:45:17] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [parsers.docker_parser] Lecture de : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\f8d1118d\docker-compose.yml
+[2026-05-08 08:45:17] [WARNING ] [parsers.docker_parser] [RISQUE] Service 'queue-master' monte /var/run/docker.sock — contrôle total du daemon Docker
+[2026-05-08 08:45:17] [INFO    ] [parsers.docker_parser] → Services détectés         : 15
+[2026-05-08 08:45:17] [INFO    ] [parsers.docker_parser] → Services exposés          : ['edge-router']
+[2026-05-08 08:45:17] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 16 (dont Outside)
+[2026-05-08 08:45:17] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 1
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Environnement             : Docker Compose
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Services parsés           : 15
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Services exposés          : ['edge-router']
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Durée                     : 0.05s
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-05-08 08:45:17] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [graph.builder] → Noeuds dans G0            : 16
+[2026-05-08 08:45:17] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 0
+[2026-05-08 08:45:17] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 1
+[2026-05-08 08:45:17] [INFO    ] [graph.builder] → Total arêtes              : 1
+[2026-05-08 08:45:17] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Noeuds                    : 16 (dont Outside)
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Arêtes                    : 1
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Durée                     : 0.01s
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-05-08 08:45:17] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [graph.scorer] → Criticités calculées      : 16 noeuds
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Criticités                : 16 noeuds
+[2026-05-08 08:45:17] [INFO    ] [__main__] → Durée                     : 0.01s
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-05-08 08:45:17] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [__main__] Interrogation APIs CVE (OSV.dev → NVD NIST)...
+[2026-05-08 08:45:17] [INFO    ] [__main__] Patience — 3 à 10 minutes selon la connexion internet
+[2026-05-08 08:45:17] [INFO    ] [cve.cve_scorer] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [cve.cve_scorer]   CALCUL DES SCORES CVE (TRIVY — SCANS PARALLÈLES)
+[2026-05-08 08:45:17] [INFO    ] [cve.cve_scorer] ────────────────────────────────────────────────────────────
+[2026-05-08 08:45:17] [INFO    ] [cve.cve_scorer] 15 images à scanner (4 scans en parallèle)
+[2026-05-08 08:45:23] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/front-end:0.3.12' (image non trouvée localement?)
+[2026-05-08 08:45:23] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/edge-router:0.1.1' (image non trouvée localement?)
+[2026-05-08 08:45:23] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/catalogue:0.3.5' (image non trouvée localement?)
+[2026-05-08 08:45:28] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/carts:0.4.8' (image non trouvée localement?)
+[2026-05-08 08:45:28] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'mongo:3.4' (image non trouvée localement?)
+[2026-05-08 08:45:28] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/orders:0.4.7' (image non trouvée localement?)
+[2026-05-08 08:45:34] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'mongo:3.4' (image non trouvée localement?)
+[2026-05-08 08:45:34] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/shipping:0.4.8' (image non trouvée localement?)
+[2026-05-08 08:45:34] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/queue-master:0.3.1' (image non trouvée localement?)
+[2026-05-08 08:45:39] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'rabbitmq:3.6.8' (image non trouvée localement?)
+[2026-05-08 08:45:39] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/payment:0.4.3' (image non trouvée localement?)
+[2026-05-08 08:45:39] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/user:0.4.4' (image non trouvée localement?)
+[2026-05-08 08:45:45] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/user-db:0.4.0' (image non trouvée localement?)
+[2026-05-08 08:45:45] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/load-test:0.1.1' (image non trouvée localement?)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_client] Trivy: sortie vide pour 'weaveworksdemos/catalogue-db:0.3.0' (image non trouvée localement?)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'front-end' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'edge-router' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'catalogue' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'carts' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'carts-db' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'orders' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'orders-db' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'shipping' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'queue-master' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'rabbitmq' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'payment' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'user' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'user-db' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'user-sim' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [WARNING ] [cve.cve_scorer] Erreur Trivy pour 'catalogue-db' [trivy_vide] — score CVE = 100 (hypothèse conservative)
+[2026-05-08 08:47:24] [INFO    ] [cve.cve_scorer] → Services scannés          : 15
+[2026-05-08 08:47:24] [INFO    ] [cve.cve_scorer] → Erreurs Trivy             : 15
+[2026-05-08 08:47:24] [INFO    ] [__main__] → Durée                     : 126.47s
+[2026-05-08 08:47:24] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [__main__]   ÉTAPE 5 — CALCUL DU SCORE GLOBAL
+[2026-05-08 08:47:24] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-05-08 08:47:24] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [graph.scorer] → Score global              : 100.0/100
+[2026-05-08 08:47:24] [INFO    ] [graph.scorer] → Niveau sécurité           : SAIN
+[2026-05-08 08:47:24] [INFO    ] [graph.scorer] → Services évalués          : 15
+[2026-05-08 08:47:24] [INFO    ] [__main__] → Score global              : 100.0/100
+[2026-05-08 08:47:24] [INFO    ] [__main__] → Niveau sécurité           : SAIN
+[2026-05-08 08:47:24] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-05-08 08:47:24] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [__main__]   ÉTAPE 7 — EXPORT DES FICHIERS
+[2026-05-08 08:47:24] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] → G0 exporté                : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] → Taille                    : 4.7 Ko
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] → Noeuds                    : 16
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] → Arêtes                    : 1
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] → CSV exporté               : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-08 08:47:24] [INFO    ] [graph.exporter] → Services évalués          : 15
+[2026-05-08 08:47:24] [INFO    ] [__main__] → G0 exporté                : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-08 08:47:24] [INFO    ] [__main__] → Scores exportés           : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-08 08:47:24] [INFO    ] [__main__] → Durée                     : 0.06s
+[2026-05-08 08:47:24] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [__main__]   ÉTAPE 8 — VISUALISATION DE G0
+[2026-05-08 08:47:24] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [visualizer.graph_viz] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:24] [INFO    ] [visualizer.graph_viz]   VISUALISATION DE G0
+[2026-05-08 08:47:24] [INFO    ] [visualizer.graph_viz] ────────────────────────────────────────────────────────────
+[2026-05-08 08:47:25] [INFO    ] [visualizer.graph_viz] → Rendu PNG généré          : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.png
+[2026-05-08 08:47:27] [INFO    ] [visualizer.graph_viz] → Rendu HTML interactif généré : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html
+[2026-05-08 08:47:27] [INFO    ] [visualizer.graph_viz] Ouvrez c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html dans votre navigateur pour explorer G0 de façon interactive
+[2026-05-08 08:47:27] [INFO    ] [__main__] → Viz PNG                   : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.png
+[2026-05-08 08:47:27] [INFO    ] [__main__] → Viz HTML                  : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html
+[2026-05-08 08:47:27] [INFO    ] [__main__] → Durée                     : 3.72s
+[2026-05-08 08:47:27] [INFO    ] [__main__] ============================================================
+[2026-05-08 08:47:27] [INFO    ] [__main__]   RÉSUMÉ — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-05-08 08:47:27] [INFO    ] [__main__] ============================================================
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → Environnement   : Docker Compose
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → Services parsés : 15 services
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → Noeuds dans G0  : 16 (dont Outside)
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → Arêtes dans G0  : 1
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → Services exposés: ['edge-router']
+[2026-05-08 08:47:27] [INFO    ] [__main__] 
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → G0 sauvegardé   : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → Scores CVE      : c:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-08 08:47:27] [INFO    ] [__main__] 
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → Score global    : 100.0/100 → SAIN ✓
+[2026-05-08 08:47:27] [INFO    ] [__main__] 
+[2026-05-08 08:47:27] [INFO    ] [__main__]   Services les plus vulnérables :
+[2026-05-08 08:47:27] [INFO    ] [__main__]     front-end            score=100.0/100  criticité=1
+[2026-05-08 08:47:27] [INFO    ] [__main__]     edge-router          score=100.0/100  criticité=1
+[2026-05-08 08:47:27] [INFO    ] [__main__]     catalogue            score=100.0/100  criticité=1
+[2026-05-08 08:47:27] [INFO    ] [__main__] 
+[2026-05-08 08:47:27] [INFO    ] [__main__]   → Durée totale    : 130.3s
+[2026-05-08 08:47:27] [INFO    ] [__main__] ============================================================
+
+=== STDERR ===

@@ -41,9 +41,14 @@ def forcer_environnement(env: str) -> None:
         )
 
 
-def detecter_environnement() -> str:
+def detecter_environnement(compose_path: str = None) -> str:
     """
     Retourne l'environnement cible.
+
+    Paramètres :
+        compose_path (str) : chemin vers un docker-compose.yml fourni
+                             manuellement. Si fourni, force la détection Docker
+                             sans vérifier kubectl.
 
     Si un environnement a été forcé via forcer_environnement(),
     on le retourne directement sans aucun test.
@@ -68,6 +73,18 @@ def detecter_environnement() -> str:
         return _env_force
 
     # -------------------------------------------------------------------------
+    # Fichier fourni manuellement → Docker sans ambiguïté
+    # -------------------------------------------------------------------------
+    if compose_path is not None:
+        if _detecter_docker(compose_path):
+            log_resultat(logger, "Environnement détecté", "Docker Compose (fichier fourni)")
+            return ENV_DOCKER
+        log_erreur_critique(
+            logger,
+            f"Fichier fourni introuvable ou invalide : '{compose_path}'"
+        )
+
+    # -------------------------------------------------------------------------
     # Détection automatique — priorité décroissante
     # -------------------------------------------------------------------------
     if _detecter_docker():
@@ -87,12 +104,13 @@ def detecter_environnement() -> str:
     )
 
 
-def _detecter_docker() -> bool:
+def _detecter_docker(compose_path: str = None) -> bool:
+    chemin = compose_path or DOCKER_COMPOSE_PATH
     try:
-        if not os.path.isfile(DOCKER_COMPOSE_PATH):
-            logger.debug(f"docker-compose.yml introuvable à : {DOCKER_COMPOSE_PATH}")
+        if not os.path.isfile(chemin):
+            logger.debug(f"docker-compose.yml introuvable à : {chemin}")
             return False
-        if os.path.getsize(DOCKER_COMPOSE_PATH) == 0:
+        if os.path.getsize(chemin) == 0:
             logger.warning("docker-compose.yml trouvé mais vide — ignoré")
             return False
         logger.debug("docker-compose.yml trouvé et non vide")

@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #F8F9FA;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#B71C1C", "font": {"color": "#212121"}, "id": "front-end", "label": "front-end\n48.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003efront-end\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/front-end:0.3.12\u003cbr\u003eScore CVE : 48.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#F9A825", "font": {"color": "#212121"}, "id": "edge-router", "label": "edge-router\n76.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003eedge-router\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/edge-router:0.1.1\u003cbr\u003eScore CVE : 76.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : STABLE\u003cbr\u003ePorts expos\u00e9s : [80, 8080]"}, {"color": "#E65100", "font": {"color": "#212121"}, "id": "catalogue", "label": "catalogue\n68.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003ecatalogue\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/catalogue:0.3.5\u003cbr\u003eScore CVE : 68.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : DEGRADE"}, {"color": "#E65100", "font": {"color": "#212121"}, "id": "catalogue-db", "label": "catalogue-db\n50.0/100", "shape": "dot", "size": 25, "title": "\u003cb\u003ecatalogue-db\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/catalogue-db:0.3.0\u003cbr\u003eScore CVE : 50.0/100\u003cbr\u003eCriticit\u00e9 : 2\u003cbr\u003eNiveau    : DEGRADE"}, {"color": "#F9A825", "font": {"color": "#212121"}, "id": "carts", "label": "carts\n70.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003ecarts\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/carts:0.4.8\u003cbr\u003eScore CVE : 70.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : STABLE"}, {"color": "#F9A825", "font": {"color": "#212121"}, "id": "carts-db", "label": "carts-db\n70.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003ecarts-db\u003c/b\u003e\u003cbr\u003eImage     : mongo:3.4\u003cbr\u003eScore CVE : 70.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : STABLE"}, {"color": "#F9A825", "font": {"color": "#212121"}, "id": "orders", "label": "orders\n76.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003eorders\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/orders:0.4.7\u003cbr\u003eScore CVE : 76.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : STABLE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "orders-db", "label": "orders-db\n24.0/100", "shape": "dot", "size": 25, "title": "\u003cb\u003eorders-db\u003c/b\u003e\u003cbr\u003eImage     : mongo:3.4\u003cbr\u003eScore CVE : 24.0/100\u003cbr\u003eCriticit\u00e9 : 2\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#F9A825", "font": {"color": "#212121"}, "id": "shipping", "label": "shipping\n78.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003eshipping\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/shipping:0.4.8\u003cbr\u003eScore CVE : 78.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : STABLE"}, {"color": "#F9A825", "font": {"color": "#212121"}, "id": "queue-master", "label": "queue-master\n70.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003equeue-master\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/queue-master:0.3.1\u003cbr\u003eScore CVE : 70.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : STABLE"}, {"color": "#E65100", "font": {"color": "#212121"}, "id": "rabbitmq", "label": "rabbitmq\n60.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003erabbitmq\u003c/b\u003e\u003cbr\u003eImage     : rabbitmq:3.6.8\u003cbr\u003eScore CVE : 60.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : DEGRADE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "payment", "label": "payment\n14.0/100", "shape": "dot", "size": 25, "title": "\u003cb\u003epayment\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/payment:0.4.3\u003cbr\u003eScore CVE : 14.0/100\u003cbr\u003eCriticit\u00e9 : 2\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#E65100", "font": {"color": "#212121"}, "id": "user", "label": "user\n62.0/100", "shape": "dot", "size": 25, "title": "\u003cb\u003euser\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/user:0.4.4\u003cbr\u003eScore CVE : 62.0/100\u003cbr\u003eCriticit\u00e9 : 2\u003cbr\u003eNiveau    : DEGRADE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "user-db", "label": "user-db\n42.0/100", "shape": "dot", "size": 25, "title": "\u003cb\u003euser-db\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/user-db:0.4.0\u003cbr\u003eScore CVE : 42.0/100\u003cbr\u003eCriticit\u00e9 : 2\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#F9A825", "font": {"color": "#212121"}, "id": "user-sim", "label": "user-sim\n70.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003euser-sim\u003c/b\u003e\u003cbr\u003eImage     : weaveworksdemos/load-test:0.1.1\u003cbr\u003eScore CVE : 70.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : STABLE"}, {"color": "#424242", "font": {"color": "#212121"}, "id": "Outside", "label": "Outside", "shape": "dot", "size": 20, "title": "\u003cb\u003eOutside\u003c/b\u003e\u003cbr\u003eImage     : N/A\u003cbr\u003eScore CVE : None/100\u003cbr\u003eCriticit\u00e9 : 0\u003cbr\u003eNiveau    : EXTERNE"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#C62828", "dashes": true, "from": "Outside", "label": "PEUT_ATTAQUER", "title": "PEUT_ATTAQUER", "to": "edge-router", "width": 3}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 150, "springConstant": 0.08}, "solver": "forceAtlas2Based", "stabilization": {"iterations": 150}}, "edges": {"arrows": {"to": {"enabled": true, "scaleFactor": 1.2}}, "smooth": {"type": "dynamic"}}, "interaction": {"hover": true, "tooltipDelay": 200, "zoomView": true}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

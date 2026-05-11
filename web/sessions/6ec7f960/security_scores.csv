@@ -1,0 +1,13 @@
+service,image,score_cve,criticite,niveau,ports,privileged
+currencyservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/currencyservice:v0.10.5,70.0,1,STABLE,[],False
+loadgenerator,us-central1-docker.pkg.dev/google-samples/microservices-demo/loadgenerator:v0.10.5,70.0,1,STABLE,[],False
+productcatalogservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/productcatalogservice:v0.10.5,70.0,1,STABLE,[],False
+checkoutservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice:v0.10.5,70.0,1,STABLE,[],False
+shippingservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/shippingservice:v0.10.5,70.0,1,STABLE,[],False
+cartservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice:v0.10.5,70.0,1,STABLE,[],False
+redis-cart,redis:alpine,70.0,1,STABLE,[],False
+emailservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/emailservice:v0.10.5,70.0,1,STABLE,[],False
+paymentservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/paymentservice:v0.10.5,70.0,1,STABLE,[],False
+frontend,us-central1-docker.pkg.dev/google-samples/microservices-demo/frontend:v0.10.5,70.0,1,STABLE,[],False
+recommendationservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/recommendationservice:v0.10.5,70.0,1,STABLE,[],False
+adservice,us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice:v0.10.5,70.0,1,STABLE,[],False

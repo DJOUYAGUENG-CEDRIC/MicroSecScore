@@ -6,8 +6,9 @@
 # =============================================================================
 
 import networkx as nx
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
-from config.settings import CVE_WEIGHTS, OUTSIDE_NODE
+from config.settings import CVE_WEIGHTS, OUTSIDE_NODE, TRIVY_MAX_WORKERS
 from cve.cve_client  import interroger_cve_par_image
 from utils.logger    import get_logger, log_separateur, log_resultat
 
@@ -20,11 +21,11 @@ logger = get_logger(__name__)
 
 def enrichir_G0_avec_scores_cve(G0: nx.DiGraph) -> nx.DiGraph:
     """
-    Interroge l'API CVE pour chaque service de G0 et calcule son Score_CVE.
+    Scanne chaque image de G0 avec Trivy en parallèle et calcule les scores CVE.
 
-    Cette fonction fait le lien entre le module cve/ et le graphe G0.
-    Elle enrichit chaque noeud de G0 avec son score_cve calculé,
-    rendant G0 prêt pour le calcul du score global dans graph/scorer.py.
+    Les scans Trivy sont lancés simultanément via ThreadPoolExecutor
+    (TRIVY_MAX_WORKERS workers). Pour 13 images avec 4 workers en parallèle,
+    le temps passe de ~20 min (séquentiel) à ~5 min.
 
     Paramètre :
         G0 (nx.DiGraph) : graphe construit par builder.py
@@ -33,66 +34,73 @@ def enrichir_G0_avec_scores_cve(G0: nx.DiGraph) -> nx.DiGraph:
         nx.DiGraph : G0 avec l'attribut score_cve renseigné sur chaque noeud
     """
 
-    log_separateur(logger, "Calcul des scores CVE")
+    log_separateur(logger, "Calcul des scores CVE (Trivy — scans parallèles)")
 
-    nb_services  = 0
-    nb_erreurs   = 0
+    # ── Collecte des nœuds à scanner ─────────────────────────────────────────
+    a_scanner = [
+        (noeud, data.get("image", "unknown"))
+        for noeud, data in G0.nodes(data=True)
+        if noeud != OUTSIDE_NODE
+    ]
 
-    for noeud, attributs in G0.nodes(data=True):
+    nb_workers = min(TRIVY_MAX_WORKERS, len(a_scanner))
+    logger.info(
+        f"{len(a_scanner)} images à scanner "
+        f"({nb_workers} scans en parallèle)"
+    )
 
-        # Outside n'a pas d'image Docker — on l'ignore
-        if noeud == OUTSIDE_NODE:
-            continue
-
-        image = attributs.get("image", "unknown")
-
+    # ── Fonction de scan pour un seul nœud ───────────────────────────────────
+    def _scanner(noeud_image: tuple) -> tuple:
+        noeud, image = noeud_image
         if image == "unknown":
+            return noeud, None
+        return noeud, interroger_cve_par_image(image)
+
+    # ── Lancement des scans en parallèle ─────────────────────────────────────
+    resultats = {}
+    with ThreadPoolExecutor(max_workers=nb_workers) as executor:
+        futures = {executor.submit(_scanner, item): item[0] for item in a_scanner}
+        for future in as_completed(futures):
+            noeud, res = future.result()
+            resultats[noeud] = res
+
+    # ── Application des résultats sur G0 ─────────────────────────────────────
+    nb_services = 0
+    nb_erreurs  = 0
+
+    for noeud, res in resultats.items():
+
+        if res is None:
             logger.warning(f"Image inconnue pour '{noeud}' — score CVE = 50 (valeur neutre)")
             G0.nodes[noeud]["score_cve"] = 50.0
-            nb_services += 1
-            continue
 
-        # -------------------------------------------------------------------------
-        # Interrogation de l'API CVE pour cette image
-        # -------------------------------------------------------------------------
-        logger.debug(f"Scan CVE : {noeud} ({image})")
-        resultats_cve = interroger_cve_par_image(image)
-
-        if resultats_cve.get("erreur"):
+        elif res.get("erreur"):
             logger.warning(
-                f"Impossible de récupérer les CVE pour '{noeud}' "
-                f"— score CVE = 100 (hypothèse conservative : aucune faille)"
+                f"Erreur Trivy pour '{noeud}' [{res['source']}] "
+                f"— score CVE = 100 (hypothèse conservative)"
             )
             G0.nodes[noeud]["score_cve"] = 100.0
-            nb_erreurs  += 1
-            nb_services += 1
-            continue
+            nb_erreurs += 1
 
-        # -------------------------------------------------------------------------
-        # Calcul du Score_CVE
-        # -------------------------------------------------------------------------
-        score = calculer_score_cve(
-            critical = resultats_cve.get("CRITICAL", 0),
-            high     = resultats_cve.get("HIGH",     0),
-            medium   = resultats_cve.get("MEDIUM",   0),
-            low      = resultats_cve.get("LOW",      0)
-        )
+        else:
+            score = calculer_score_cve(
+                critical = res.get("CRITICAL", 0),
+                high     = res.get("HIGH",     0),
+                medium   = res.get("MEDIUM",   0),
+                low      = res.get("LOW",      0)
+            )
+            G0.nodes[noeud]["score_cve"] = score
+            logger.info(
+                f"  {noeud:<20} "
+                f"C={res['CRITICAL']} H={res['HIGH']} "
+                f"M={res['MEDIUM']} L={res['LOW']} "
+                f"→ score={score}/100 [trivy]"
+            )
 
-        G0.nodes[noeud]["score_cve"] = score
         nb_services += 1
 
-        logger.info(
-            f"  {noeud:<20} "
-            f"C={resultats_cve['CRITICAL']} "
-            f"H={resultats_cve['HIGH']} "
-            f"M={resultats_cve['MEDIUM']} "
-            f"L={resultats_cve['LOW']} "
-            f"→ score={score}/100 "
-            f"[source:{resultats_cve['source']}]"
-        )
-
     log_resultat(logger, "Services scannés", nb_services)
-    log_resultat(logger, "Erreurs API",      nb_erreurs)
+    log_resultat(logger, "Erreurs Trivy",    nb_erreurs)
 
     return G0
 

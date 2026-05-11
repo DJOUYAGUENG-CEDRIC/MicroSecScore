@@ -1,317 +1,229 @@
 # =============================================================================
 # MicroSecScore — Phase 1 : Topologie & Graphe G0
 # Fichier : cve/cve_client.py
-# Rôle    : Interroge l'API OSV.dev pour récupérer les CVE par image Docker
-#           En cas d'échec ou image propriétaire, bascule sur NVD NIST
+# Rôle    : Scanner CVE basé sur Trivy CLI
+#           Remplace les appels OSV.dev / NVD NIST (lents, dépendants du réseau)
+#           Trivy : plus rapide (5-30s/image), plus précis, fonctionne hors-ligne
+#           après le premier téléchargement de la base de vulnérabilités.
+#
+# Prérequis :
+#   Trivy installé et dans le PATH.
+#   Windows : choco install trivy
+#             ou télécharger le .exe sur https://github.com/aquasecurity/trivy/releases
+#   Linux   : apt install trivy  /  brew install trivy
+#
 # Auteur  : DJOUYAGUENG SADE CEDRIC — Master II RSD — Université de Dschang
 # =============================================================================
 
-import time
-import requests
+import json
+import shutil
+import subprocess
 
-from config.settings import (
-    OSV_API_URL,
-    NVD_API_URL,
-    API_TIMEOUT,
-    API_RETRIES
-)
-from utils.logger import get_logger
+from config.settings import TRIVY_TIMEOUT
+from utils.logger    import get_logger
 
-# Initialisation du logger — OBLIGATOIRE
 logger = get_logger(__name__)
 
 
 # =============================================================================
-# STRUCTURE D'UN RÉSULTAT CVE VIDE
+# STRUCTURES DE RETOUR
+# Interface identique à l'ancien cve_client.py (OSV/NVD)
 # =============================================================================
 
-def _resultat_vide() -> dict:
+def _resultat_vide(source: str = "trivy") -> dict:
     return {
         "CRITICAL": 0,
         "HIGH"    : 0,
         "MEDIUM"  : 0,
         "LOW"     : 0,
-        "source"  : "aucune",
+        "source"  : source,
         "erreur"  : False
     }
 
-def _resultat_erreur() -> dict:
-    r = _resultat_vide()
+def _resultat_erreur(source: str = "trivy_erreur") -> dict:
+    r = _resultat_vide(source)
     r["erreur"] = True
-    r["source"] = "erreur"
     return r
 
 
 # =============================================================================
-# FONCTION PRINCIPALE
-# Circuit Breaker : OSV.dev → NVD NIST → résultat vide
+# FONCTION PRINCIPALE — SCAN D'UNE IMAGE AVEC TRIVY
 # =============================================================================
 
 def interroger_cve_par_image(image: str) -> dict:
     """
-    Récupère les CVE associées à une image Docker.
+    Lance Trivy pour scanner une image Docker et retourne les compteurs CVE.
 
-    Algorithme — Circuit Breaker avec fallback étendu :
-        1. OSV.dev  → si package connu : retourner résultat
-                    → si non trouvé (propriétaire) : aller sur NVD
-                    → si erreur réseau : aller sur NVD
-        2. NVD NIST → si réponse OK : retourner résultat
-        3. Échec total → score 100 avec flag erreur
-    """
-    logger.debug(f"Interrogation CVE pour : {image}")
-    nom_package, version = _parser_image(image)
+    Algorithme :
+        1. Vérifie que trivy est dans le PATH
+        2. Exécute : trivy image --format json --quiet <image>
+        3. Parse le JSON → compte CRITICAL / HIGH / MEDIUM / LOW
+        4. En cas d'erreur → retourne un résultat avec erreur=True
+           (cve_scorer.py lui attribue alors le score 100 par défaut)
 
-    # Tentative 1 — OSV.dev
-    resultat_osv, trouve_dans_osv = _interroger_osv_v2(nom_package, version)
-
-    if resultat_osv is not None and trouve_dans_osv:
-        resultat_osv["source"] = "osv"
-        resultat_osv["erreur"] = False
-        logger.debug(
-            f"  OSV.dev → "
-            f"C={resultat_osv['CRITICAL']} H={resultat_osv['HIGH']} "
-            f"M={resultat_osv['MEDIUM']} L={resultat_osv['LOW']}"
-        )
-        return resultat_osv
-
-    if not trouve_dans_osv:
-        logger.info(
-            f"'{image}' non indexé dans OSV.dev "
-            f"(image propriétaire) — consultation NVD NIST"
-        )
-    else:
-        logger.warning(f"OSV.dev indisponible pour '{image}' — bascule NVD NIST")
-
-    # Tentative 2 — NVD NIST
-    resultat_nvd = _interroger_nvd(nom_package, version)
-
-    if resultat_nvd is not None:
-        resultat_nvd["source"] = "nvd"
-        resultat_nvd["erreur"] = False
-        logger.debug(
-            f"  NVD NIST → "
-            f"C={resultat_nvd['CRITICAL']} H={resultat_nvd['HIGH']} "
-            f"M={resultat_nvd['MEDIUM']} L={resultat_nvd['LOW']}"
-        )
-        return resultat_nvd
-
-    # Échec total
-    logger.error(
-        f"OSV.dev et NVD NIST inaccessibles pour '{image}' — "
-        f"score CVE = 100 (hypothèse conservative)"
-    )
-    return _resultat_erreur()
-
-
-# =============================================================================
-# INTERROGATION OSV.DEV
-# =============================================================================
-
-def _interroger_osv_v2(nom_package: str, version: str) -> tuple:
-    """
-    Interroge OSV.dev.
+    Paramètre :
+        image (str) : nom complet de l'image Docker
+                      ex: "nginx:1.21", "weaveworksdemos/front-end:0.3.12"
 
     Retourne :
-        (dict_résultat, True)  → package connu avec ses CVE
-        (None, False)          → package non trouvé ou erreur réseau
+        dict : {
+            "CRITICAL" : int,
+            "HIGH"     : int,
+            "MEDIUM"   : int,
+            "LOW"      : int,
+            "source"   : str,   # "trivy" ou code d'erreur
+            "erreur"   : bool
+        }
     """
-    payload = {
-        "package": {
-            "name"     : nom_package,
-            "ecosystem": "npm"
+
+    # -------------------------------------------------------------------------
+    # Étape 1 — Vérification de l'installation Trivy
+    # -------------------------------------------------------------------------
+    if not shutil.which("trivy"):
+        logger.warning(
+            "Trivy introuvable dans le PATH — score CVE = 100 (défaut conservateur). "
+            "Installez Trivy : https://github.com/aquasecurity/trivy/releases"
+        )
+        return _resultat_erreur("trivy_absent")
+
+    # -------------------------------------------------------------------------
+    # Étape 2 — Lancement du scan Trivy
+    # Flags utilisés :
+    #   --format json   : sortie JSON structurée sur stdout
+    #   --quiet         : supprime les logs de progression (hors JSON)
+    #   --timeout       : timeout par image (configurable dans settings.py)
+    # -------------------------------------------------------------------------
+    logger.debug(f"Trivy scan : {image}")
+
+    cmd = [
+        "trivy", "image",
+        "--format",  "json",
+        "--quiet",
+        "--timeout", f"{TRIVY_TIMEOUT}s",
+        image,
+    ]
+
+    try:
+        proc = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            timeout=TRIVY_TIMEOUT + 15,
+        )
+        stdout = proc.stdout.decode("utf-8", errors="replace")
+        stderr = proc.stderr.decode("utf-8", errors="replace")
+
+    except subprocess.TimeoutExpired:
+        logger.warning(f"Trivy timeout ({TRIVY_TIMEOUT}s) pour '{image}'")
+        return _resultat_erreur("trivy_timeout")
+
+    except FileNotFoundError:
+        logger.error("Commande 'trivy' introuvable — vérifiez l'installation")
+        return _resultat_erreur("trivy_absent")
+
+    except Exception as e:
+        logger.error(f"Erreur inattendue lors du scan Trivy de '{image}' : {e}")
+        return _resultat_erreur("trivy_erreur")
+
+    # -------------------------------------------------------------------------
+    # Étape 3 — Vérification du code de retour
+    # Trivy retourne 0 (aucune vuln) ou 1 (vulnérabilités trouvées)
+    # Un code > 1 indique une erreur réelle (image inexistante, etc.)
+    # -------------------------------------------------------------------------
+    if proc.returncode > 1:
+        logger.warning(
+            f"Trivy erreur (code {proc.returncode}) pour '{image}' "
+            f"— {stderr.strip()[:300]}"
+        )
+        return _resultat_erreur("trivy_echec")
+
+    # -------------------------------------------------------------------------
+    # Étape 4 — Parse du JSON et comptage par sévérité
+    # -------------------------------------------------------------------------
+    return _parser_sortie_trivy(stdout, image)
+
+
+# =============================================================================
+# PARSEUR DE LA SORTIE JSON TRIVY
+# =============================================================================
+
+def _parser_sortie_trivy(stdout: str, image: str) -> dict:
+    """
+    Parse le JSON produit par 'trivy image --format json'.
+
+    Structure JSON Trivy :
+    {
+      "Results": [
+        {
+          "Target": "nginx:1.21 (debian 11.6)",
+          "Vulnerabilities": [
+            { "Severity": "HIGH", "VulnerabilityID": "CVE-2021-XXXXX", ... },
+            ...
+          ]
         },
-        "version": version
+        ...
+      ]
     }
 
-    for tentative in range(1, API_RETRIES + 1):
-        try:
-            response = requests.post(
-                OSV_API_URL,
-                json=payload,
-                timeout=API_TIMEOUT
-            )
-
-            if response.status_code == 200:
-                data  = response.json()
-                vulns = data.get("vulns", [])
-
-                if len(vulns) == 0 and "vulns" not in data:
-                    logger.debug(
-                        f"Package '{nom_package}' absent de OSV.dev "
-                        f"(probablement propriétaire)"
-                    )
-                    return (None, False)
-
-                compteurs = _parser_reponse_osv(data)
-                return (compteurs, True)
-
-            elif response.status_code == 404:
-                logger.debug(f"Package '{nom_package}' non trouvé dans OSV.dev (404)")
-                return (None, False)
-
-            else:
-                logger.debug(
-                    f"OSV.dev tentative {tentative}/{API_RETRIES} "
-                    f"→ HTTP {response.status_code}"
-                )
-
-        except requests.Timeout:
-            logger.debug(f"OSV.dev timeout (tentative {tentative}/{API_RETRIES})")
-            if tentative < API_RETRIES:
-                time.sleep(2 ** tentative)
-
-        except requests.ConnectionError:
-            logger.debug(f"OSV.dev connexion refusée (tentative {tentative}/{API_RETRIES})")
-            if tentative < API_RETRIES:
-                time.sleep(2 ** tentative)
-
-        except Exception as e:
-            logger.debug(f"OSV.dev erreur inattendue : {e}")
-            break
-
-    return (None, False)
-
-
-def _parser_reponse_osv(data: dict) -> dict:
-    """Parse la réponse JSON d'OSV.dev et compte les CVE par sévérité."""
-    compteurs = _resultat_vide()
-    vulns     = data.get("vulns", [])
-
-    for vuln in vulns:
-        severite = _extraire_severite_osv(vuln)
-        if severite in compteurs:
-            compteurs[severite] += 1
-
-    return compteurs
-
-
-def _extraire_severite_osv(vuln: dict) -> str:
-    """Extrait le niveau de sévérité d'une vulnérabilité OSV."""
-    for sev in vuln.get("severity", []):
-        if sev.get("type") == "CVSS_V3":
-            score = float(sev.get("score", 0))
-            return _cvss_score_vers_niveau(score)
-
-    sev_texte = vuln.get("database_specific", {}).get("severity", "")
-    if sev_texte.upper() in ("CRITICAL", "HIGH", "MEDIUM", "LOW"):
-        return sev_texte.upper()
-
-    return "LOW"
-
-
-# =============================================================================
-# INTERROGATION NVD NIST (FALLBACK)
-# =============================================================================
-
-def _interroger_nvd(nom_package: str, version: str) -> dict:
+    Retourne :
+        dict : compteurs par sévérité avec source="trivy" et erreur=False
     """
-    Interroge l'API NVD NIST comme source de secours.
-    Couvre les logiciels open source ET propriétaires.
-    Limite de débit : 5 requêtes / 30 secondes.
-    """
-    compteurs = _resultat_vide()
+    if not stdout.strip():
+        logger.warning(f"Trivy: sortie vide pour '{image}' (image non trouvée localement?)")
+        return _resultat_erreur("trivy_vide")
 
-    for niveau in ("CRITICAL", "HIGH", "MEDIUM", "LOW"):
-        for tentative in range(1, API_RETRIES + 1):
-            try:
-                params = {
-                    "keywordSearch" : nom_package,
-                    "cvssV3Severity": niveau
-                }
-                response = requests.get(
-                    NVD_API_URL,
-                    params=params,
-                    timeout=API_TIMEOUT
-                )
+    try:
+        data = json.loads(stdout)
+    except json.JSONDecodeError as e:
+        logger.warning(f"Trivy: JSON invalide pour '{image}' : {e}")
+        return _resultat_erreur("trivy_json_invalide")
 
-                if response.status_code == 200:
-                    data = response.json()
-                    compteurs[niveau] = data.get("totalResults", 0)
-                    time.sleep(0.6)  # Respecter la limite de débit NVD
-                    break
+    compteurs = _resultat_vide("trivy")
 
-                elif response.status_code == 429:
-                    logger.debug("NVD rate limit — pause 30s")
-                    time.sleep(30)
+    for resultat in data.get("Results", []):
+        vulns = resultat.get("Vulnerabilities") or []
+        for vuln in vulns:
+            severite = vuln.get("Severity", "").upper()
+            if severite in ("CRITICAL", "HIGH", "MEDIUM", "LOW"):
+                compteurs[severite] += 1
 
-                else:
-                    logger.debug(
-                        f"NVD tentative {tentative}/{API_RETRIES} "
-                        f"→ HTTP {response.status_code}"
-                    )
-
-            except requests.Timeout:
-                logger.debug(f"NVD timeout niveau {niveau} (tentative {tentative})")
-                if tentative < API_RETRIES:
-                    time.sleep(2 ** tentative)
-
-            except requests.ConnectionError:
-                logger.debug("NVD connexion refusée")
-                return None
-
-            except Exception as e:
-                logger.debug(f"NVD erreur inattendue : {e}")
-                return None
+    total = sum(compteurs[k] for k in ("CRITICAL", "HIGH", "MEDIUM", "LOW"))
+    logger.info(
+        f"  {image:<40} "
+        f"CRITICAL={compteurs['CRITICAL']:>3}  "
+        f"HIGH={compteurs['HIGH']:>3}  "
+        f"MEDIUM={compteurs['MEDIUM']:>3}  "
+        f"LOW={compteurs['LOW']:>3}  "
+        f"(total: {total})  [source: Trivy]"
+    )
 
     return compteurs
 
 
 # =============================================================================
-# FONCTIONS UTILITAIRES
-# =============================================================================
-
-def _parser_image(image: str) -> tuple:
-    """
-    Décompose une image Docker en nom de package et version.
-
-    Exemples :
-        "weaveworksdemos/front-end:0.3.12" → ("front-end", "0.3.12")
-        "mongo:3.4"                         → ("mongo", "3.4")
-        "nginx"                             → ("nginx", "latest")
-    """
-    if "/" in image:
-        parties = image.split("/")
-        image   = parties[-1]
-
-    if ":" in image:
-        nom, version = image.split(":", 1)
-    else:
-        nom     = image
-        version = "latest"
-
-    return nom, version
-
-
-def _cvss_score_vers_niveau(score: float) -> str:
-    """Convertit un score CVSS numérique en niveau textuel (standard CVSS v3.1)."""
-    if score >= 9.0:
-        return "CRITICAL"
-    elif score >= 7.0:
-        return "HIGH"
-    elif score >= 4.0:
-        return "MEDIUM"
-    elif score > 0.0:
-        return "LOW"
-    return "LOW"
-
-
-# =============================================================================
-# TEST RAPIDE
+# TEST RAPIDE — Exécution directe du fichier
 # python cve/cve_client.py
 # =============================================================================
 
 if __name__ == "__main__":
     images_test = [
-        "weaveworksdemos/front-end:0.3.12",
+        "nginx:1.21",
         "mongo:3.4",
-        "redis:alpine"
+        "redis:alpine",
+        "node:14.17.0-alpine",
     ]
 
+    print("=== Test Trivy CVE Scanner ===\n")
+
     for image in images_test:
-        print(f"\nImage : {image}")
-        resultat = interroger_cve_par_image(image)
-        print(f"  Source   : {resultat['source']}")
-        print(f"  CRITICAL : {resultat['CRITICAL']}")
-        print(f"  HIGH     : {resultat['HIGH']}")
-        print(f"  MEDIUM   : {resultat['MEDIUM']}")
-        print(f"  LOW      : {resultat['LOW']}")
+        print(f"Image : {image}")
+        r = interroger_cve_par_image(image)
+        if r["erreur"]:
+            print(f"  ⚠ Erreur : {r['source']}")
+        else:
+            print(f"  CRITICAL : {r['CRITICAL']}")
+            print(f"  HIGH     : {r['HIGH']}")
+            print(f"  MEDIUM   : {r['MEDIUM']}")
+            print(f"  LOW      : {r['LOW']}")
+            print(f"  Source   : {r['source']}")
+        print()

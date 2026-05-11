@@ -18,17 +18,14 @@ logger = get_logger(__name__)
 # FONCTION PRINCIPALE — PARSING DU DOCKER-COMPOSE.YML
 # =============================================================================
 
-def parser_docker_compose() -> dict:
+def parser_docker_compose(file_path: str = None) -> dict:
     """
     Lit le fichier docker-compose.yml et extrait les informations
     sécuritaires de chaque service.
 
-    Algorithme — parseur à extraction sélective :
-        1. Charger le fichier YAML en mémoire (PyYAML)
-        2. Pour chaque service, extraire les attributs sécuritaires
-        3. Normaliser chaque service en un dictionnaire standard
-        4. Identifier les services exposés vers l'extérieur
-        5. Retourner la structure complète
+    Paramètres :
+        file_path (str) : chemin vers un docker-compose.yml quelconque.
+                          Si None, utilise le chemin par défaut (DOCKER_COMPOSE_PATH).
 
     Retourne :
         dict : {
@@ -39,15 +36,17 @@ def parser_docker_compose() -> dict:
         }
     """
 
+    chemin = file_path or DOCKER_COMPOSE_PATH
+
     log_separateur(logger, "Parsing Docker Compose")
-    logger.info(f"Lecture de : {DOCKER_COMPOSE_PATH}")
+    logger.info(f"Lecture de : {chemin}")
 
     # -------------------------------------------------------------------------
     # ÉTAPE 1 — Chargement du fichier YAML
     # yaml.safe_load() est utilisé (pas yaml.load()) pour des raisons
     # de sécurité : safe_load interdit l'exécution de code Python embarqué
     # -------------------------------------------------------------------------
-    contenu_yaml = _charger_yaml(DOCKER_COMPOSE_PATH)
+    contenu_yaml = _charger_yaml(chemin)
     if contenu_yaml is None:
         return None
 

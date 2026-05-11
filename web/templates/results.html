@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MicroSecScore — Résultats</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body { background: #f0f2f5; }
+    .hero { background: linear-gradient(135deg, #1a237e, #283593); color: white; padding: 2rem 0 1.5rem; }
+    .card-result { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+    .score-badge {
+      font-size: 2.5rem;
+      font-weight: 700;
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto;
+    }
+    .niveau-SAIN     { background: #e8f5e9; color: #2e7d32; }
+    .niveau-STABLE   { background: #fff9c4; color: #f57f17; }
+    .niveau-DÉGRADÉ  { background: #fff3e0; color: #e65100; }
+    .niveau-CRITIQUE { background: #ffebee; color: #b71c1c; }
+    .niveau-NA       { background: #eceff1; color: #546e7a; }
+    .badge-SAIN      { background-color: #2e7d32 !important; }
+    .badge-STABLE    { background-color: #f9a825 !important; color:#000 !important; }
+    .badge-DÉGRADÉ   { background-color: #e65100 !important; }
+    .badge-CRITIQUE  { background-color: #b71c1c !important; }
+    .badge-NA        { background-color: #90a4ae !important; }
+    .graph-frame { width: 100%; height: 550px; border: none; border-radius: 8px; }
+    .btn-back { color: #1a237e; border-color: #1a237e; }
+    .btn-back:hover { background: #1a237e; color: white; }
+    footer { color: #78909c; font-size: .85rem; }
+    table th { background: #e8eaf6; }
+  </style>
+</head>
+<body>
+
+<div class="hero text-center">
+  <h1 class="fw-bold mb-1">MicroSecScore</h1>
+  <p class="mb-0 opacity-75">Résultats de l'analyse — session <code class="text-white">{{ session_id }}</code></p>
+</div>
+
+<div class="container py-4" style="max-width: 960px">
+
+  <!-- ── Cartes récapitulatives ─────────────────────────────────── -->
+  <div class="row g-3 mb-4">
+
+    <div class="col-md-4">
+      <div class="card card-result h-100 text-center p-3">
+        <div class="text-muted small mb-2">Score global</div>
+        {% set nclass = "niveau-" + niveau_global.replace("É","É") %}
+        <div class="score-badge {{ nclass }} mx-auto mb-2">
+          {% if score_global is not none %}{{ score_global }}{% else %}—{% endif %}
+        </div>
+        <div class="fw-bold fs-5">{{ niveau_global }}</div>
+        <div class="text-muted small">sur 100</div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-result h-100 text-center p-3 d-flex flex-column justify-content-center">
+        <div class="text-muted small mb-1">Services analysés</div>
+        <div class="fw-bold fs-1 text-primary">{{ nb_services }}</div>
+        <div class="text-muted small">microservices</div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card card-result h-100 p-3 d-flex flex-column justify-content-center">
+        <div class="text-muted small mb-2">Télécharger les résultats</div>
+        <a href="/results/{{ session_id }}/download/csv"
+           class="btn btn-outline-primary btn-sm mb-2">
+          ⬇ security_scores.csv
+        </a>
+        <a href="/results/{{ session_id }}/download/json"
+           class="btn btn-outline-secondary btn-sm">
+          ⬇ graph_G0.json
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Graphe interactif ───────────────────────────────────────── -->
+  {% if has_graph %}
+  <div class="card card-result mb-4">
+    <div class="card-header bg-white border-0 pt-3 px-4 fw-semibold">
+      Graphe de sécurité G0 — interactif
+      <small class="text-muted fw-normal ms-2">
+        Vert = SAIN · Jaune = STABLE · Orange = DÉGRADÉ · Rouge = CRITIQUE
+      </small>
+    </div>
+    <div class="card-body p-0">
+      <iframe src="/results/{{ session_id }}/graph" class="graph-frame"></iframe>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- ── Tableau des scores ──────────────────────────────────────── -->
+  <div class="card card-result mb-4">
+    <div class="card-header bg-white border-0 pt-3 px-4 fw-semibold">
+      Scores de sécurité par service
+    </div>
+    <div class="card-body p-0">
+      {% if scores %}
+      <div class="table-responsive">
+        <table class="table table-hover mb-0 align-middle">
+          <thead>
+            <tr>
+              <th class="ps-4">Service</th>
+              <th>Image</th>
+              <th class="text-center">Score CVE</th>
+              <th class="text-center">Criticité</th>
+              <th class="text-center">Niveau</th>
+              <th>Ports exposés</th>
+              <th class="text-center">Privilégié</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in scores %}
+            {% set niv = s.get("niveau", "N/A").replace("DEGRADE","DÉGRADÉ") %}
+            <tr>
+              <td class="ps-4 fw-medium">{{ s.get("service", "—") }}</td>
+              <td class="text-muted small">{{ s.get("image", "—") }}</td>
+              <td class="text-center">
+                {% set score = s.get("score_cve", "N/A") %}
+                {% if score != "N/A" and score != "" %}
+                  {% set sv = score | float %}
+                  <span class="fw-bold {% if sv >= 90 %}text-success{% elif sv >= 70 %}text-warning{% elif sv >= 50 %}text-orange{% else %}text-danger{% endif %}">
+                    {{ score }}
+                  </span>
+                {% else %}
+                  <span class="text-muted">N/A</span>
+                {% endif %}
+              </td>
+              <td class="text-center">{{ s.get("criticite", "—") }}</td>
+              <td class="text-center">
+                <span class="badge badge-{{ niv }} rounded-pill px-2">{{ niv }}</span>
+              </td>
+              <td class="small">{{ s.get("ports", "[]") }}</td>
+              <td class="text-center">
+                {% if s.get("privileged", "False") == "True" %}
+                  <span class="badge bg-danger">Oui</span>
+                {% else %}
+                  <span class="text-muted small">Non</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="p-4 text-muted">Aucune donnée disponible.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- ── Navigation ─────────────────────────────────────────────── -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <a href="/" class="btn btn-outline-primary btn-back">← Analyser une autre application</a>
+    <span class="text-muted small">Session : {{ session_id }}</span>
+  </div>
+
+  <footer class="text-center pb-3 footer">
+    MicroSecScore — DJOUYAGUENG SADE CEDRIC — Master II RSD — Université de Dschang
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

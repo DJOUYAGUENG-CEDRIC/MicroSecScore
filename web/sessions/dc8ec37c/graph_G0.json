@@ -1,0 +1,251 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "nom": "G0",
+    "version": "1.0",
+    "horodatage": "2026-05-04T07:10:25.955839",
+    "nb_noeuds": 14,
+    "nb_aretes": 13,
+    "noeuds_exposes": [
+      "front-end",
+      "edge-router"
+    ]
+  },
+  "nodes": [
+    {
+      "image": "weaveworksdemos/front-end:0.3.12",
+      "ports_exposes": [
+        80
+      ],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 48.0,
+      "criticite": 4,
+      "niveau": "CRITIQUE",
+      "type_noeud": "service",
+      "id": "front-end"
+    },
+    {
+      "image": "weaveworksdemos/edge-router:0.1.1",
+      "ports_exposes": [
+        8080
+      ],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 76.0,
+      "criticite": 2,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "edge-router"
+    },
+    {
+      "image": "weaveworksdemos/catalogue:0.3.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 68.0,
+      "criticite": 3,
+      "niveau": "DEGRADE",
+      "type_noeud": "service",
+      "id": "catalogue"
+    },
+    {
+      "image": "weaveworksdemos/catalogue-db:0.3.0",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 50.0,
+      "criticite": 3,
+      "niveau": "DEGRADE",
+      "type_noeud": "service",
+      "id": "catalogue-db"
+    },
+    {
+      "image": "weaveworksdemos/orders:0.4.7",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 76.0,
+      "criticite": 3,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "orders"
+    },
+    {
+      "image": "mongo:3.4",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 24.0,
+      "criticite": 3,
+      "niveau": "CRITIQUE",
+      "type_noeud": "service",
+      "id": "orders-db"
+    },
+    {
+      "image": "weaveworksdemos/cart:0.4.8",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 86.0,
+      "criticite": 3,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "cart"
+    },
+    {
+      "image": "redis:alpine",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 92.0,
+      "criticite": 3,
+      "niveau": "SAIN",
+      "type_noeud": "service",
+      "id": "cart-db"
+    },
+    {
+      "image": "weaveworksdemos/payment:0.4.3",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 14.0,
+      "criticite": 2,
+      "niveau": "CRITIQUE",
+      "type_noeud": "service",
+      "id": "payment"
+    },
+    {
+      "image": "weaveworksdemos/user:0.4.7",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 62.0,
+      "criticite": 4,
+      "niveau": "DEGRADE",
+      "type_noeud": "service",
+      "id": "user"
+    },
+    {
+      "image": "weaveworksdemos/user-db:0.4.0",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 42.0,
+      "criticite": 3,
+      "niveau": "CRITIQUE",
+      "type_noeud": "service",
+      "id": "user-db"
+    },
+    {
+      "image": "weaveworksdemos/shipping:0.4.8",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 78.0,
+      "criticite": 2,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "shipping"
+    },
+    {
+      "image": "rabbitmq:3.6.8",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 60.0,
+      "criticite": 3,
+      "niveau": "DEGRADE",
+      "type_noeud": "service",
+      "id": "rabbitmq"
+    },
+    {
+      "type_noeud": "attaquant_externe",
+      "score_cve": null,
+      "criticite": 0,
+      "niveau": "EXTERNE",
+      "id": "Outside"
+    }
+  ],
+  "edges": [
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "front-end",
+      "target": "catalogue"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "front-end",
+      "target": "orders"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "front-end",
+      "target": "cart"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "front-end",
+      "target": "user"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "edge-router",
+      "target": "front-end"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "catalogue",
+      "target": "catalogue-db"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "orders",
+      "target": "orders-db"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "orders",
+      "target": "rabbitmq"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "cart",
+      "target": "cart-db"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "user",
+      "target": "user-db"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "shipping",
+      "target": "rabbitmq"
+    },
+    {
+      "type_arete": "PEUT_ATTAQUER",
+      "autorise": false,
+      "source": "Outside",
+      "target": "front-end"
+    },
+    {
+      "type_arete": "PEUT_ATTAQUER",
+      "autorise": false,
+      "source": "Outside",
+      "target": "edge-router"
+    }
+  ]
+}

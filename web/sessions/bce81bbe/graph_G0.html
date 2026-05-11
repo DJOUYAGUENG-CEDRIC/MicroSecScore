@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 750px;
+                 background-color: #F8F9FA;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#B71C1C", "font": {"color": "#212121"}, "id": "api-gateway", "label": "api-gateway\n0.0/100", "shape": "dot", "size": 40, "title": "\u003cb\u003eapi-gateway\u003c/b\u003e\u003cbr\u003eImage     : nginx:1.19.0\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 5\u003cbr\u003eNiveau    : CRITIQUE\u003cbr\u003ePorts expos\u00e9s : [30080]"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "auth-service", "label": "auth-service\n0.0/100", "shape": "dot", "size": 35, "title": "\u003cb\u003eauth-service\u003c/b\u003e\u003cbr\u003eImage     : node:14.17.0-alpine\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 4\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "account-service", "label": "account-service\n0.0/100", "shape": "dot", "size": 35, "title": "\u003cb\u003eaccount-service\u003c/b\u003e\u003cbr\u003eImage     : python:3.8.0-slim\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 4\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "transaction-service", "label": "transaction-service\n11.0/100", "shape": "dot", "size": 40, "title": "\u003cb\u003etransaction-service\u003c/b\u003e\u003cbr\u003eImage     : openjdk:11.0.8-jre-slim\u003cbr\u003eScore CVE : 11.0/100\u003cbr\u003eCriticit\u00e9 : 5\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "notification-service", "label": "notification-service\n0.0/100", "shape": "dot", "size": 30, "title": "\u003cb\u003enotification-service\u003c/b\u003e\u003cbr\u003eImage     : python:3.7.0-slim\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 3\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "fraud-detection", "label": "fraud-detection\n0.0/100", "shape": "dot", "size": 25, "title": "\u003cb\u003efraud-detection\u003c/b\u003e\u003cbr\u003eImage     : python:3.6.0-slim\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 2\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "admin-dashboard", "label": "admin-dashboard\n0.0/100", "shape": "dot", "size": 20, "title": "\u003cb\u003eadmin-dashboard\u003c/b\u003e\u003cbr\u003eImage     : node:12.18.0-alpine\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 1\u003cbr\u003eNiveau    : CRITIQUE\u003cbr\u003ePorts expos\u00e9s : [30880]"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "user-db", "label": "user-db\n0.0/100", "shape": "dot", "size": 30, "title": "\u003cb\u003euser-db\u003c/b\u003e\u003cbr\u003eImage     : postgres:9.6.0\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 3\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "account-db", "label": "account-db\n0.0/100", "shape": "dot", "size": 25, "title": "\u003cb\u003eaccount-db\u003c/b\u003e\u003cbr\u003eImage     : postgres:11.5.0\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 2\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "transaction-db", "label": "transaction-db\n0.0/100", "shape": "dot", "size": 30, "title": "\u003cb\u003etransaction-db\u003c/b\u003e\u003cbr\u003eImage     : mongo:4.4.0\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 3\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "redis-cache", "label": "redis-cache\n0.0/100", "shape": "dot", "size": 25, "title": "\u003cb\u003eredis-cache\u003c/b\u003e\u003cbr\u003eImage     : redis:5.0.0-alpine\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 2\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#B71C1C", "font": {"color": "#212121"}, "id": "message-broker", "label": "message-broker\n0.0/100", "shape": "dot", "size": 30, "title": "\u003cb\u003emessage-broker\u003c/b\u003e\u003cbr\u003eImage     : rabbitmq:3.7.0-management\u003cbr\u003eScore CVE : 0.0/100\u003cbr\u003eCriticit\u00e9 : 3\u003cbr\u003eNiveau    : CRITIQUE"}, {"color": "#424242", "font": {"color": "#212121"}, "id": "Outside", "label": "Outside", "shape": "dot", "size": 20, "title": "\u003cb\u003eOutside\u003c/b\u003e\u003cbr\u003eImage     : N/A\u003cbr\u003eScore CVE : None/100\u003cbr\u003eCriticit\u00e9 : 0\u003cbr\u003eNiveau    : EXTERNE"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#1565C0", "dashes": false, "from": "api-gateway", "label": "", "title": "DEPENDS_ON", "to": "auth-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "api-gateway", "label": "", "title": "DEPENDS_ON", "to": "account-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "api-gateway", "label": "", "title": "DEPENDS_ON", "to": "transaction-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "auth-service", "label": "", "title": "DEPENDS_ON", "to": "api-gateway", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "account-service", "label": "", "title": "DEPENDS_ON", "to": "api-gateway", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "account-service", "label": "", "title": "DEPENDS_ON", "to": "auth-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "transaction-service", "label": "", "title": "DEPENDS_ON", "to": "api-gateway", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "transaction-service", "label": "", "title": "DEPENDS_ON", "to": "account-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "notification-service", "label": "", "title": "DEPENDS_ON", "to": "transaction-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "user-db", "label": "", "title": "DEPENDS_ON", "to": "auth-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "account-db", "label": "", "title": "DEPENDS_ON", "to": "account-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "transaction-db", "label": "", "title": "DEPENDS_ON", "to": "transaction-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "transaction-db", "label": "", "title": "DEPENDS_ON", "to": "fraud-detection", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "redis-cache", "label": "", "title": "DEPENDS_ON", "to": "auth-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "message-broker", "label": "", "title": "DEPENDS_ON", "to": "transaction-service", "width": 1.5}, {"arrows": "to", "color": "#1565C0", "dashes": false, "from": "message-broker", "label": "", "title": "DEPENDS_ON", "to": "notification-service", "width": 1.5}, {"arrows": "to", "color": "#C62828", "dashes": true, "from": "Outside", "label": "PEUT_ATTAQUER", "title": "PEUT_ATTAQUER", "to": "api-gateway", "width": 3}, {"arrows": "to", "color": "#C62828", "dashes": true, "from": "Outside", "label": "PEUT_ATTAQUER", "title": "PEUT_ATTAQUER", "to": "admin-dashboard", "width": 3}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 150, "springConstant": 0.08}, "solver": "forceAtlas2Based", "stabilization": {"iterations": 150}}, "edges": {"arrows": {"to": {"enabled": true, "scaleFactor": 1.2}}, "smooth": {"type": "dynamic"}}, "interaction": {"hover": true, "tooltipDelay": 200, "zoomView": true}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

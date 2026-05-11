@@ -1,0 +1,270 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "nom": "G0",
+    "version": "1.0",
+    "horodatage": "2026-05-08T20:19:41.366629",
+    "nb_noeuds": 13,
+    "nb_aretes": 18,
+    "noeuds_exposes": [
+      "api-gateway",
+      "admin-dashboard"
+    ]
+  },
+  "nodes": [
+    {
+      "image": "nginx:1.19.0",
+      "ports_exposes": [
+        30080
+      ],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 5,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "api-gateway"
+    },
+    {
+      "image": "node:14.17.0-alpine",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 4,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "auth-service"
+    },
+    {
+      "image": "python:3.8.0-slim",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 4,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "account-service"
+    },
+    {
+      "image": "openjdk:11.0.8-jre-slim",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 5,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "transaction-service"
+    },
+    {
+      "image": "python:3.7.0-slim",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 3,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "notification-service"
+    },
+    {
+      "image": "python:3.6.0-slim",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 2,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "fraud-detection"
+    },
+    {
+      "image": "node:12.18.0-alpine",
+      "ports_exposes": [
+        30880
+      ],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "admin-dashboard"
+    },
+    {
+      "image": "postgres:9.6.0",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 42.0,
+      "criticite": 3,
+      "niveau": "CRITIQUE",
+      "type_noeud": "service",
+      "id": "user-db"
+    },
+    {
+      "image": "postgres:11.5.0",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 2,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "account-db"
+    },
+    {
+      "image": "mongo:4.4.0",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 3,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "transaction-db"
+    },
+    {
+      "image": "redis:5.0.0-alpine",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 2,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "redis-cache"
+    },
+    {
+      "image": "rabbitmq:3.7.0-management",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 3,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "message-broker"
+    },
+    {
+      "type_noeud": "attaquant_externe",
+      "score_cve": null,
+      "criticite": 0,
+      "niveau": "EXTERNE",
+      "id": "Outside"
+    }
+  ],
+  "edges": [
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "api-gateway",
+      "target": "auth-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "api-gateway",
+      "target": "account-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "api-gateway",
+      "target": "transaction-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "auth-service",
+      "target": "api-gateway"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "account-service",
+      "target": "api-gateway"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "account-service",
+      "target": "auth-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "transaction-service",
+      "target": "api-gateway"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "transaction-service",
+      "target": "account-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "notification-service",
+      "target": "transaction-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "user-db",
+      "target": "auth-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "account-db",
+      "target": "account-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "transaction-db",
+      "target": "transaction-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "transaction-db",
+      "target": "fraud-detection"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "redis-cache",
+      "target": "auth-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "message-broker",
+      "target": "transaction-service"
+    },
+    {
+      "type_arete": "DEPENDS_ON",
+      "autorise": true,
+      "source": "message-broker",
+      "target": "notification-service"
+    },
+    {
+      "type_arete": "PEUT_ATTAQUER",
+      "autorise": false,
+      "source": "Outside",
+      "target": "api-gateway"
+    },
+    {
+      "type_arete": "PEUT_ATTAQUER",
+      "autorise": false,
+      "source": "Outside",
+      "target": "admin-dashboard"
+    }
+  ]
+}

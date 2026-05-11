@@ -6,9 +6,11 @@
 # Auteur  : DJOUYAGUENG SADE CEDRIC — Master II RSD — Université de Dschang
 # =============================================================================
 
+import os
+import yaml
 from kubernetes import client, config as k8s_config
 
-from config.settings import K8S_NAMESPACE
+from config.settings import K8S_NAMESPACE, K8S_DIR
 from utils.logger import get_logger, log_separateur, log_resultat
 
 logger = get_logger(__name__)
@@ -307,6 +309,191 @@ def _extraire_depends_on_depuis_policies(nom_service: str,
                         depends_on.append(source_app)
 
     return depends_on
+
+
+# =============================================================================
+# PARSEUR BASÉ FICHIERS — Lecture de manifestes YAML locaux
+# Alternative à parser_kubernetes() qui nécessite un cluster actif.
+# Lit deployments.yaml, services.yaml et networkpolicies.yaml depuis un dossier.
+# =============================================================================
+
+def parser_kubernetes_fichiers(k8s_dir: str = None) -> dict:
+    """
+    Analyse des manifestes Kubernetes YAML locaux sans connexion au cluster.
+
+    Paramètres :
+        k8s_dir (str) : dossier contenant deployments.yaml, services.yaml
+                        et optionnellement networkpolicies.yaml.
+                        Si None, utilise K8S_DIR (data/input/k8s/).
+
+    Retourne :
+        dict : même format que parser_kubernetes()
+    """
+    dossier = k8s_dir or K8S_DIR
+
+    log_separateur(logger, "Parsing Kubernetes (fichiers YAML)")
+    logger.info(f"Dossier source : {dossier}")
+
+    deployments      = _lire_deployments_yaml(dossier)
+    if deployments is None:
+        return None
+
+    services_k8s     = _lire_services_yaml(dossier)
+    network_policies = _lire_networkpolicies_yaml(dossier)
+
+    services         = {}
+    services_exposes = []
+    total_aretes     = 0
+
+    for nom, config_deploy in deployments.items():
+        service_k8s   = services_k8s.get(nom, {})
+        depends_on    = _extraire_depends_on_depuis_policies_yaml(nom, network_policies)
+        ports_exposes = service_k8s.get("ports_exposes", [])
+
+        descriptor = {
+            "nom"          : nom,
+            "image"        : config_deploy.get("image", "unknown"),
+            "ports_exposes": ports_exposes,
+            "depends_on"   : depends_on,
+            "networks"     : [K8S_NAMESPACE],
+            "privileged"   : config_deploy.get("privileged", False),
+            "docker_sock"  : config_deploy.get("docker_sock", False),
+            "score_cve"    : None,
+            "criticite"    : None
+        }
+
+        services[nom]  = descriptor
+        total_aretes  += len(depends_on)
+
+        if ports_exposes:
+            services_exposes.append(nom)
+            logger.debug(f"Service exposé : {nom} → ports {ports_exposes}")
+
+    total_aretes += len(services_exposes)
+    total_noeuds  = len(services) + 1
+
+    log_resultat(logger, "Deployments détectés", len(services))
+    log_resultat(logger, "Services exposés",     f"{services_exposes}")
+    log_resultat(logger, "Noeuds dans G0",       f"{total_noeuds} (dont Outside)")
+    log_resultat(logger, "Arêtes détectées",     total_aretes)
+
+    return {
+        "services"        : services,
+        "services_exposes": services_exposes,
+        "total_noeuds"    : total_noeuds,
+        "total_aretes"    : total_aretes
+    }
+
+
+def _extraire_depends_on_depuis_policies_yaml(nom_service: str, policies: list) -> list:
+    """
+    Variante de _extraire_depends_on_depuis_policies pour des dicts YAML bruts
+    (issus de yaml.safe_load_all) plutôt que des objets K8s API.
+    """
+    depends_on = []
+    for policy in policies:
+        spec     = policy.get("spec", {})
+        selector = spec.get("podSelector", {}).get("matchLabels", {})
+        if selector.get("app") != nom_service:
+            continue
+        for ingress_rule in spec.get("ingress", []):
+            for source in ingress_rule.get("from", []):
+                source_app = source.get("podSelector", {}).get("matchLabels", {}).get("app")
+                if source_app and source_app not in depends_on:
+                    depends_on.append(source_app)
+    return depends_on
+
+
+def _lire_deployments_yaml(dossier: str) -> dict:
+    chemin = os.path.join(dossier, "deployments.yaml")
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            docs = list(yaml.safe_load_all(f))
+    except FileNotFoundError:
+        logger.error(f"deployments.yaml introuvable : {chemin}")
+        return None
+    except yaml.YAMLError as e:
+        logger.error(f"Erreur YAML dans deployments.yaml : {e}")
+        return None
+
+    deployments = {}
+    for doc in docs:
+        if not doc or doc.get("kind") != "Deployment":
+            continue
+        nom      = doc["metadata"]["name"]
+        conteneurs = doc.get("spec", {}).get("template", {}).get("spec", {}).get("containers", [])
+        if not conteneurs:
+            continue
+        conteneur  = conteneurs[0]
+        image      = conteneur.get("image", "unknown")
+
+        privileged  = False
+        sec_ctx     = conteneur.get("securityContext", {})
+        if sec_ctx:
+            privileged = sec_ctx.get("privileged", False)
+
+        docker_sock = False
+        for vol in doc.get("spec", {}).get("template", {}).get("spec", {}).get("volumes", []):
+            host_path = vol.get("hostPath", {}).get("path", "")
+            if "docker.sock" in host_path:
+                docker_sock = True
+                logger.warning(f"[RISQUE] Deployment '{nom}' monte docker.sock")
+
+        deployments[nom] = {"image": image, "privileged": privileged, "docker_sock": docker_sock}
+
+    logger.debug(f"{len(deployments)} deployments trouvés dans {chemin}")
+    return deployments
+
+
+def _lire_services_yaml(dossier: str) -> dict:
+    chemin = os.path.join(dossier, "services.yaml")
+    services = {}
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            docs = list(yaml.safe_load_all(f))
+    except FileNotFoundError:
+        logger.warning(f"services.yaml introuvable : {chemin} — aucun port exposé")
+        return services
+    except yaml.YAMLError as e:
+        logger.error(f"Erreur YAML dans services.yaml : {e}")
+        return services
+
+    for doc in docs:
+        if not doc or doc.get("kind") != "Service":
+            continue
+        nom          = doc["metadata"]["name"]
+        type_service = doc.get("spec", {}).get("type", "ClusterIP")
+        ports_exposes = []
+        if type_service in ("NodePort", "LoadBalancer"):
+            for port in doc.get("spec", {}).get("ports", []):
+                node_port = port.get("nodePort") or port.get("port")
+                if node_port:
+                    ports_exposes.append(node_port)
+        services[nom] = {"ports_exposes": ports_exposes}
+
+    logger.debug(f"{len(services)} services trouvés dans {chemin}")
+    return services
+
+
+def _lire_networkpolicies_yaml(dossier: str) -> list:
+    chemin = os.path.join(dossier, "networkpolicies.yaml")
+    policies = []
+    try:
+        with open(chemin, "r", encoding="utf-8") as f:
+            docs = list(yaml.safe_load_all(f))
+    except FileNotFoundError:
+        logger.warning(f"networkpolicies.yaml introuvable : {chemin} — dépendances ignorées")
+        return policies
+    except yaml.YAMLError as e:
+        logger.error(f"Erreur YAML dans networkpolicies.yaml : {e}")
+        return policies
+
+    for doc in docs:
+        if doc and doc.get("kind") == "NetworkPolicy":
+            policies.append(doc)
+
+    logger.debug(f"{len(policies)} NetworkPolicies trouvées dans {chemin}")
+    return policies
 
 
 # =============================================================================

@@ -31,7 +31,7 @@ import time
 from config.settings    import ENV_KUBERNETES
 from utils.logger       import get_logger, log_separateur, log_resultat
 from parsers.detector   import detecter_environnement, forcer_environnement
-from parsers.docker_parser import parser_docker_compose
+from parsers.docker_parser     import parser_docker_compose
 from graph.builder      import construire_G0
 from graph.scorer       import calculer_criticites, calculer_score_global
 from graph.exporter     import exporter_graphe, exporter_scores_csv
@@ -43,10 +43,12 @@ from visualizer         import visualiser_G0
 logger = get_logger(__name__)
 
 
-def main(simulation : bool = False,
-         avec_neo4j : bool = True,
-         avec_viz   : bool = True,
-         env_force  : str  = None) -> dict:
+def main(simulation  : bool = False,
+         avec_neo4j  : bool = True,
+         avec_viz    : bool = True,
+         env_force   : str  = None,
+         file_path   : str  = None,
+         k8s_dir     : str  = None) -> dict:
 
     debut_total = time.time()
 
@@ -54,6 +56,10 @@ def main(simulation : bool = False,
     logger.info(f"Mode simulation   : {'OUI' if simulation else 'NON'}")
     logger.info(f"Sync Neo4j        : {'OUI' if avec_neo4j else 'NON'}")
     logger.info(f"Visualisation     : {'OUI' if avec_viz else 'NON'}")
+    if file_path:
+        logger.info(f"Fichier Docker    : {file_path}")
+    if k8s_dir:
+        logger.info(f"Dossier K8s       : {k8s_dir}")
     if env_force:
         logger.info(f"Environnement     : FORCÉ → {env_force.upper()}")
 
@@ -63,24 +69,37 @@ def main(simulation : bool = False,
     log_separateur(logger, "Étape 1 — Parsing de l'architecture")
     debut = time.time()
 
+    # Si un dossier K8s est fourni, forcer l'environnement Kubernetes
+    if k8s_dir and not env_force:
+        env_force = ENV_KUBERNETES
+
     # Appliquer l'environnement forcé si spécifié
     if env_force:
         forcer_environnement(env_force)
 
-    env_detecte = detecter_environnement()
+    env_detecte = detecter_environnement(compose_path=file_path)
 
     # Sélection du parseur selon l'environnement
     if env_detecte == ENV_KUBERNETES:
-        logger.info("Parseur sélectionné : Kubernetes")
-        try:
-            from parsers.kubernetes_parser import parser_kubernetes
-            donnees_parsees = parser_kubernetes()
-        except ImportError:
-            logger.error("Module kubernetes non disponible")
-            donnees_parsees = None
+        if k8s_dir:
+            logger.info(f"Parseur sélectionné : Kubernetes (fichiers YAML depuis {k8s_dir})")
+            try:
+                from parsers.kubernetes_parser import parser_kubernetes_fichiers
+                donnees_parsees = parser_kubernetes_fichiers(k8s_dir)
+            except ImportError:
+                logger.error("Module kubernetes non disponible")
+                donnees_parsees = None
+        else:
+            logger.info("Parseur sélectionné : Kubernetes (API live)")
+            try:
+                from parsers.kubernetes_parser import parser_kubernetes
+                donnees_parsees = parser_kubernetes()
+            except ImportError:
+                logger.error("Module kubernetes non disponible")
+                donnees_parsees = None
     else:
         logger.info("Parseur sélectionné : Docker Compose")
-        donnees_parsees = parser_docker_compose()
+        donnees_parsees = parser_docker_compose(file_path)
 
     if donnees_parsees is None:
         logger.critical(
@@ -271,6 +290,18 @@ Exemples :
         help="Forcer l'environnement (docker ou kubernetes). Sans cette option : détection automatique."
     )
     parser.add_argument(
+        "--file",
+        metavar="CHEMIN",
+        default=None,
+        help="Chemin vers un fichier docker-compose.yml à analyser (remplace le fichier par défaut)."
+    )
+    parser.add_argument(
+        "--k8s-dir",
+        metavar="DOSSIER",
+        default=None,
+        help="Dossier contenant les manifestes Kubernetes (deployments.yaml, services.yaml, networkpolicies.yaml)."
+    )
+    parser.add_argument(
         "--simulation",
         action="store_true",
         default=False,
@@ -297,7 +328,9 @@ if __name__ == "__main__":
         simulation = args.simulation,
         avec_neo4j = not args.no_neo4j,
         avec_viz   = not args.no_viz,
-        env_force  = args.env
+        env_force  = args.env,
+        file_path  = args.file,
+        k8s_dir    = args.k8s_dir,
     )
     codes = {"SAIN":0, "STABLE":0, "DEGRADE":1, "CRITIQUE":2}
     sys.exit(codes.get(resultat["niveau"], 1))
