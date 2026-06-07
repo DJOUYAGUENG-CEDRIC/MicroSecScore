@@ -1,0 +1,33 @@
+{
+  "phase": "Phase 2 — Collecte Runtime",
+  "generated_at": "2026-05-30T20:04:55.651032+00:00",
+  "duration_seconds": 29821.3,
+  "sources": {
+    "docker_logs": {
+      "published": 984,
+      "errors": 0,
+      "containers": 14
+    },
+    "cadvisor": {
+      "scrapes": 0,
+      "published": 0,
+      "alerts_triggered": 0,
+      "errors": 0
+    },
+    "falco_generator": {
+      "scan_alerts": 0,
+      "brute_alerts": 0,
+      "lateral_alerts": 0,
+      "escape_alerts": 0,
+      "total_published": 0,
+      "errors": 0
+    }
+  },
+  "normalizer": {
+    "consumed": 0,
+    "normalized": 0,
+    "rejected": 0,
+    "written": 0
+  },
+  "total_events": 0
+}

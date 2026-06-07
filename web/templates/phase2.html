@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MicroSecScore — Phase 2 Runtime</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body { background: #f0f2f5; }
+    .hero { background: linear-gradient(135deg, #1a237e, #283593); color: white; padding: 2rem 0 1.5rem; }
+    .card-dash { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.08); }
+    .stat-val   { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+    .stat-label { font-size: .78rem; color: #78909c; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* Indicateurs de statut pipeline */
+    .dot-active   { display:inline-block;width:10px;height:10px;border-radius:50%;
+                    background:#2e7d32;animation:blink 1.5s infinite;vertical-align:middle; }
+    .dot-inactive { display:inline-block;width:10px;height:10px;border-radius:50%;
+                    background:#90a4ae;vertical-align:middle; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    /* Cartes statut source */
+    .src-card         { border-radius: 10px; padding: .9rem 1.1rem; }
+    .src-card-active  { background: #e8f5e9; border-left: 4px solid #2e7d32; }
+    .src-card-inactive{ background: #f5f5f5; border-left: 4px solid #bdbdbd; }
+    .badge-actif      { background-color: #2e7d32; font-size: .7rem; }
+    .badge-inactif    { background-color: #90a4ae; font-size: .7rem; }
+
+    /* Tableau événements */
+    .badge-src  { font-size: .72rem; font-weight: 600; border-radius: 50rem !important; }
+    .badge-type { font-size: .70rem; font-weight: 600; border-radius: 50rem !important; }
+    .table-events td { vertical-align: middle; font-size: .82rem; }
+    .table-events th { font-size: .8rem; background: #e8eaf6; }
+    .p1-row { border-left: 3px solid #1a237e; }
+    .score-hi  { color: #2e7d32; font-weight: 700; }
+    .score-mid { color: #e65100; font-weight: 700; }
+    .score-low { color: #b71c1c; font-weight: 700; }
+    .topo-table td, .topo-table th { padding: .3rem .6rem; font-size: .82rem; }
+
+    /* Codes HTTP colorés */
+    .http-method      { font-family: monospace; font-weight: 700; font-size: .8rem;
+                        color: #1a237e; }
+    .http-path        { color: #546e7a; font-family: monospace; font-size: .78rem; }
+    .http-arrow       { color: #b0bec5; margin: 0 .2rem; }
+    .http-2xx         { color: #2e7d32; font-weight: 700; font-size: .82rem; }
+    .http-3xx         { color: #e65100; font-weight: 700; font-size: .82rem; }
+    .http-4xx, .http-5xx { color: #b71c1c; font-weight: 700; font-size: .82rem; }
+
+    /* Boutons de filtre */
+    .filter-bar .btn  { font-size: .78rem; border-radius: 20px; padding: .25rem .8rem; }
+    .filter-bar .btn.active { box-shadow: 0 2px 8px rgba(0,0,0,.15); }
+    .row-hidden       { display: none !important; }
+
+    /* État vide */
+    .empty-page { padding: 4rem 2rem; text-align: center; color: #90a4ae; }
+    .empty-page code { background: #e8eaf6; padding: .4rem 1rem;
+                       border-radius: 6px; font-size: .9rem; color: #1a237e; }
+    footer { color: #78909c; font-size: .85rem; }
+  </style>
+</head>
+<body>
+
+<!-- En-tête ──────────────────────────────────────────────────── -->
+<div class="hero text-center">
+  <h1 class="fw-bold mb-1">MicroSecScore</h1>
+  <p class="mb-3 opacity-75">Phase 2 — Collecte Runtime</p>
+  <div>
+    <a href="/" class="btn btn-sm btn-outline-light me-2">Phase 1 — Analyse statique</a>
+    <a href="/phase2" class="btn btn-sm btn-light text-primary me-2">Phase 2 — Runtime (actuel)</a>
+    <a href="/phase3" class="btn btn-sm btn-outline-light">Phase 3 — CEP</a>
+  </div>
+</div>
+
+<div class="container py-4" style="max-width:1140px">
+
+  <!-- Statut global du pipeline ────────────────────────────────── -->
+  <div class="card card-dash mb-4 px-4 py-3">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
+      <div>
+        {% if is_active %}
+          <span class="dot-active me-2"></span>
+          <strong class="text-success">Pipeline actif</strong>
+          <span class="text-muted small ms-2">— dernière écriture : {{ last_modified }}</span>
+        {% elif last_modified %}
+          <span class="dot-inactive me-2"></span>
+          <strong class="text-secondary">Pipeline arrêté</strong>
+          <span class="text-muted small ms-2">— dernier run : {{ last_modified }}</span>
+        {% else %}
+          <span class="dot-inactive me-2"></span>
+          <strong class="text-secondary">En attente</strong>
+          <span class="text-muted small ms-2">— aucune collecte effectuée</span>
+        {% endif %}
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        {% if total > 0 %}
+          <span class="text-muted small">
+            Actualisation dans <strong id="countdown">10</strong>s
+          </span>
+        {% endif %}
+        <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()">↻ Rafraîchir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Statut des sources réelles ──────────────────────────────── -->
+  {% if source_status %}
+  <div class="card card-dash mb-4 p-3">
+    <div class="fw-semibold mb-3 text-muted small text-uppercase" style="letter-spacing:.05em">
+      Sources actives — issues de events_collected.jsonl
+    </div>
+    <div class="row g-3">
+      {% for src, st in source_status.items() %}
+      <div class="col-md-4">
+        <div class="src-card {% if st.active %}src-card-active{% else %}src-card-inactive{% endif %}">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <div class="fw-semibold" style="font-size:.9rem">{{ st.label }}</div>
+              <div class="text-muted small mt-1">{{ st.count }} événements collectés</div>
+              {% if st.active %}
+                <div class="text-success" style="font-size:.75rem">
+                  Dernier reçu il y a {{ st.age_seconds }}s
+                </div>
+              {% else %}
+                <div class="text-muted" style="font-size:.75rem">
+                  Dernier : {{ st.last_event }}
+                </div>
+              {% endif %}
+            </div>
+            <span class="badge {% if st.active %}badge-actif{% else %}badge-inactif{% endif %} ms-2">
+              {% if st.active %}ACTIF{% else %}INACTIF{% endif %}
+            </span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- ── État vide ──────────────────────────────────────────────── -->
+  {% if total == 0 %}
+  <div class="card card-dash mb-4">
+    <div class="empty-page">
+      <div style="font-size:3rem;margin-bottom:1rem">📡</div>
+      <h5 class="mb-2">Aucun événement collecté</h5>
+      <p class="text-muted mb-4">
+        Le fichier <code>events_collected.jsonl</code> est vide ou absent.<br>
+        Démarrez le pipeline pour commencer la collecte réelle.
+      </p>
+      <div class="d-flex flex-column align-items-center gap-2">
+        <div class="text-muted small mb-1">1. Démarrer Kafka (si ce n'est pas fait) :</div>
+        <code>docker compose -f phase2/kafka/docker-compose-kafka.yml up -d</code>
+        <div class="text-muted small mt-2 mb-1">2. Lancer Phase 2 depuis le dossier phase2/ :</div>
+        <code>python phase2_runtime.py</code>
+      </div>
+      <p class="text-muted small mt-4">
+        Cette page se rafraîchit automatiquement dès que des événements arrivent.
+      </p>
+    </div>
+  </div>
+
+  {% else %}
+  <!-- ── Données réelles ─────────────────────────────────────────── -->
+
+  <!-- Cartes statistiques (uniquement ce qui existe) ──────────── -->
+  <div class="row g-3 mb-4">
+
+    <div class="col-6 col-md-3">
+      <div class="card card-dash h-100 text-center p-3">
+        <div class="stat-label mb-2">Événements collectés</div>
+        <div class="stat-val text-primary">{{ total }}</div>
+        <div class="text-muted small">depuis events_collected.jsonl</div>
+      </div>
+    </div>
+
+    {% set nb_alerts = by_type.get("ALERT_SCAN",0) + by_type.get("ALERT_BRUTE",0) + by_type.get("ALERT_LATERAL",0) %}
+    {% if nb_alerts > 0 %}
+    <div class="col-6 col-md-3">
+      <div class="card card-dash h-100 text-center p-3">
+        <div class="stat-label mb-2">Alertes sécurité</div>
+        <div class="stat-val text-danger">{{ nb_alerts }}</div>
+        <div class="text-muted small">
+          {% if by_type.get("ALERT_SCAN",0) > 0 %}Scan {{ by_type.ALERT_SCAN }}{% endif %}
+          {% if by_type.get("ALERT_BRUTE",0) > 0 %} · Brute {{ by_type.ALERT_BRUTE }}{% endif %}
+          {% if by_type.get("ALERT_LATERAL",0) > 0 %} · Latéral {{ by_type.ALERT_LATERAL }}{% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if phase1_enriched > 0 %}
+    <div class="col-6 col-md-3">
+      <div class="card card-dash h-100 text-center p-3">
+        <div class="stat-label mb-2">Enrichis Phase 1</div>
+        <div class="stat-val text-success">{{ phase1_enriched }}</div>
+        <div class="text-muted small">{{ "%.0f"|format(phase1_enriched / total * 100) }}% du total</div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if topologie %}
+    <div class="col-6 col-md-3">
+      <div class="card card-dash h-100 text-center p-3">
+        <div class="stat-label mb-2">Services surveillés</div>
+        <div class="stat-val" style="color:#1a237e">{{ topologie|length }}</div>
+        <div class="text-muted small">issus du graphe G0</div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% set nb_errors = by_type.get("LOG_ERROR",0) + by_type.get("LOG_AUTH",0) %}
+    {% if nb_errors > 0 %}
+    <div class="col-6 col-md-3">
+      <div class="card card-dash h-100 text-center p-3">
+        <div class="stat-label mb-2">Erreurs / Auth échouées</div>
+        <div class="stat-val text-warning">{{ nb_errors }}</div>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+
+  <!-- Graphiques (uniquement si les données correspondantes existent) -->
+  {% if by_type or by_source %}
+  <div class="row g-3 mb-4">
+    {% if by_source | length > 1 %}
+    <div class="col-md-4">
+      <div class="card card-dash p-3 h-100">
+        <div class="fw-semibold mb-3">Répartition par source</div>
+        <canvas id="chartSource" height="220"></canvas>
+      </div>
+    </div>
+    {% endif %}
+    <div class="col-md-{% if by_source|length > 1 %}8{% else %}12{% endif %}">
+      <div class="card card-dash p-3 h-100">
+        <div class="fw-semibold mb-3">Événements par type</div>
+        <canvas id="chartType" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Sévérité (si présente et variée) ──────────────────────────── -->
+  {% if by_severity and by_severity | length > 1 %}
+  <div class="card card-dash mb-4 px-4 py-3">
+    <div class="fw-semibold mb-3">Répartition par sévérité</div>
+    <div class="d-flex gap-3 flex-wrap">
+      {% for sev, cnt in by_severity.items() | sort %}
+      <div class="text-center px-5 py-3 rounded-3"
+           style="min-width:120px;background:{% if sev=='CRITICAL' %}#ffebee{% elif sev=='WARNING' %}#fff3e0{% else %}#e8f5e9{% endif %}">
+        <div class="stat-val"
+             style="color:{% if sev=='CRITICAL' %}#b71c1c{% elif sev=='WARNING' %}#e65100{% else %}#2e7d32{% endif %}">
+          {{ cnt }}
+        </div>
+        <div class="text-muted small mt-1">{{ sev }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Topologie G0 + volume par service ────────────────────────── -->
+  <div class="row g-3 mb-4">
+
+    {% if topologie %}
+    <div class="col-md-5">
+      <div class="card card-dash p-3 h-100">
+        <div class="fw-semibold mb-3">
+          Services surveillés (Phase 1)
+          <span class="badge bg-primary bg-opacity-75 ms-1" style="font-size:.7rem">{{ topologie|length }}</span>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-sm table-hover topo-table mb-0">
+            <thead>
+              <tr>
+                <th>Service</th>
+                <th class="text-center">Score CVE</th>
+                <th class="text-center">Criticité</th>
+                <th class="text-center">Événements</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for svc, info in topologie.items() | sort(attribute='1.score_cve') %}
+              {% set sc = info.score_cve | float %}
+              <tr>
+                <td class="fw-medium">{{ svc }}</td>
+                <td class="text-center">
+                  <span class="{% if sc < 50 %}score-low{% elif sc < 70 %}score-mid{% else %}score-hi{% endif %}">
+                    {{ "%.1f"|format(sc) }}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <span class="badge bg-secondary bg-opacity-75">{{ info.criticite }}</span>
+                </td>
+                <td class="text-center text-muted">{{ by_service.get(svc, 0) }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if by_service %}
+    <div class="col-md-{% if topologie %}7{% else %}12{% endif %}">
+      <div class="card card-dash p-3 h-100">
+        <div class="fw-semibold mb-3">Volume d'événements par service</div>
+        <canvas id="chartService" height="240"></canvas>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+
+  <!-- Tableau des 50 derniers événements réels ─────────────────── -->
+  <div class="card card-dash mb-4">
+    <div class="card-header bg-white border-0 pt-3 px-4 pb-2">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <span class="fw-semibold">
+          Événements récents
+          <span class="text-muted fw-normal small ms-1">
+            (50 derniers · antéchronologique)
+          </span>
+        </span>
+        <span class="badge bg-primary rounded-pill" id="visible-count" style="font-size:.85rem;padding:.35em .7em">
+          {{ recent | length }}
+        </span>
+      </div>
+
+      <!-- Barre de filtres -->
+      <div class="filter-bar d-flex gap-2 flex-wrap">
+        <button class="btn btn-primary active" data-filter="ALL">
+          Tous <span class="badge bg-white text-primary ms-1">{{ recent | length }}</span>
+        </button>
+
+        {% if by_type.get("LOG_HTTP", 0) > 0 %}
+        <button class="btn btn-outline-primary" data-filter="LOG_HTTP">
+          HTTP <span class="badge bg-primary ms-1">{{ by_type.get("LOG_HTTP", 0) }}</span>
+        </button>
+        {% endif %}
+
+        {% set nb_alerts = by_type.get("ALERT_SCAN",0)+by_type.get("ALERT_BRUTE",0)+by_type.get("ALERT_LATERAL",0) %}
+        {% if nb_alerts > 0 %}
+        <button class="btn btn-outline-danger" data-filter="ALERT">
+          Alertes <span class="badge bg-danger ms-1">{{ nb_alerts }}</span>
+        </button>
+        {% endif %}
+
+        {% set nb_err = by_type.get("LOG_ERROR",0)+by_type.get("LOG_AUTH",0) %}
+        {% if nb_err > 0 %}
+        <button class="btn btn-outline-warning" data-filter="LOG_ERROR,LOG_AUTH">
+          Erreurs / Auth <span class="badge bg-warning text-dark ms-1">{{ nb_err }}</span>
+        </button>
+        {% endif %}
+
+        {% set nb_met = by_type.get("METRIC_CPU",0)+by_type.get("METRIC_RAM",0)+by_type.get("METRIC_NET",0) %}
+        {% if nb_met > 0 %}
+        <button class="btn btn-outline-success" data-filter="METRIC">
+          Métriques <span class="badge bg-success ms-1">{{ nb_met }}</span>
+        </button>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover table-events mb-0">
+          <thead>
+            <tr>
+              <th class="ps-3">Horodatage (UTC)</th>
+              <th>Source</th>
+              <th>Service</th>
+              <th>Type</th>
+              <th class="text-center">Sévérité</th>
+              {% if phase1_enriched > 0 %}
+              <th class="text-center">Score CVE</th>
+              <th class="text-center">Criticité</th>
+              {% endif %}
+              <th>Détails</th>
+            </tr>
+          </thead>
+          <tbody id="events-tbody">
+            {% for e in recent %}
+            {% set has_p1   = "phase1" in e %}
+            {% set topo_ctx = topologie.get(e.get("service",""), {}) %}
+            {% set sc   = e.phase1.score_cve  if has_p1 else (topo_ctx.score_cve  if topo_ctx else none) %}
+            {% set crit = e.phase1.criticite  if has_p1 else (topo_ctx.criticite  if topo_ctx else none) %}
+            {% set et = e.get("event_type","") %}
+            <tr data-type="{{ et }}" {% if has_p1 %}class="p1-row"{% endif %}>
+
+              <td class="ps-3 text-muted text-nowrap" style="font-size:.78rem">
+                {{ e.get("timestamp_utc","")[:19] | replace("T"," ") }}
+              </td>
+
+              <!-- Source : déduite de la valeur réelle dans le JSONL -->
+              <td>
+                {% set src = e.get("source","") %}
+                {% if src == "docker_logs" %}
+                  <span class="badge bg-primary bg-opacity-75 badge-src">Logs</span>
+                {% elif "falco" in src %}
+                  <span class="badge bg-danger bg-opacity-75 badge-src">Falco</span>
+                {% elif "prometheus" in src or "cadvisor" in src %}
+                  <span class="badge bg-success bg-opacity-75 badge-src">Métriques</span>
+                {% else %}
+                  <span class="badge bg-secondary badge-src">{{ src }}</span>
+                {% endif %}
+              </td>
+
+              <td class="fw-medium" style="font-size:.82rem">{{ e.get("service","—") }}</td>
+
+              <!-- Type : coloré selon la famille -->
+              <td>
+                {% if et == "ALERT_SCAN" %}
+                  <span class="badge badge-type text-dark" style="background:rgba(255,202,40,.55)">{{ et }}</span>
+                {% elif et == "ALERT_BRUTE" %}
+                  <span class="badge badge-type" style="background:rgba(255,112,67,.7);color:#fff">{{ et }}</span>
+                {% elif et == "ALERT_LATERAL" %}
+                  <span class="badge badge-type" style="background:rgba(171,71,188,.6);color:#fff">{{ et }}</span>
+                {% elif et == "LOG_AUTH" %}
+                  <span class="badge badge-type text-dark" style="background:rgba(255,167,38,.5)">{{ et }}</span>
+                {% elif et == "LOG_ERROR" %}
+                  <span class="badge badge-type" style="background:rgba(239,83,80,.55);color:#fff">{{ et }}</span>
+                {% elif et == "LOG_HTTP" %}
+                  <span class="badge badge-type text-muted" style="background:rgba(0,0,0,.06);border:1px solid #dee2e6">{{ et }}</span>
+                {% elif et == "METRIC_CPU" %}
+                  <span class="badge badge-type text-dark" style="background:rgba(102,187,106,.5)">{{ et }}</span>
+                {% elif et == "METRIC_RAM" %}
+                  <span class="badge badge-type text-dark" style="background:rgba(38,198,218,.45)">{{ et }}</span>
+                {% elif et == "METRIC_NET" %}
+                  <span class="badge badge-type text-dark" style="background:rgba(38,166,154,.5)">{{ et }}</span>
+                {% else %}
+                  <span class="badge badge-type text-muted" style="background:rgba(0,0,0,.06);border:1px solid #dee2e6">{{ et }}</span>
+                {% endif %}
+              </td>
+
+              <!-- Sévérité -->
+              <td class="text-center">
+                {% set sev = e.get("severity","INFO") %}
+                {% if sev == "CRITICAL" %}
+                  <span class="badge bg-danger badge-type">CRITICAL</span>
+                {% elif sev == "WARNING" %}
+                  <span class="badge bg-warning text-dark badge-type">WARNING</span>
+                {% else %}
+                  <span class="text-muted" style="font-size:.78rem">INFO</span>
+                {% endif %}
+              </td>
+
+              <!-- Colonnes Phase 1 : affichées uniquement si enrichissement réel -->
+              {% if phase1_enriched > 0 %}
+              <td class="text-center">
+                {% if sc is not none %}
+                  {% set scf = sc | float %}
+                  <span class="{% if scf >= 70 %}score-low{% elif scf >= 50 %}score-mid{% else %}score-hi{% endif %}">
+                    {{ "%.1f"|format(scf) }}
+                  </span>
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </td>
+              <td class="text-center">
+                {% if crit is not none %}
+                  <span class="badge bg-secondary bg-opacity-75">{{ crit }}</span>
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              </td>
+              {% endif %}
+
+              <!-- Détails : formatage enrichi selon le type -->
+              <td style="max-width:260px;font-size:.78rem">
+                {% set f = e.get("fields",{}) %}
+
+                {% if f.get("http_method") %}
+                  {# Requête HTTP : METHOD /path → CODE coloré #}
+                  {% set code = f.get("http_status_code", 0) | int %}
+                  <span class="http-method">{{ f.http_method }}</span>
+                  <span class="http-path">{{ f.get("http_path","") }}</span>
+                  <span class="http-arrow">→</span>
+                  <span class="
+                    {% if code >= 500 %}http-5xx
+                    {% elif code >= 400 %}http-4xx
+                    {% elif code >= 300 %}http-3xx
+                    {% else %}http-2xx{% endif %}">{{ code }}</span>
+
+                {% elif f.get("auth_failed") %}
+                  <span class="text-warning fw-medium">Auth failed</span>
+                  <span class="text-muted ms-1" style="font-size:.75rem">{{ f.get("raw_hint","")[:55] }}</span>
+
+                {% elif f.get("rule") %}
+                  <span class="text-danger fw-medium">{{ f.rule }}</span>
+                  {% set ms = f.get("microsecure", {}) %}
+                  {% if ms.get("ip_source") %}
+                    <span class="text-muted ms-1">from {{ ms.ip_source }}</span>
+                  {% elif ms.get("service_source") %}
+                    <span class="text-muted ms-1">{{ ms.service_source }} → {{ ms.get("service_cible","") }}</span>
+                  {% endif %}
+
+                {% elif f.get("cpu_percent") is not none %}
+                  <span class="{% if f.cpu_percent > 80 %}text-danger{% else %}text-success{% endif %}">
+                    CPU {{ f.cpu_percent }}%
+                  </span>
+                  {% if f.get("alert") %}<span class="badge bg-danger ms-1" style="font-size:.65rem">SEUIL</span>{% endif %}
+
+                {% elif f.get("ram_percent") is not none %}
+                  <span class="{% if f.ram_percent > 85 %}text-danger{% else %}text-success{% endif %}">
+                    RAM {{ f.ram_percent }}%
+                  </span>
+                  {% if f.get("alert") %}<span class="badge bg-danger ms-1" style="font-size:.65rem">SEUIL</span>{% endif %}
+
+                {% elif e.get("raw") %}
+                  <span class="text-muted" style="overflow:hidden;text-overflow:ellipsis;
+                        white-space:nowrap;display:block;max-width:240px">
+                    {{ e.raw[:90] }}
+                  </span>
+                {% endif %}
+              </td>
+
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rapport de session ─────────────────────────────────────────── -->
+  {% if rapport %}
+  <div class="card card-dash mb-4 px-4 py-3">
+    <div class="fw-semibold mb-2 text-muted small text-uppercase"
+         style="letter-spacing:.05em">Rapport de la dernière session Phase 2</div>
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="text-muted small">Durée</div>
+        <div class="fw-medium">{{ rapport.get("duration_seconds",0)|int }}s</div>
+      </div>
+      <div class="col-md-4">
+        <div class="text-muted small">Événements normalisés</div>
+        <div class="fw-medium">{{ rapport.get("total_events",0) }}</div>
+      </div>
+      <div class="col-md-4">
+        <div class="text-muted small">Généré le</div>
+        <div class="fw-medium small">
+          {{ rapport.get("generated_at","—")[:19] | replace("T"," ") }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% endif %}{# fin total > 0 #}
+
+  <footer class="text-center pb-3 footer">
+    MicroSecScore — DJOUYAGUENG SADE CEDRIC — Master II RSD — Université de Dschang
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+{% if total > 0 %}
+/* Données serveur — issues uniquement de events_collected.jsonl */
+const bySource  = {{ by_source  | tojson }};
+const byType    = {{ by_type    | tojson }};
+const byService = {{ by_service | tojson }};
+
+const SRC_COLORS = {
+  docker_logs:      "#42a5f5",
+  falco_generator:  "#ef5350",
+  falco_simulator:  "#ef5350",
+  prometheus:       "#66bb6a",
+  cadvisor:         "#26a69a",
+};
+const TYPE_COLORS = {
+  LOG_HTTP:      "#42a5f5",
+  LOG_AUTH:      "#ffa726",
+  LOG_ERROR:     "#ef5350",
+  LOG_INFO:      "#cfd8dc",
+  METRIC_CPU:    "#66bb6a",
+  METRIC_RAM:    "#26c6da",
+  METRIC_NET:    "#26a69a",
+  ALERT_SCAN:    "#ffca28",
+  ALERT_BRUTE:   "#ff7043",
+  ALERT_LATERAL: "#ab47bc",
+};
+const SRC_LABELS = {
+  docker_logs:     "Logs Docker",
+  falco_generator: "Falco",
+  falco_simulator: "Falco",
+  prometheus:      "Métriques",
+  cadvisor:        "Métriques",
+};
+function clr(map, k) { return map[k] || "#90a4ae"; }
+function srcLbl(k)   { return SRC_LABELS[k] || k; }
+
+/* Donut sources (seulement si > 1 source) */
+const ctxSrc = document.getElementById("chartSource");
+if (ctxSrc && Object.keys(bySource).length > 0) {
+  new Chart(ctxSrc, {
+    type: "doughnut",
+    data: {
+      labels: Object.keys(bySource).map(srcLbl),
+      datasets: [{
+        data: Object.values(bySource),
+        backgroundColor: Object.keys(bySource).map(k => clr(SRC_COLORS, k)),
+        borderWidth: 2, hoverOffset: 6,
+      }]
+    },
+    options: {
+      plugins: { legend: { position:"bottom", labels:{boxWidth:12,font:{size:11}} } },
+      cutout: "60%",
+    }
+  });
+}
+
+/* Barres types */
+const ctxType = document.getElementById("chartType");
+if (ctxType && Object.keys(byType).length > 0) {
+  const tl = Object.keys(byType);
+  new Chart(ctxType, {
+    type: "bar",
+    data: {
+      labels: tl,
+      datasets: [{
+        label: "Événements",
+        data: Object.values(byType),
+        backgroundColor: tl.map(k => clr(TYPE_COLORS, k)),
+        borderRadius: 5,
+      }]
+    },
+    options: {
+      plugins: { legend: { display:false } },
+      scales: { y: { beginAtZero:true, ticks:{stepSize:1} } },
+    }
+  });
+}
+
+/* Barres horizontales services */
+const ctxSvc = document.getElementById("chartService");
+if (ctxSvc && Object.keys(byService).length > 0) {
+  const sorted = Object.entries(byService).sort((a,b) => b[1]-a[1]).slice(0,15);
+  new Chart(ctxSvc, {
+    type: "bar",
+    data: {
+      labels: sorted.map(e => e[0]),
+      datasets: [{
+        label: "Événements",
+        data: sorted.map(e => e[1]),
+        backgroundColor: "#1a237e",
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      indexAxis: "y",
+      plugins: { legend: { display:false } },
+      scales: { x: { beginAtZero:true, ticks:{stepSize:1} } },
+    }
+  });
+}
+
+/* ── Filtres événements ─────────────────────────────────────── */
+(function () {
+  const tbody   = document.getElementById("events-tbody");
+  const counter = document.getElementById("visible-count");
+  if (!tbody) return;
+
+  function updateCounter() {
+    const visible = tbody.querySelectorAll("tr:not(.row-hidden)").length;
+    if (counter) counter.textContent = visible;
+  }
+
+  function applyFilter(filterValue) {
+    const rows = tbody.querySelectorAll("tr[data-type]");
+    const parts = filterValue.split(",").map(s => s.trim());
+
+    rows.forEach(function (row) {
+      const rowType = (row.dataset.type || "").trim();
+      let show = false;
+
+      if (filterValue === "ALL") {
+        show = true;
+      } else {
+        parts.forEach(function (part) {
+          if (part === "ALERT"  && rowType.startsWith("ALERT"))  show = true;
+          else if (part === "METRIC" && rowType.startsWith("METRIC")) show = true;
+          else if (rowType === part) show = true;
+        });
+      }
+
+      row.classList.toggle("row-hidden", !show);
+    });
+
+    updateCounter();
+  }
+
+  document.querySelectorAll(".filter-bar .btn[data-filter]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".filter-bar .btn").forEach(function (b) {
+        b.classList.remove("active");
+        /* Remettre le style outline sur les boutons colorés */
+        if (!b.classList.contains("btn-primary")) {
+          b.className = b.className.replace(/\bbtn-(danger|warning|success)\b/, "btn-outline-$1");
+        }
+      });
+
+      /* Activer le bouton cliqué */
+      this.classList.add("active");
+      if (this.classList.contains("btn-outline-danger"))  {
+        this.classList.replace("btn-outline-danger",  "btn-danger");
+      } else if (this.classList.contains("btn-outline-warning")) {
+        this.classList.replace("btn-outline-warning", "btn-warning");
+      } else if (this.classList.contains("btn-outline-success")) {
+        this.classList.replace("btn-outline-success", "btn-success");
+      }
+
+      applyFilter(this.dataset.filter);
+    });
+  });
+
+  /* Initialisation : afficher le bon count dès le chargement */
+  updateCounter();
+})();
+
+/* Auto-refresh */
+let secs = 10;
+const el = document.getElementById("countdown");
+const t = setInterval(() => {
+  secs--;
+  if (el) el.textContent = secs;
+  if (secs <= 0) { clearInterval(t); location.reload(); }
+}, 1000);
+
+{% else %}
+/* Aucune donnée — vérifier toutes les 15s */
+setTimeout(() => location.reload(), 15000);
+{% endif %}
+</script>
+</body>
+</html>

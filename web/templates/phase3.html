@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MicroSecScore — Phase 3 CEP</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body { background: #0d1117; color: #e6edf3; font-family: 'Segoe UI', sans-serif; }
+
+    /* ── Header ── */
+    .hero {
+      background: linear-gradient(135deg, #1a0a2e, #2d1b69, #1a237e);
+      padding: 1.5rem 0 1rem;
+      border-bottom: 1px solid #30363d;
+    }
+    .hero h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: 1px; }
+
+    /* ── Cards ── */
+    .card-dark {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+    }
+    .card-dark .card-header {
+      background: transparent;
+      border-bottom: 1px solid #30363d;
+      font-weight: 600;
+      color: #58a6ff;
+    }
+
+    /* ── Severity badges ── */
+    .sev-CRITICAL { background: #b91c1c; color: #fff; }
+    .sev-HIGH     { background: #696563; color: #fff; }
+    .sev-MEDIUM   { background: #89d61e; color: #fff; }
+    .sev-LOW      { background: #6ae396; color: #fff; }
+    .sev-INFO     { background: #1e40af; color: #fff; }
+
+    /* ── Alert row ── */
+    .alert-row { border-left: 4px solid transparent; transition: background .15s; }
+    .alert-row:hover { background: #1c2128; }
+    .alert-row.CRITICAL { border-color: #ef4444; }
+    .alert-row.HIGH     { border-color: #f97316; }
+    .alert-row.MEDIUM   { border-color: #eab308; }
+    .alert-row.LOW      { border-color: #22c55e; }
+
+    /* ── Stat big number ── */
+    .stat-num { font-size: 2.2rem; font-weight: 700; line-height: 1; }
+    .text-red    { color: #ef4444; }
+    .text-orange { color: #f97316; }
+    .text-yellow { color: #eab308; }
+    .text-blue   { color: #58a6ff; }
+
+    /* ── MITRE bar ── */
+    .mitre-bar { height: 6px; border-radius: 3px; background: #21262d; overflow: hidden; }
+    .mitre-fill { height: 100%; background: linear-gradient(90deg, #7c3aed, #2563eb); border-radius: 3px; }
+
+    /* ── Status dot ── */
+    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .dot.on  { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
+    .dot.off { background: #6b7280; }
+
+    /* ── Rule table ── */
+    .rule-row td { border-color: #30363d; vertical-align: middle; }
+    .thread-active   { color: #22c55e; }
+    .thread-inactive { color: #6b7280; }
+
+    /* ── Timeline ── */
+    .timeline-item {
+      border-left: 2px solid #30363d;
+      padding: 0 0 1rem 1rem;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -5px; top: 4px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #58a6ff;
+    }
+    .timeline-item.CRITICAL::before { background: #ef4444; }
+    .timeline-item.HIGH::before     { background: #f97316; }
+    .timeline-item.MEDIUM::before   { background: #eab308; }
+
+    /* ── Scrollable alert list ── */
+    .alert-scroll { max-height: 420px; overflow-y: auto; }
+    .alert-scroll::-webkit-scrollbar { width: 4px; }
+    .alert-scroll::-webkit-scrollbar-thumb { background: #30363d; }
+
+    .badge-mitre {
+      font-size: .7rem; background: #21262d;
+      border: 1px solid #eaedf0; color: #e7eaed;
+      border-radius: 4px; padding: 1px 5px;
+    }
+
+    footer { color: #6b7280; font-size: .8rem; border-top: 1px solid #21262d; margin-top: 2rem; padding: 1rem 0; }
+    a { color: #58a6ff; }
+    a:hover { color: #79c0ff; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
+<div class="hero text-center">
+  <h1 class="text-white mb-1">MicroSecScore</h1>
+  <p class="mb-2" style="color:#8b949e; font-size:.9rem;">
+    Phase 3 — Moteur CEP &bull; Corrélation d'événements &bull; 7 règles MITRE ATT&CK
+  </p>
+  <div class="d-flex justify-content-center gap-2 flex-wrap">
+    <a href="/" class="btn btn-sm btn-outline-light">Phase 1 — Analyser</a>
+    <a href="/phase2" class="btn btn-sm btn-outline-light">Phase 2 — Runtime</a>
+    <a href="/phase3" class="btn btn-sm btn-outline-secondary">Phase 3 — CEP</a>
+  </div>
+</div>
+
+<div class="container-fluid py-4 px-4" style="max-width:1300px">
+
+  <!-- ═══════════════════ CONTRÔLE DU MOTEUR CEP ══════════════════ -->
+  <div class="card card-dark mb-4">
+    <div class="card-header d-flex align-items-center justify-content-between">
+      <span>Moteur CEP — Contrôle</span>
+      <span id="cep-badge" class="badge rounded-pill px-3"
+            style="background:{% if proc_running %}#166534{% else %}#374151{% endif %}">
+        {% if proc_running %}ACTIF — PID {{ proc_pid or '?' }}{% else %}Arrêté{% endif %}
+      </span>
+    </div>
+    <div class="card-body d-flex gap-3 flex-wrap align-items-center">
+      <button id="btn-start" class="btn btn-success btn-sm px-4"
+              onclick="cepStart()" {% if proc_running %}style="display:none"{% endif %}>
+        ▶ Démarrer le moteur CEP
+      </button>
+      <button id="btn-stop" class="btn btn-danger btn-sm px-4"
+              onclick="cepStop()" {% if not proc_running %}style="display:none"{% endif %}>
+        ■ Arrêter
+      </button>
+      <button class="btn btn-outline-warning btn-sm px-4" onclick="injectAttack()">
+        ⚡ Injecter scénario APT
+      </button>
+      <a href="/phase3" class="btn btn-outline-secondary btn-sm">↻ Rafraîchir</a>
+      <span id="cep-msg" class="small text-muted ms-2"></span>
+    </div>
+    {% if started_at %}
+    <div class="card-footer" style="border-color:#30363d; background:transparent; font-size:.8rem; color:#8b949e;">
+      Démarré le {{ started_at[:19].replace('T',' ') }} UTC
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- ═══════════════════ LÉGENDE DES COMPTEURS ════════════════════ -->
+  <div class="card card-dark mb-3" style="border-color:#30363d;">
+    <div class="card-body py-2 px-3">
+      <div class="d-flex flex-wrap gap-3 align-items-start" style="font-size:.8rem; color:#e6edf3;">
+        <div style="min-width:200px;">
+          <span style="color:#58a6ff; font-weight:600;">Alertes CEP totales</span><br>
+          Nombre de patterns d'attaque confirmés par le moteur CEP depuis son démarrage.
+          Chaque injection APT génère jusqu'à 4 alertes (scan + brute force + mouvement latéral + évasion).
+        </div>
+        <div style="min-width:190px;">
+          <span style="color:#ef4444; font-weight:600;">CRITICAL</span><br>
+          Règles P3 (mouvement latéral T1550), P4 (compromission T1078) et P5 (évasion conteneur T1611).
+          Un cooldown de 10 min par paire limite les doublons P3.
+        </div>
+        <div style="min-width:190px;">
+          <span style="color:#f97316; font-weight:600;">HIGH</span><br>
+          Règles P2 (force brute T1110) et P6 (exfiltration T1041).
+          P2 se déclenche après 100 échecs d'auth consécutifs sur la même paire IP/utilisateur.
+        </div>
+        <div style="min-width:190px;">
+          <span style="color:#eab308; font-weight:600;">MEDIUM</span><br>
+          Règle P1 (scan de reconnaissance T1046).
+          Se déclenche dès que 50 ports distincts sont sondés en moins de 2 secondes.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════ CARTES STATISTIQUES ══════════════════════ -->
+  <div class="row g-3 mb-4">
+
+    <!-- Total alertes -->
+    <div class="col-md-3">
+      <div class="card card-dark h-100 text-center p-3">
+        <div class="text-muted small mb-2">Alertes CEP totales</div>
+        <div class="stat-num text-white">{{ total }}</div>
+        <div class="text-muted small mt-1">patterns d'attaque confirmés</div>
+      </div>
+    </div>
+
+    <!-- Critical -->
+    <div class="col-md-3">
+      <div class="card card-dark h-100 text-center p-3">
+        <div class="text-muted small mb-2">CRITICAL</div>
+        <div class="stat-num text-red">{{ by_severity.get('CRITICAL', 0) }}</div>
+        <div class="text-muted small mt-1">P3 latéral · P4 compromis · P5 évasion</div>
+      </div>
+    </div>
+
+    <!-- High -->
+    <div class="col-md-3">
+      <div class="card card-dark h-100 text-center p-3">
+        <div class="text-muted small mb-2">HIGH</div>
+        <div class="stat-num text-orange">{{ by_severity.get('HIGH', 0) }}</div>
+        <div class="text-muted small mt-1">P2 brute force · P6 exfiltration · P7 DoS</div>
+      </div>
+    </div>
+
+    <!-- Medium -->
+    <div class="col-md-3">
+      <div class="card card-dark h-100 text-center p-3">
+        <div class="text-muted small mb-2">MEDIUM</div>
+        <div class="stat-num text-yellow">{{ by_severity.get('MEDIUM', 0) }}</div>
+        <div class="text-muted small mt-1">P1 scan de reconnaissance</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row g-3 mb-4">
+
+    <!-- ══ Alertes par règle ══ -->
+    <div class="col-lg-5">
+      <div class="card card-dark h-100">
+        <div class="card-header">Alertes par règle MITRE</div>
+        <div class="card-body p-0">
+          <table class="table table-dark table-sm mb-0">
+            <thead style="background:#0d1117; color:#8b949e; font-size:.78rem;">
+              <tr>
+                <th class="ps-3">Règle</th>
+                <th class="text-center">Technique</th>
+                <th class="text-center">Alertes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% set rule_order = ['SCAN_RECONN','BRUTE_FORCE','LATERAL_MOVE','COMPROMISE','CONTAINER_ESCAPE','EXFILTRATION','DOS_DETECTED'] %}
+              {% for rtype in rule_order %}
+              {% set info = rule_labels.get(rtype, {}) %}
+              {% set count = by_type.get(rtype, 0) %}
+              <tr class="rule-row">
+                <td class="ps-3 small" style="color:#e6edf3;">{{ info.get('nom', rtype) }}</td>
+                <td class="text-center">
+                  <span class="badge-mitre">{{ info.get('mitre', '') }}</span>
+                </td>
+                <td class="text-center fw-bold {% if count > 0 %}text-red{% else %}text-muted{% endif %}">
+                  {{ count }}
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Threads de détection ══ -->
+    <div class="col-lg-4">
+      <div class="card card-dark h-100">
+        <div class="card-header">Threads de détection</div>
+        <div class="card-body p-2">
+          {% if statut_cep.get('rules') %}
+          {% for rule in statut_cep['rules'] %}
+          <div class="d-flex align-items-center justify-content-between py-1 px-2 rounded"
+               style="border-bottom: 1px solid #21262d;">
+            <div class="d-flex align-items-center gap-2">
+              <span class="dot {% if rule.get('actif') %}on{% else %}off{% endif %}"></span>
+              <span class="small" style="color:#e6edf3;">{{ rule.get('nom', '') }}</span>
+            </div>
+            <span class="badge" style="background:#21262d; color:#8b949e; font-size:.72rem;">
+              {{ rule.get('alertes', 0) }} alerte{{ 's' if rule.get('alertes', 0) != 1 else '' }}
+            </span>
+          </div>
+          {% endfor %}
+          {% else %}
+          <p class="text-muted small p-3 mb-0">Moteur CEP non démarré.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ Techniques MITRE ══ -->
+    <div class="col-lg-3">
+      <div class="card card-dark h-100">
+        <div class="card-header">Techniques MITRE ATT&CK</div>
+        <div class="card-body">
+          {% if by_mitre %}
+          {% set max_val = by_mitre.values()|max %}
+          {% for tech, cnt in by_mitre.items()|sort(reverse=True, attribute='1') %}
+          <div class="mb-3">
+            <div class="d-flex justify-content-between small mb-1">
+              <span style="color:#e6edf3;">
+                <span class="badge-mitre me-1">{{ tech }}</span>
+                {{ mitre_labels.get(tech, tech) }}
+              </span>
+              <span class="fw-bold text-red">{{ cnt }}</span>
+            </div>
+            <div class="mitre-bar">
+              <div class="mitre-fill" style="width:{{ (cnt / max_val * 100)|int }}%"></div>
+            </div>
+          </div>
+          {% endfor %}
+          {% else %}
+          <p class="text-muted small mb-0">Aucune alerte pour l'instant.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════ FLUX D'ALERTES RÉCENTES ══════════════════ -->
+  <div class="card card-dark mb-4">
+    <div class="card-header d-flex align-items-center justify-content-between">
+      <span>Flux d'alertes en temps réel</span>
+      <span class="small text-muted">{{ total }} alerte{{ 's' if total != 1 else '' }} au total — 30 dernières affichées</span>
+    </div>
+
+    {% if recentes %}
+    <div class="alert-scroll">
+      <table class="table table-dark table-sm mb-0" style="font-size:.83rem;">
+        <thead style="background:#0d1117; color:#8b949e; position:sticky; top:0;">
+          <tr>
+            <th class="ps-3" style="width:155px">Horodatage</th>
+            <th style="width:110px">Sévérité</th>
+            <th style="width:130px">Type</th>
+            <th style="width:80px">MITRE</th>
+            <th>Détail</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in recentes %}
+          {% set sev = a.get('severity', 'INFO') %}
+          <tr class="alert-row {{ sev }}">
+            <td class="ps-3" style="color:#8b949e; font-family:monospace; font-size:.78rem;">
+              {{ a.get('timestamp', '')[:19].replace('T',' ') }}
+            </td>
+            <td>
+              <span class="badge sev-{{ sev }} rounded-pill" style="font-size:.72rem;">
+                {{ sev }}
+              </span>
+            </td>
+            <td style="color:#58a6ff; font-weight:600;">{{ a.get('type', '—') }}</td>
+            <td><span class="badge-mitre">{{ a.get('mitre', '—') }}</span></td>
+            <td style="color:#8b949e;">{{ a.get('detail', '—')[:120] }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% else %}
+    <div class="card-body text-center py-5">
+      <div style="font-size:3rem; opacity:.3;">🔍</div>
+      <p class="text-muted mt-2 mb-1">Aucune alerte CEP pour l'instant.</p>
+      <p class="text-muted small">
+        Démarrez le moteur CEP puis injectez un scénario APT pour voir les alertes.
+      </p>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- ═══════════════════ TIMELINE ══════════════════════════════════ -->
+  {% if recentes %}
+  <div class="card card-dark mb-4">
+    <div class="card-header">Chronologie des 10 dernières alertes</div>
+    <div class="card-body">
+      {% for a in recentes[:10] %}
+      {% set sev = a.get('severity', 'INFO') %}
+      <div class="timeline-item {{ sev }}">
+        <div class="d-flex align-items-center gap-2 mb-1">
+          <span class="badge sev-{{ sev }} rounded-pill" style="font-size:.7rem;">{{ sev }}</span>
+          <span class="fw-bold" style="color:#e6edf3; font-size:.88rem;">{{ a.get('type', '') }}</span>
+          <span class="badge-mitre">{{ a.get('mitre', '') }}</span>
+          <span class="text-muted small ms-auto" style="font-family:monospace;">
+            {{ a.get('timestamp', '')[:19].replace('T',' ') }} UTC
+          </span>
+        </div>
+        <p class="text-muted small mb-0">{{ a.get('detail', '') }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <footer class="text-center">
+    MicroSecScore — DJOUYAGUENG SADE CEDRIC — Master II RSD — Université de Dschang
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const msg    = document.getElementById('cep-msg');
+const badge  = document.getElementById('cep-badge');
+const btnSt  = document.getElementById('btn-start');
+const btnStp = document.getElementById('btn-stop');
+
+function setMsg(txt, color) {
+  msg.textContent = txt;
+  msg.style.color = color || '#8b949e';
+}
+
+function updateUI(running, pid) {
+  if (running) {
+    badge.textContent = 'ACTIF — PID ' + pid;
+    badge.style.background = '#166534';
+    btnSt.style.display  = 'none';
+    btnStp.style.display = '';
+  } else {
+    badge.textContent = 'Arrêté';
+    badge.style.background = '#374151';
+    btnSt.style.display  = '';
+    btnStp.style.display = 'none';
+  }
+}
+
+function cepStart() {
+  btnSt.disabled = true; btnSt.textContent = 'Démarrage…';
+  setMsg('Connexion à Kafka et démarrage des 7 threads…', '#eab308');
+  fetch('/phase3/start', { method: 'POST' })
+    .then(r => r.json())
+    .then(d => {
+      btnSt.disabled = false; btnSt.textContent = '▶ Démarrer le moteur CEP';
+      if (d.status === 'started') {
+        updateUI(true, d.pid);
+        setMsg('Moteur CEP démarré (PID ' + d.pid + '). Kafka doit être actif.', '#22c55e');
+      } else if (d.status === 'already_running') {
+        updateUI(true, d.pid);
+        setMsg('Déjà en cours (PID ' + d.pid + ').', '#eab308');
+      } else {
+        setMsg('Erreur : ' + (d.detail || d.status), '#ef4444');
+      }
+    })
+    .catch(e => {
+      btnSt.disabled = false; btnSt.textContent = '▶ Démarrer le moteur CEP';
+      setMsg('Erreur réseau : ' + e, '#ef4444');
+    });
+}
+
+function cepStop() {
+  btnStp.disabled = true; btnStp.textContent = 'Arrêt…';
+  fetch('/phase3/stop', { method: 'POST' })
+    .then(r => r.json())
+    .then(() => {
+      btnStp.disabled = false; btnStp.textContent = '■ Arrêter';
+      updateUI(false, null);
+      setMsg('Moteur CEP arrêté.', '#8b949e');
+    })
+    .catch(e => {
+      btnStp.disabled = false; btnStp.textContent = '■ Arrêter';
+      setMsg('Erreur : ' + e, '#ef4444');
+    });
+}
+
+function injectAttack() {
+  setMsg('Injection du scénario APT en cours (scan + brute + lateral + escape)…', '#eab308');
+  fetch('/phase3/inject', { method: 'POST' })
+    .then(r => r.json())
+    .then(d => {
+      if (d.status === 'injected') {
+        setMsg('Scénario APT injecté sur Kafka. Les alertes apparaissent dans 3-5 secondes.', '#22c55e');
+        setTimeout(() => location.reload(), 5000);
+      } else {
+        setMsg('Erreur injection : ' + (d.detail || d.status), '#ef4444');
+      }
+    })
+    .catch(e => setMsg('Erreur réseau : ' + e, '#ef4444'));
+}
+
+// Vérifier le statut toutes les 10s et recharger si de nouvelles alertes arrivent
+let _lastTotal = {{ total }};
+setInterval(() => {
+  fetch('/phase3/api/stats')
+    .then(r => r.json())
+    .then(d => {
+      updateUI(d.proc_running, d.proc_pid);
+      if (d.total !== _lastTotal) {
+        _lastTotal = d.total;
+        location.reload();
+      }
+    });
+}, 10000);
+</script>
+</body>
+</html>

@@ -122,7 +122,7 @@ def normalize_event(raw_event: dict,
         logger.debug(f"Événement rejeté ({reason}): {str(raw_event)[:80]}")
         return None
 
-    return {
+    normalized = {
         "schema_version": "1.0",
         "event_id":       str(uuid.uuid4()),
         "timestamp_utc":  raw_event.get("timestamp_utc", _now_utc_iso()),
@@ -137,6 +137,9 @@ def normalize_event(raw_event: dict,
             "topic_origin": topic_origin,
         },
     }
+    if "phase1" in raw_event:
+        normalized["phase1"] = raw_event["phase1"]
+    return normalized
 
 
 class EventNormalizer:

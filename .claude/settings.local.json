@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(docker exec microsecure-kafka kafka-topics --bootstrap-server localhost:9092 --create --if-not-exists --topic logs-applicatifs --partitions 3 --replication-factor 1 --config retention.ms=86400000)",
+      "PowerShell(docker exec microsecure-kafka kafka-topics --bootstrap-server localhost:9092 --create --if-not-exists --topic metriques-systeme --partitions 3 --replication-factor 1 --config retention.ms=86400000)",
+      "PowerShell(docker exec microsecure-kafka kafka-topics --bootstrap-server localhost:9092 --create --if-not-exists --topic alertes-securite --partitions 3 --replication-factor 1 --config retention.ms=86400000)",
+      "PowerShell(docker exec microsecure-kafka kafka-topics --bootstrap-server localhost:9092 --list)",
+      "Bash(mkdir \"c:\\\\Users\\\\LABO-INFOS\\\\Desktop\\\\recherche\\\\mes tests\\\\MicroSecScore\\\\microsecscor_phase3\")",
+      "Bash(mkdir \"c:\\\\Users\\\\LABO-INFOS\\\\Desktop\\\\recherche\\\\mes tests\\\\MicroSecScore\\\\microsecscor_phase3\\\\rules\")",
+      "Bash(mkdir \"c:\\\\Users\\\\LABO-INFOS\\\\Desktop\\\\recherche\\\\mes tests\\\\MicroSecScore\\\\microsecscor_phase3\\\\tests\")",
+      "Bash(python -c \"import neo4j_cache; print\\('OK'\\)\")"
+    ]
+  }
+}

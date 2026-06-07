@@ -1,0 +1,154 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {
+    "nom": "G0",
+    "version": "1.0",
+    "horodatage": "2026-05-11T12:18:01.974350",
+    "nb_noeuds": 13,
+    "nb_aretes": 0,
+    "noeuds_exposes": []
+  },
+  "nodes": [
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/currencyservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "currencyservice"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/loadgenerator:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "loadgenerator"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/productcatalogservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "productcatalogservice"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/checkoutservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "checkoutservice"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/shippingservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "shippingservice"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/cartservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "cartservice"
+    },
+    {
+      "image": "redis:alpine",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "redis-cart"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/emailservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "emailservice"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/paymentservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "paymentservice"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/frontend:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "frontend"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/recommendationservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "recommendationservice"
+    },
+    {
+      "image": "us-central1-docker.pkg.dev/google-samples/microservices-demo/adservice:v0.10.5",
+      "ports_exposes": [],
+      "privileged": false,
+      "docker_sock": false,
+      "score_cve": 70.0,
+      "criticite": 1,
+      "niveau": "STABLE",
+      "type_noeud": "service",
+      "id": "adservice"
+    },
+    {
+      "type_noeud": "attaquant_externe",
+      "score_cve": null,
+      "criticite": 0,
+      "niveau": "EXTERNE",
+      "id": "Outside"
+    }
+  ],
+  "edges": []
+}

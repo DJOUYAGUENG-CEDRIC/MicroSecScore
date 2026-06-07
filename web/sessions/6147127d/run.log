@@ -1,0 +1,138 @@
+Commande : C:\Users\LABO-INFOS\AppData\Local\Programs\Python\Python313\python.exe phase1_topology.py --no-neo4j --simulation --k8s-dir C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\6147127d\k8s --env kubernetes
+Code retour : 1
+
+=== STDOUT ===
+[2026-05-12 04:07:15] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:15] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-05-12 04:07:15] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:15] [INFO    ] [__main__] Mode simulation   : OUI
+[2026-05-12 04:07:15] [INFO    ] [__main__] Sync Neo4j        : NON
+[2026-05-12 04:07:15] [INFO    ] [__main__] Visualisation     : OUI
+[2026-05-12 04:07:15] [INFO    ] [__main__] Dossier K8s       : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\6147127d\k8s
+[2026-05-12 04:07:15] [INFO    ] [__main__] Environnement     : FORCÉ → KUBERNETES
+[2026-05-12 04:07:15] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:15] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-05-12 04:07:15] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:15] [INFO    ] [parsers.detector] Environnement forcé manuellement : kubernetes
+[2026-05-12 04:07:15] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:15] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-05-12 04:07:15] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:15] [INFO    ] [parsers.detector] → Environnement forcé       : KUBERNETES
+[2026-05-12 04:07:15] [INFO    ] [__main__] Parseur sélectionné : Kubernetes (fichiers YAML depuis C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\6147127d\k8s)
+[2026-05-12 04:07:18] [INFO    ] [parsers.kubernetes_parser] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [parsers.kubernetes_parser]   PARSING KUBERNETES (FICHIERS YAML)
+[2026-05-12 04:07:18] [INFO    ] [parsers.kubernetes_parser] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [parsers.kubernetes_parser] Dossier source : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\6147127d\k8s
+[2026-05-12 04:07:18] [INFO    ] [parsers.kubernetes_parser] → Deployments détectés      : 12
+[2026-05-12 04:07:18] [INFO    ] [parsers.kubernetes_parser] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-05-12 04:07:18] [INFO    ] [parsers.kubernetes_parser] → Noeuds dans G0            : 13 (dont Outside)
+[2026-05-12 04:07:18] [INFO    ] [parsers.kubernetes_parser] → Arêtes détectées          : 18
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Environnement             : Kubernetes
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Services parsés           : 12
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Services exposés          : ['api-gateway', 'admin-dashboard']
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Durée                     : 3.61s
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-05-12 04:07:18] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.builder] → Noeuds dans G0            : 13
+[2026-05-12 04:07:18] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 16
+[2026-05-12 04:07:18] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 2
+[2026-05-12 04:07:18] [INFO    ] [graph.builder] → Total arêtes              : 18
+[2026-05-12 04:07:18] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Noeuds                    : 13 (dont Outside)
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Arêtes                    : 18
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Durée                     : 0.01s
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer] → Criticités calculées      : 13 noeuds
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Criticités                : 13 noeuds
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [WARNING ] [__main__] MODE SIMULATION — scores CVE Sock Shop injectés
+[2026-05-12 04:07:18] [WARNING ] [cve.cve_scorer] MODE SIMULATION — scores CVE simulés (Sock Shop réels)
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [__main__]   ÉTAPE 5 — CALCUL DU SCORE GLOBAL
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer] → Score global              : 67.7/100
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer] → Niveau sécurité           : DEGRADE
+[2026-05-12 04:07:18] [INFO    ] [graph.scorer] → Services évalués          : 12
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Score global              : 67.7/100
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Niveau sécurité           : DEGRADE
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [__main__]   ÉTAPE 7 — EXPORT DES FICHIERS
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] → Taille                    : 6.3 Ko
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] → Noeuds                    : 13
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] → Arêtes                    : 18
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] → CSV exporté               : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-12 04:07:18] [INFO    ] [graph.exporter] → Services évalués          : 12
+[2026-05-12 04:07:18] [INFO    ] [__main__] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Scores exportés           : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-12 04:07:18] [INFO    ] [__main__] → Durée                     : 0.02s
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [__main__]   ÉTAPE 8 — VISUALISATION DE G0
+[2026-05-12 04:07:18] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [visualizer.graph_viz] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:18] [INFO    ] [visualizer.graph_viz]   VISUALISATION DE G0
+[2026-05-12 04:07:18] [INFO    ] [visualizer.graph_viz] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:20] [INFO    ] [visualizer.graph_viz] → Rendu PNG généré          : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.png
+[2026-05-12 04:07:22] [INFO    ] [visualizer.graph_viz] → Rendu HTML interactif généré : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html
+[2026-05-12 04:07:22] [INFO    ] [visualizer.graph_viz] Ouvrez C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html dans votre navigateur pour explorer G0 de façon interactive
+[2026-05-12 04:07:22] [INFO    ] [__main__] → Viz PNG                   : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.png
+[2026-05-12 04:07:22] [INFO    ] [__main__] → Viz HTML                  : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html
+[2026-05-12 04:07:22] [INFO    ] [__main__] → Durée                     : 3.20s
+[2026-05-12 04:07:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:22] [INFO    ] [__main__]   WATCHER KUBERNETES
+[2026-05-12 04:07:22] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:22] [INFO    ] [watcher.k8s_watcher] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:22] [INFO    ] [watcher.k8s_watcher]   DÉMARRAGE DU WATCHER KUBERNETES
+[2026-05-12 04:07:22] [INFO    ] [watcher.k8s_watcher] ────────────────────────────────────────────────────────────
+[2026-05-12 04:07:22] [INFO    ] [watcher.k8s_watcher] → Watcher Kubernetes        : ACTIF
+[2026-05-12 04:07:22] [INFO    ] [watcher.k8s_watcher] → Thread                    : KubernetesWatcher
+[2026-05-12 04:07:22] [INFO    ] [watcher.k8s_watcher] → Namespace surveillé       : default
+[2026-05-12 04:07:22] [INFO    ] [watcher.k8s_watcher] G0 sera mis à jour automatiquement à chaque changement Kubernetes
+[2026-05-12 04:07:22] [INFO    ] [__main__] Watcher actif — G0 mis à jour automatiquement
+[2026-05-12 04:07:22] [INFO    ] [__main__] ============================================================
+[2026-05-12 04:07:22] [INFO    ] [__main__]   RÉSUMÉ — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-05-12 04:07:22] [INFO    ] [__main__] ============================================================
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → Environnement   : Kubernetes
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → Services parsés : 12 services
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → Noeuds dans G0  : 13 (dont Outside)
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → Arêtes dans G0  : 18
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → Services exposés: ['api-gateway', 'admin-dashboard']
+[2026-05-12 04:07:22] [INFO    ] [__main__] 
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → G0 sauvegardé   : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → Scores CVE      : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-12 04:07:22] [INFO    ] [__main__] 
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → Score global    : 67.7/100 → DEGRADE !
+[2026-05-12 04:07:22] [INFO    ] [__main__] 
+[2026-05-12 04:07:22] [INFO    ] [__main__]   Services les plus vulnérables :
+[2026-05-12 04:07:22] [INFO    ] [__main__]     user-db              score=42.0/100  criticité=3
+[2026-05-12 04:07:22] [INFO    ] [__main__]     api-gateway          score=70.0/100  criticité=5
+[2026-05-12 04:07:22] [INFO    ] [__main__]     auth-service         score=70.0/100  criticité=4
+[2026-05-12 04:07:22] [INFO    ] [__main__] 
+[2026-05-12 04:07:22] [INFO    ] [__main__]   → Durée totale    : 6.9s
+[2026-05-12 04:07:22] [INFO    ] [__main__] ============================================================
+
+=== STDERR ===

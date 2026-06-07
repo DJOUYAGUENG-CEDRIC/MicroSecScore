@@ -72,7 +72,15 @@ VALID_EVENT_TYPES = {
 }
 
 # ─────────────────────────────────────────
-# SECTION 5 — Sorties
+# SECTION 5 — Intégration Phase 1
+# ─────────────────────────────────────────
+import os as _os
+GRAPH_G0_PATH = _os.path.join(
+    _os.path.dirname(__file__), "..", "..", "data", "output", "graph_G0.json"
+)
+
+# ─────────────────────────────────────────
+# SECTION 6 — Sorties
 # ─────────────────────────────────────────
 OUTPUT_DIR = "data/output"
 EVENTS_LOG_FILE = "data/output/events_collected.jsonl"

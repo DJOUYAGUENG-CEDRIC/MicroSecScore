@@ -50,6 +50,7 @@ from collectors.docker_log_collector import DockerLogCollector
 from collectors.prometheus_collector import PrometheusCollector
 from collectors.falco_generator      import FalcoGenerator
 from normalizer.event_normalizer     import EventNormalizer
+from utils.topology_loader           import charger_topologie_phase1
 
 
 # ─────────────────────────────────────────
@@ -201,8 +202,12 @@ def main() -> None:
 
     # ── Initialisation ─────────────────────────────────────
     logger.info("Phase 2 MicroSecScore — Démarrage")
+    topo = charger_topologie_phase1()
+    if not topo:
+        logger.warning("graph_G0.json introuvable — collecte sur tous les conteneurs")
+
     producer    = _init_producer()
-    log_coll    = DockerLogCollector(producer)
+    log_coll    = DockerLogCollector(producer, topologie_phase1=topo)
     metric_coll = PrometheusCollector(producer)
     falco_gen   = FalcoGenerator(producer)
     normalizer  = EventNormalizer()

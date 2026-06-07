@@ -38,7 +38,12 @@
 
 <div class="hero text-center">
   <h1 class="fw-bold mb-1">MicroSecScore</h1>
-  <p class="mb-0 opacity-75">Résultats de l'analyse — session <code class="text-white">{{ session_id }}</code></p>
+  <p class="mb-2 opacity-75">Résultats Phase 1 — session <code class="text-white">{{ session_id }}</code></p>
+  <div>
+    <a href="/" class="btn btn-sm btn-outline-light me-2">Phase 1 — Analyser</a>
+    <a href="/phase2" class="btn btn-sm btn-outline-light me-2">Phase 2 — Runtime</a>
+    <a href="/phase3" class="btn btn-sm btn-outline-light">Phase 3 — CEP</a>
+  </div>
 </div>
 
 <div class="container py-4" style="max-width: 960px">
@@ -157,6 +162,37 @@
     </div>
   </div>
 
+  <!-- ── Phase 2 — Surveillance en temps réel ──────────────────── -->
+  <div class="card card-result mb-4" id="phase2-card">
+    <div class="card-header bg-white border-0 pt-3 px-4 d-flex align-items-center justify-content-between">
+      <span class="fw-semibold">Phase 2 — Surveillance en temps réel</span>
+      <span id="p2-badge" class="badge rounded-pill bg-secondary px-3">Chargement…</span>
+    </div>
+    <div class="card-body px-4 pb-4">
+      <p class="text-muted small mb-3">
+        Démarre la collecte des logs Docker, métriques et alertes Falco
+        sur les <strong>{{ nb_services }} services</strong> identifiés en Phase 1.
+        Les événements sont visibles en direct sur le tableau de bord Phase 2.
+      </p>
+
+      <div id="p2-info" class="alert alert-info py-2 small mb-3 d-none"></div>
+
+      <div class="d-flex gap-2 flex-wrap">
+        <button id="btn-start-p2" class="btn btn-success btn-sm px-3"
+                onclick="phase2Start()">
+          ▶ Démarrer la surveillance
+        </button>
+        <button id="btn-stop-p2" class="btn btn-danger btn-sm px-3 d-none"
+                onclick="phase2Stop()">
+          ■ Arrêter
+        </button>
+        <a href="/phase2" class="btn btn-outline-primary btn-sm px-3">
+          Tableau de bord Phase 2 →
+        </a>
+      </div>
+    </div>
+  </div>
+
   <!-- ── Navigation ─────────────────────────────────────────────── -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <a href="/" class="btn btn-outline-primary btn-back">← Analyser une autre application</a>
@@ -170,5 +206,94 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+(function () {
+  const SESSION_ID = "{{ session_id }}";
+  const badge      = document.getElementById("p2-badge");
+  const info       = document.getElementById("p2-info");
+  const btnStart   = document.getElementById("btn-start-p2");
+  const btnStop    = document.getElementById("btn-stop-p2");
+
+  function setInfo(msg, cls) {
+    info.textContent = msg;
+    info.className = "alert py-2 small mb-3 alert-" + (cls || "info");
+    info.classList.remove("d-none");
+  }
+
+  function updateUI(running, pid, started) {
+    if (running) {
+      badge.className = "badge rounded-pill bg-success px-3";
+      badge.textContent = "ACTIF — PID " + pid;
+      btnStart.classList.add("d-none");
+      btnStop.classList.remove("d-none");
+      if (started) setInfo("Surveillance démarrée le " + started.replace("T", " ").slice(0, 19) + " UTC", "success");
+    } else {
+      badge.className = "badge rounded-pill bg-secondary px-3";
+      badge.textContent = "Arrêté";
+      btnStart.classList.remove("d-none");
+      btnStop.classList.add("d-none");
+    }
+  }
+
+  function refreshStatus() {
+    fetch("/phase2/status")
+      .then(r => r.json())
+      .then(d => updateUI(d.running, d.pid, d.started_at))
+      .catch(() => { badge.textContent = "Erreur"; });
+  }
+
+  window.phase2Start = function () {
+    btnStart.disabled = true;
+    btnStart.textContent = "Démarrage…";
+    setInfo("Démarrage de Phase 2 en cours…", "info");
+    fetch("/phase2/start", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: "session_id=" + encodeURIComponent(SESSION_ID),
+    })
+    .then(r => r.json())
+    .then(d => {
+      btnStart.disabled = false;
+      btnStart.textContent = "▶ Démarrer la surveillance";
+      if (d.status === "started") {
+        setInfo("Phase 2 démarrée (PID " + d.pid + "). Kafka doit être actif.", "success");
+        updateUI(true, d.pid, d.started_at);
+      } else if (d.status === "already_running") {
+        setInfo("Phase 2 est déjà en cours (PID " + d.pid + ").", "warning");
+        updateUI(true, d.pid, null);
+      } else {
+        setInfo("Erreur : " + (d.detail || d.status), "danger");
+      }
+    })
+    .catch(e => {
+      btnStart.disabled = false;
+      btnStart.textContent = "▶ Démarrer la surveillance";
+      setInfo("Erreur réseau : " + e, "danger");
+    });
+  };
+
+  window.phase2Stop = function () {
+    btnStop.disabled = true;
+    btnStop.textContent = "Arrêt…";
+    fetch("/phase2/stop", { method: "POST" })
+      .then(r => r.json())
+      .then(d => {
+        btnStop.disabled = false;
+        btnStop.textContent = "■ Arrêter";
+        setInfo("Phase 2 arrêtée.", "secondary");
+        updateUI(false, null, null);
+      })
+      .catch(e => {
+        btnStop.disabled = false;
+        btnStop.textContent = "■ Arrêter";
+        setInfo("Erreur : " + e, "danger");
+      });
+  };
+
+  // Vérifier le statut au chargement puis toutes les 10 secondes
+  refreshStatus();
+  setInterval(refreshStatus, 10000);
+})();
+</script>
 </body>
 </html>

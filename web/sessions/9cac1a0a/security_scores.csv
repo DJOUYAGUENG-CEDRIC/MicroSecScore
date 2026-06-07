@@ -1,0 +1,14 @@
+service,image,score_cve,criticite,niveau,ports,privileged
+payment,weaveworksdemos/payment:0.4.3,14.0,2,CRITIQUE,[],False
+orders-db,mongo:3.4,24.0,3,CRITIQUE,[],False
+user-db,weaveworksdemos/user-db:0.4.0,42.0,3,CRITIQUE,[],False
+front-end,weaveworksdemos/front-end:0.3.12,48.0,4,CRITIQUE,[80],False
+catalogue-db,weaveworksdemos/catalogue-db:0.3.0,50.0,3,DEGRADE,[],False
+rabbitmq,rabbitmq:3.6.8,60.0,3,DEGRADE,[],False
+user,weaveworksdemos/user:0.4.7,62.0,4,DEGRADE,[],False
+catalogue,weaveworksdemos/catalogue:0.3.5,68.0,3,DEGRADE,[],False
+orders,weaveworksdemos/orders:0.4.7,76.0,3,STABLE,[],False
+edge-router,weaveworksdemos/edge-router:0.1.1,76.0,2,STABLE,[8080],False
+shipping,weaveworksdemos/shipping:0.4.8,78.0,2,STABLE,[],False
+cart,weaveworksdemos/cart:0.4.8,86.0,3,STABLE,[],False
+cart-db,redis:alpine,92.0,3,SAIN,[],False

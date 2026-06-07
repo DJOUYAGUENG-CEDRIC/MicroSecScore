@@ -73,6 +73,8 @@ services:
     entrypoint: ["/bin/sh", "-c"]
     command: |
       "
+      echo '>>> Attente démarrage Kafka (30s)...'
+      sleep 30
       echo '>>> Création des topics MicroSecScore...'
 
       kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists \

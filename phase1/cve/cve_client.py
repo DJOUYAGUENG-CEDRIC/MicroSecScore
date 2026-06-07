@@ -110,8 +110,9 @@ def interroger_cve_par_image(image: str) -> dict:
             stderr=subprocess.PIPE,
             timeout=TRIVY_TIMEOUT + 15,
         )
-        stdout = proc.stdout.decode("utf-8", errors="replace")
-        stderr = proc.stderr.decode("utf-8", errors="replace")
+        # utf-8-sig retire automatiquement le BOM Windows que Trivy ajoute
+        stdout = proc.stdout.decode("utf-8-sig", errors="replace")
+        stderr = proc.stderr.decode("utf-8",     errors="replace")
 
     except subprocess.TimeoutExpired:
         logger.warning(f"Trivy timeout ({TRIVY_TIMEOUT}s) pour '{image}'")

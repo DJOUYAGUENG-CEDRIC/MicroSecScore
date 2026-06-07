@@ -1,0 +1,104 @@
+# =============================================================================
+# Sock Shop — Application e-commerce microservices
+# Source : Weaveworks (benchmark académique)
+# Utilisé pour : Test Phase 1 MicroSecScore — Environnement Docker Compose
+# =============================================================================
+
+version: '3'
+
+services:
+
+  front-end:
+    image: weaveworksdemos/front-end:0.3.12
+    ports:
+      - '80:8079'
+    depends_on:
+      - catalogue
+      - orders
+      - cart
+      - user
+    networks:
+      - front-tier
+      - back-tier
+
+  edge-router:
+    image: weaveworksdemos/edge-router:0.1.1
+    ports:
+      - '8080:8080'
+    depends_on:
+      - front-end
+    networks:
+      - front-tier
+      - back-tier
+
+  catalogue:
+    image: weaveworksdemos/catalogue:0.3.5
+    depends_on:
+      - catalogue-db
+    networks:
+      - back-tier
+
+  catalogue-db:
+    image: weaveworksdemos/catalogue-db:0.3.0
+    networks:
+      - back-tier
+
+  orders:
+    image: weaveworksdemos/orders:0.4.7
+    depends_on:
+      - orders-db
+      - rabbitmq
+    networks:
+      - back-tier
+
+  orders-db:
+    image: mongo:3.4
+    networks:
+      - back-tier
+
+  cart:
+    image: weaveworksdemos/cart:0.4.8
+    depends_on:
+      - cart-db
+    networks:
+      - back-tier
+
+  cart-db:
+    image: redis:alpine
+    networks:
+      - back-tier
+
+  payment:
+    image: weaveworksdemos/payment:0.4.3
+    networks:
+      - back-tier
+
+  user:
+    image: weaveworksdemos/user:0.4.7
+    depends_on:
+      - user-db
+    networks:
+      - back-tier
+
+  user-db:
+    image: weaveworksdemos/user-db:0.4.0
+    networks:
+      - back-tier
+
+  shipping:
+    image: weaveworksdemos/shipping:0.4.8
+    depends_on:
+      - rabbitmq
+    networks:
+      - back-tier
+
+  rabbitmq:
+    image: rabbitmq:3.6.8
+    networks:
+      - back-tier
+
+networks:
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge

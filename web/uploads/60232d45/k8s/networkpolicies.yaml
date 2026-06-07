@@ -1,0 +1,194 @@
+# =============================================================================
+# BankSecure — NetworkPolicies Kubernetes
+# Fichier : data/input/k8s/networkpolicies.yaml
+# Définit les communications autorisées entre services
+# = équivalent des depends_on de Docker Compose
+# Ces règles génèrent les arêtes DEPENDS_ON dans G0
+# =============================================================================
+
+# api-gateway ← auth-service, account-service, transaction-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: api-gateway-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: api-gateway
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: auth-service
+    - podSelector:
+        matchLabels:
+          app: account-service
+    - podSelector:
+        matchLabels:
+          app: transaction-service
+
+---
+# auth-service ← api-gateway uniquement
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: auth-service-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: auth-service
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+
+---
+# account-service ← api-gateway, auth-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: account-service-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: account-service
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    - podSelector:
+        matchLabels:
+          app: auth-service
+
+---
+# transaction-service ← api-gateway, account-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: transaction-service-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: transaction-service
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: api-gateway
+    - podSelector:
+        matchLabels:
+          app: account-service
+
+---
+# user-db ← auth-service uniquement
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: user-db-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: user-db
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: auth-service
+
+---
+# account-db ← account-service uniquement
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: account-db-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: account-db
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: account-service
+
+---
+# transaction-db ← transaction-service, fraud-detection
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: transaction-db-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: transaction-db
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: transaction-service
+    - podSelector:
+        matchLabels:
+          app: fraud-detection
+
+---
+# notification-service ← transaction-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: notification-service-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: notification-service
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: transaction-service
+
+---
+# redis-cache ← auth-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: redis-cache-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: redis-cache
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: auth-service
+
+---
+# message-broker ← transaction-service, notification-service
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: message-broker-policy
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: message-broker
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: transaction-service
+    - podSelector:
+        matchLabels:
+          app: notification-service

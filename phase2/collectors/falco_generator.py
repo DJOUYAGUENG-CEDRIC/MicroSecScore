@@ -41,27 +41,75 @@ from config.phase2_settings import (
 logger = logging.getLogger("phase2.falco_generator")
 
 # ─────────────────────────────────────────
-# Services Sock Shop disponibles pour les scénarios
+# Topologie chargée dynamiquement depuis graph_G0.json (Phase 1)
 # ─────────────────────────────────────────
-SOCK_SHOP_SERVICES = [
-    "front-end", "catalogue", "catalogue-db", "orders", "orders-db",
-    "cart", "cart-db", "payment", "user", "user-db",
-    "shipping", "rabbitmq", "edge-router",
-]
-EXPOSED_SERVICES   = ["front-end", "edge-router"]
-INTERNAL_SERVICES  = [s for s in SOCK_SHOP_SERVICES if s not in EXPOSED_SERVICES]
-DB_SERVICES        = ["catalogue-db", "orders-db", "cart-db", "user-db"]
 
-# Relations AUTORISÉES dans G0 (issues de la Phase 1)
-# Utilisées pour générer des mouvements latéraux NON autorisés
-AUTHORIZED_RELATIONS = {
-    "front-end":   ["catalogue", "orders", "cart", "user"],
-    "orders":      ["orders-db", "rabbitmq"],
-    "cart":        ["cart-db"],
-    "user":        ["user-db"],
-    "catalogue":   ["catalogue-db"],
-    "shipping":    ["rabbitmq"],
-}
+def _charger_topologie_depuis_g0() -> tuple:
+    """
+    Lit graph_G0.json et extrait :
+      - all_services    : liste de tous les services (hors Outside)
+      - exposed         : services avec ports publics (cibles de scan)
+      - authorized      : dict {service: [services_autorisés]} (arêtes DEPENDS_ON)
+
+    Retourne des listes vides si le fichier est absent — le générateur
+    se rabattra sur les services Docker actifs.
+    """
+    import json as _json
+    import os as _os
+
+    g0_path = _os.path.abspath(
+        _os.path.join(_os.path.dirname(__file__), "..", "..", "data", "output", "graph_G0.json")
+    )
+
+    if not _os.path.isfile(g0_path):
+        logger.warning("graph_G0.json absent — FalcoGenerator sans contexte G0")
+        return [], [], {}
+
+    try:
+        with open(g0_path, encoding="utf-8") as f:
+            data = _json.load(f)
+    except Exception as exc:
+        logger.error(f"Erreur lecture graph_G0.json : {exc}")
+        return [], [], {}
+
+    nodes = data.get("nodes", [])
+    links = data.get("links", [])   # format NetworkX node-link
+
+    all_services = [
+        n["id"] for n in nodes
+        if n.get("id") != "Outside" and n.get("type_noeud") == "service"
+    ]
+
+    exposed = [
+        n["id"] for n in nodes
+        if n.get("ports_exposes") and n.get("id") != "Outside"
+    ]
+    # Si aucun port exposé trouvé, prendre les 2 premiers services
+    if not exposed and all_services:
+        exposed = all_services[:2]
+
+    authorized: dict = {}
+    for link in links:
+        src = link.get("source", "")
+        tgt = link.get("target", "")
+        if link.get("type_arete") == "DEPENDS_ON" and src != "Outside" and tgt != "Outside":
+            authorized.setdefault(src, []).append(tgt)
+
+    logger.info(
+        f"Topologie G0 chargee : {len(all_services)} services, "
+        f"{len(exposed)} exposes, {len(authorized)} relations autorisees"
+    )
+    return all_services, exposed, authorized
+
+
+# Chargement au démarrage du module
+_ALL_SERVICES, _EXPOSED_SERVICES, _AUTHORIZED_RELATIONS = _charger_topologie_depuis_g0()
+
+# Fallback si G0 absent au moment de l'import
+if not _ALL_SERVICES:
+    _ALL_SERVICES   = ["service-a", "service-b", "service-c", "db"]
+    _EXPOSED_SERVICES = ["service-a"]
+    _AUTHORIZED_RELATIONS = {"service-a": ["service-b"], "service-b": ["db"]}
 
 # IPs sources simulées (attaquant externe)
 ATTACKER_IPS = [
@@ -84,7 +132,7 @@ def _build_falco_scan_alert() -> dict:
     MITRE ATT&CK T1046 — Network Service Discovery
     Un attaquant sonde les ports exposés pour identifier les services.
     """
-    target_service = random.choice(EXPOSED_SERVICES)
+    target_service = random.choice(_EXPOSED_SERVICES)
     attacker_ip    = random.choice(ATTACKER_IPS)
     nb_ports       = random.randint(51, 200)  # > seuil CEP de 50
 
@@ -131,7 +179,7 @@ def _build_falco_brute_alert() -> dict:
     MITRE ATT&CK T1110 — Brute Force
     Un attaquant tente de deviner les credentials d'un service exposé.
     """
-    target_service = random.choice(EXPOSED_SERVICES)
+    target_service = random.choice(_EXPOSED_SERVICES)
     attacker_ip    = random.choice(ATTACKER_IPS)
     nb_attempts    = random.randint(101, 500)   # > seuil CEP de 100
     usernames      = ["admin", "root", "user", "test", "guest", "service"]
@@ -180,13 +228,15 @@ def _build_falco_lateral_alert() -> dict:
     La paire (source, cible) est garantie NON PRÉSENTE dans G0
     pour déclencher l'alerte de mouvement latéral en Phase 3.
     """
-    # Choisir une paire non autorisée
-    # Ex: payment → orders-db n'est pas dans AUTHORIZED_RELATIONS
+    # Choisir une paire non autorisée dans G0
+    internal = [s for s in _ALL_SERVICES if s not in _EXPOSED_SERVICES]
+    if not internal:
+        internal = _ALL_SERVICES
+
     all_pairs_non_autorises = []
-    for src in INTERNAL_SERVICES:
-        autorises = AUTHORIZED_RELATIONS.get(src, [])
-        non_autorises = [s for s in INTERNAL_SERVICES
-                         if s != src and s not in autorises]
+    for src in internal:
+        autorises = _AUTHORIZED_RELATIONS.get(src, [])
+        non_autorises = [s for s in internal if s != src and s not in autorises]
         for dst in non_autorises:
             all_pairs_non_autorises.append((src, dst))
 
@@ -218,6 +268,56 @@ def _build_falco_lateral_alert() -> dict:
             "service_source":  src_service,
             "service_cible":   dst_service,
             "autorise_g0":     False,          # Clé utilisée par la Phase 3
+            "simulated":       True,
+        },
+    }
+
+
+def _build_falco_escape_alert() -> dict:
+    """
+    Génère une alerte Falco de type évasion de conteneur.
+
+    Correspond à la règle CEP P5 (Phase 3) :
+    MITRE ATT&CK T1611 — Escape to Host
+    Un processus dans un conteneur tente d'accéder au namespace hôte.
+    """
+    target_service = random.choice(_ALL_SERVICES)
+
+    escape_scenarios = [
+        ("terminal shell in container", "Terminal Shell in Container"),
+        ("execve", "Execve Syscall Detected in Container"),
+        ("docker.sock", "Docker Socket Accessed from Container"),
+        ("mount namespace", "Container Namespace Escape Attempt"),
+        ("privileged", "Launch Privileged Container"),
+        ("nsenter", "Nsenter Detected in Container"),
+    ]
+    keyword, rule_name = random.choice(escape_scenarios)
+
+    return {
+        "output":   (
+            f"Container escape attempt detected in {target_service}: "
+            f"{keyword} used — possible host namespace access "
+            f"(container={target_service}, image=weaveworksdemos)"
+        ),
+        "priority": "Critical",
+        "rule":     rule_name,
+        "time":     _now_utc_iso(),
+        "source":   "syscall",
+
+        "output_fields": {
+            "container.name":  target_service,
+            "container.image": f"weaveworksdemos/{target_service}:latest",
+            "evt.type":        "execve",
+            "proc.name":       "sh",
+            "proc.cmdline":    f"nsenter --target 1 --mount --uts --ipc --net --pid",
+        },
+
+        "microsecure": {
+            "alert_type":      "ALERT_ESCAPE",
+            "mitre_technique": "T1611",
+            "mitre_tactic":    "TA0004",    # Privilege Escalation
+            "service_cible":   target_service,
+            "keyword":         keyword,
             "simulated":       True,
         },
     }
@@ -259,6 +359,7 @@ class FalcoGenerator:
             "scan_alerts":    0,
             "brute_alerts":   0,
             "lateral_alerts": 0,
+            "escape_alerts":  0,
             "total_published": 0,
             "errors": 0,
         }
@@ -306,6 +407,21 @@ class FalcoGenerator:
                 f"{alert['microsecure']['service_cible']}"
             )
 
+        if scenario in ("escape", "full"):
+            alert = _build_falco_escape_alert()
+            self._publish(_wrap_for_kafka(alert))
+            self._stats["escape_alerts"] += 1
+            logger.info(
+                f"  → ESCAPE injecté : {alert['microsecure']['service_cible']} "
+                f"({alert['microsecure']['keyword']})"
+            )
+
+        if scenario in ("escape", "full"):
+            alert = _build_falco_escape_alert()
+            self._publish(_wrap_for_kafka(alert))
+            self._stats["escape_alerts"] += 1
+            logger.info(f"  → ESCAPE injecté : {alert['microsecure']['service_cible']}")
+
     def _run_loop(self) -> None:
         """
         Boucle principale : injecte des alertes selon les probabilités
@@ -339,6 +455,14 @@ class FalcoGenerator:
                 alert = _build_falco_scan_alert()
                 self._publish(_wrap_for_kafka(alert))
                 self._stats["scan_alerts"] += 1
+
+            elif r < (FALCO_LATERAL_PROBABILITY
+                      + FALCO_BRUTE_PROBABILITY
+                      + FALCO_SCAN_PROBABILITY
+                      + 0.02):   # 2 % de probabilité d'évasion (très rare)
+                alert = _build_falco_escape_alert()
+                self._publish(_wrap_for_kafka(alert))
+                self._stats["escape_alerts"] += 1
 
             time.sleep(FALCO_GENERATOR_INTERVAL_S)
 

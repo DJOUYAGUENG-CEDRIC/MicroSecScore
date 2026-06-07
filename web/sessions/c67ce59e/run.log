@@ -1,0 +1,128 @@
+Commande : C:\Users\LABO-INFOS\AppData\Local\Programs\Python\Python313\python.exe phase1_topology.py --no-neo4j --simulation --file C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\c67ce59e\docker-compose.yml --env docker
+Code retour : 1
+
+=== STDOUT ===
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__]   MICROSECSCORE — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__] Mode simulation   : OUI
+[2026-05-18 14:46:31] [INFO    ] [__main__] Sync Neo4j        : NON
+[2026-05-18 14:46:31] [INFO    ] [__main__] Visualisation     : OUI
+[2026-05-18 14:46:31] [INFO    ] [__main__] Fichier Docker    : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\c67ce59e\docker-compose.yml
+[2026-05-18 14:46:31] [INFO    ] [__main__] Environnement     : FORCÉ → DOCKER
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__]   ÉTAPE 1 — PARSING DE L'ARCHITECTURE
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [parsers.detector] Environnement forcé manuellement : docker
+[2026-05-18 14:46:31] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [parsers.detector]   DÉTECTION DE L'ENVIRONNEMENT
+[2026-05-18 14:46:31] [INFO    ] [parsers.detector] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [parsers.detector] → Environnement forcé       : DOCKER
+[2026-05-18 14:46:31] [INFO    ] [__main__] Parseur sélectionné : Docker Compose
+[2026-05-18 14:46:31] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [parsers.docker_parser]   PARSING DOCKER COMPOSE
+[2026-05-18 14:46:31] [INFO    ] [parsers.docker_parser] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [parsers.docker_parser] Lecture de : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\web\uploads\c67ce59e\docker-compose.yml
+[2026-05-18 14:46:31] [WARNING ] [parsers.docker_parser] [RISQUE] Service 'queue-master' monte /var/run/docker.sock — contrôle total du daemon Docker
+[2026-05-18 14:46:31] [INFO    ] [parsers.docker_parser] → Services détectés         : 15
+[2026-05-18 14:46:31] [INFO    ] [parsers.docker_parser] → Services exposés          : ['edge-router']
+[2026-05-18 14:46:31] [INFO    ] [parsers.docker_parser] → Noeuds dans G0            : 16 (dont Outside)
+[2026-05-18 14:46:31] [INFO    ] [parsers.docker_parser] → Arêtes détectées          : 1
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Environnement             : Docker Compose
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Services parsés           : 15
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Services exposés          : ['edge-router']
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Durée                     : 0.02s
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__]   ÉTAPE 2 — CONSTRUCTION DU GRAPHE G0
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.builder]   CONSTRUCTION DU GRAPHE G0
+[2026-05-18 14:46:31] [INFO    ] [graph.builder] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.builder] → Noeuds dans G0            : 16
+[2026-05-18 14:46:31] [INFO    ] [graph.builder] → Arêtes DEPENDS_ON         : 0
+[2026-05-18 14:46:31] [INFO    ] [graph.builder] → Arêtes PEUT_ATTAQUER      : 1
+[2026-05-18 14:46:31] [INFO    ] [graph.builder] → Total arêtes              : 1
+[2026-05-18 14:46:31] [INFO    ] [graph.builder] Graphe G0 construit avec succès
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Noeuds                    : 16 (dont Outside)
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Arêtes                    : 1
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__]   ÉTAPE 3 — CALCUL DES CRITICITÉS
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer]   CALCUL DES CRITICITÉS
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer] → Criticités calculées      : 16 noeuds
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Criticités                : 16 noeuds
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__]   ÉTAPE 4 — CALCUL DES SCORES CVE
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [WARNING ] [__main__] MODE SIMULATION — scores CVE Sock Shop injectés
+[2026-05-18 14:46:31] [WARNING ] [cve.cve_scorer] MODE SIMULATION — scores CVE simulés (Sock Shop réels)
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__]   ÉTAPE 5 — CALCUL DU SCORE GLOBAL
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer]   CALCUL DU SCORE GLOBAL
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer] → Score global              : 53.5/100
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer] → Niveau sécurité           : DEGRADE
+[2026-05-18 14:46:31] [INFO    ] [graph.scorer] → Services évalués          : 15
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Score global              : 53.5/100
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Niveau sécurité           : DEGRADE
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Durée                     : 0.00s
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__]   ÉTAPE 7 — EXPORT DES FICHIERS
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter]   EXPORT DU GRAPHE G0
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] → Taille                    : 4.7 Ko
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] → Noeuds                    : 16
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] → Arêtes                    : 1
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter]   EXPORT DES SCORES CSV
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] → CSV exporté               : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-18 14:46:31] [INFO    ] [graph.exporter] → Services évalués          : 15
+[2026-05-18 14:46:31] [INFO    ] [__main__] → G0 exporté                : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Scores exportés           : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-18 14:46:31] [INFO    ] [__main__] → Durée                     : 0.01s
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [__main__]   ÉTAPE 8 — VISUALISATION DE G0
+[2026-05-18 14:46:31] [INFO    ] [__main__] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [visualizer.graph_viz] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [visualizer.graph_viz]   VISUALISATION DE G0
+[2026-05-18 14:46:31] [INFO    ] [visualizer.graph_viz] ────────────────────────────────────────────────────────────
+[2026-05-18 14:46:31] [INFO    ] [visualizer.graph_viz] → Rendu PNG généré          : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.png
+[2026-05-18 14:46:32] [INFO    ] [visualizer.graph_viz] → Rendu HTML interactif généré : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html
+[2026-05-18 14:46:32] [INFO    ] [visualizer.graph_viz] Ouvrez C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html dans votre navigateur pour explorer G0 de façon interactive
+[2026-05-18 14:46:32] [INFO    ] [__main__] → Viz PNG                   : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.png
+[2026-05-18 14:46:32] [INFO    ] [__main__] → Viz HTML                  : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.html
+[2026-05-18 14:46:32] [INFO    ] [__main__] → Durée                     : 1.37s
+[2026-05-18 14:46:32] [INFO    ] [__main__] ============================================================
+[2026-05-18 14:46:32] [INFO    ] [__main__]   RÉSUMÉ — PHASE 1 : TOPOLOGIE & GRAPHE G0
+[2026-05-18 14:46:32] [INFO    ] [__main__] ============================================================
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → Environnement   : Docker Compose
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → Services parsés : 15 services
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → Noeuds dans G0  : 16 (dont Outside)
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → Arêtes dans G0  : 1
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → Services exposés: ['edge-router']
+[2026-05-18 14:46:32] [INFO    ] [__main__] 
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → G0 sauvegardé   : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\graph_G0.json
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → Scores CVE      : C:\Users\LABO-INFOS\Desktop\recherche\mes tests\MicroSecScore\phase1\..\data\output\security_scores.csv
+[2026-05-18 14:46:32] [INFO    ] [__main__] 
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → Score global    : 53.5/100 → DEGRADE !
+[2026-05-18 14:46:32] [INFO    ] [__main__] 
+[2026-05-18 14:46:32] [INFO    ] [__main__]   Services les plus vulnérables :
+[2026-05-18 14:46:32] [INFO    ] [__main__]     payment              score=14.0/100  criticité=2
+[2026-05-18 14:46:32] [INFO    ] [__main__]     orders-db            score=24.0/100  criticité=2
+[2026-05-18 14:46:32] [INFO    ] [__main__]     user-db              score=42.0/100  criticité=2
+[2026-05-18 14:46:32] [INFO    ] [__main__] 
+[2026-05-18 14:46:32] [INFO    ] [__main__]   → Durée totale    : 1.4s
+[2026-05-18 14:46:32] [INFO    ] [__main__] ============================================================
+
+=== STDERR ===

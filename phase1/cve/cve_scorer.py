@@ -77,9 +77,9 @@ def enrichir_G0_avec_scores_cve(G0: nx.DiGraph) -> nx.DiGraph:
         elif res.get("erreur"):
             logger.warning(
                 f"Erreur Trivy pour '{noeud}' [{res['source']}] "
-                f"— score CVE = 100 (hypothèse conservative)"
+                f"— score CVE = 0 (hypothèse conservative : vulnérabilité maximale assumée)"
             )
-            G0.nodes[noeud]["score_cve"] = 100.0
+            G0.nodes[noeud]["score_cve"] = 0.0
             nb_erreurs += 1
 
         else:

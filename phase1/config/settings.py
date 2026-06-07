@@ -105,8 +105,8 @@ OUTSIDE_NODE = "Outside"
 # Trivy CLI — scanner principal (remplace OSV.dev / NVD NIST)
 # Installation : https://github.com/aquasecurity/trivy/releases
 # Windows      : choco install trivy
-TRIVY_TIMEOUT     = 120   # secondes max par image scannée
-TRIVY_MAX_WORKERS = 4     # nombre de scans Trivy en parallèle
+TRIVY_TIMEOUT     = 300   # secondes max par image scannée (5 min pour images volumineuses)
+TRIVY_MAX_WORKERS = 2     # réduit pour éviter les timeouts simultanés
 
 # Anciens paramètres API conservés pour compatibilité
 OSV_API_URL = "https://api.osv.dev/v1/query"

@@ -17,6 +17,7 @@ DJOUYAGUENG SADE CEDRIC — Master II RSD — Université de Dschang
 
 import json
 import time
+import random
 import logging
 import threading
 from datetime import datetime, timezone
@@ -35,6 +36,11 @@ from config.phase2_settings import (
     RAM_ALERT_THRESHOLD_PCT,
     NET_ALERT_THRESHOLD_MBPS,
 )
+
+try:
+    from utils.topology_loader import charger_topologie_phase1 as _charger_topo
+except ImportError:
+    _charger_topo = None
 
 logger = logging.getLogger("phase2.prometheus_collector")
 
@@ -173,13 +179,65 @@ def _build_metric_event(service: str, event_type: str, fields: dict,
     }
 
 
+_INFRA_KW = ("kafka", "zookeeper", "cadvisor", "prometheus",
+             "kafka-ui", "kafka_ui", "microsecure")
+
+
+def _parse_docker_stats(raw: dict) -> tuple[float | None, float | None, float, float]:
+    """
+    Extrait CPU %, RAM % et octets réseau depuis docker container.stats().
+
+    Retourne (cpu_pct, ram_pct, rx_bytes, tx_bytes).
+    cpu_pct/ram_pct = None si impossible à calculer.
+    """
+    cpu_pct = None
+    ram_pct = None
+    rx_bytes = 0.0
+    tx_bytes = 0.0
+
+    try:
+        cpu_delta = (
+            raw["cpu_stats"]["cpu_usage"]["total_usage"]
+            - raw["precpu_stats"]["cpu_usage"]["total_usage"]
+        )
+        sys_delta = (
+            raw["cpu_stats"].get("system_cpu_usage", 0)
+            - raw["precpu_stats"].get("system_cpu_usage", 0)
+        )
+        num_cpus = raw["cpu_stats"].get("online_cpus") or len(
+            raw["cpu_stats"]["cpu_usage"].get("percpu_usage", [1])
+        )
+        if sys_delta > 0:
+            cpu_pct = round((cpu_delta / sys_delta) * num_cpus * 100.0, 2)
+            cpu_pct = max(0.0, min(cpu_pct, 100.0))
+    except (KeyError, ZeroDivisionError):
+        pass
+
+    try:
+        mem_usage = raw["memory_stats"]["usage"]
+        mem_limit = raw["memory_stats"]["limit"]
+        if mem_limit > 0:
+            ram_pct = round((mem_usage / mem_limit) * 100.0, 2)
+    except KeyError:
+        pass
+
+    try:
+        for iface in raw.get("networks", {}).values():
+            rx_bytes += iface.get("rx_bytes", 0)
+            tx_bytes += iface.get("tx_bytes", 0)
+    except Exception:
+        pass
+
+    return cpu_pct, ram_pct, rx_bytes, tx_bytes
+
+
 class PrometheusCollector:
     """
-    Collecteur de métriques cAdvisor.
+    Collecteur de métriques via Docker stats API (sans cAdvisor).
 
-    Scrape cAdvisor toutes les METRICS_INTERVAL_S secondes.
-    Publie CPU, RAM, réseau pour chaque conteneur sur Kafka.
-    Déclenche des alertes automatiques si les seuils sont dépassés.
+    Pour chaque conteneur Sock Shop détecté, récupère CPU, RAM et réseau
+    directement via le SDK Docker — aucune dépendance externe requise.
+    Bascule en simulation uniquement si Docker est complètement absent.
     """
 
     def __init__(self, producer: KafkaProducer):
@@ -194,105 +252,174 @@ class PrometheusCollector:
             "errors": 0,
         }
 
+        # Réseau : octets précédents par conteneur pour calculer les deltas
+        self._prev_net: dict[str, tuple[float, float]] = {}
+
+        # Topologie Phase 1 pour filtrage et simulation fallback
+        self._topo_services: list[str] = []
+        if _charger_topo:
+            try:
+                topo = _charger_topo()
+                self._topo_services = [s for s in topo if s != "Outside"]
+            except Exception:
+                pass
+        if not self._topo_services:
+            self._topo_services = [
+                "front-end", "orders", "catalogue", "user",
+                "payment", "cart", "shipping", "queue-master",
+                "rabbitmq", "edge-router",
+            ]
+
+        # Connexion Docker
+        self.simulation_mode = False
+        try:
+            import docker as _docker
+            self._docker = _docker.from_env()
+            self._docker.ping()
+            logger.info("PrometheusCollector : Docker API connectée.")
+        except Exception as exc:
+            logger.warning(f"Docker indisponible — simulation métriques : {exc}")
+            self._docker = None
+            self.simulation_mode = True
+
+    # ------------------------------------------------------------------
+    # Scraping Docker stats (mode réel)
+    # ------------------------------------------------------------------
+
+    def _scrape_once(self) -> None:
+        """Un cycle : récupère les stats Docker de tous les conteneurs Sock Shop."""
+        try:
+            containers = self._docker.containers.list()
+        except Exception as exc:
+            logger.warning(f"Erreur liste conteneurs : {exc}")
+            self._stats["errors"] += 1
+            return
+
+        # Filtrer sur les services G0 + exclure l'infra
+        cibles = [
+            c for c in containers
+            if not any(kw in c.name.lower() for kw in _INFRA_KW)
+        ]
+        if self._topo_services:
+            from collectors.docker_log_collector import _extract_service_name
+            cibles = [
+                c for c in cibles
+                if _extract_service_name(c) in self._topo_services
+            ]
+
+        if not cibles:
+            logger.debug("Aucun conteneur Sock Shop trouvé pour les métriques.")
+            self._stats["errors"] += 1
+            return
+
+        self._stats["scrapes"] += 1
+
+        for container in cibles:
+            from collectors.docker_log_collector import _extract_service_name
+            service = _extract_service_name(container)
+            try:
+                raw = container.stats(stream=False)
+                self._publier_stats(service, container.name, raw)
+            except Exception as exc:
+                logger.debug(f"Stats indisponibles pour {container.name} : {exc}")
+
+    def _publier_stats(self, service: str, container_name: str, raw: dict) -> None:
+        """Parse et publie les métriques d'un conteneur."""
+        cpu_pct, ram_pct, rx_bytes, tx_bytes = _parse_docker_stats(raw)
+
+        # ── CPU ──────────────────────────────────────────────────────
+        if cpu_pct is not None:
+            sev = "CRITICAL" if cpu_pct > CPU_ALERT_THRESHOLD_PCT else "INFO"
+            if sev == "CRITICAL":
+                self._stats["alerts_triggered"] += 1
+            self._publish(_build_metric_event(service, "METRIC_CPU", {
+                "cpu_percent": cpu_pct,
+                "threshold":   CPU_ALERT_THRESHOLD_PCT,
+                "alert":       sev == "CRITICAL",
+                "container":   container_name,
+            }, sev))
+
+        # ── RAM ──────────────────────────────────────────────────────
+        if ram_pct is not None:
+            sev = "CRITICAL" if ram_pct > RAM_ALERT_THRESHOLD_PCT else "INFO"
+            if sev == "CRITICAL":
+                self._stats["alerts_triggered"] += 1
+            self._publish(_build_metric_event(service, "METRIC_RAM", {
+                "ram_percent": ram_pct,
+                "threshold":   RAM_ALERT_THRESHOLD_PCT,
+                "alert":       sev == "CRITICAL",
+                "container":   container_name,
+            }, sev))
+
+        # ── Réseau (delta par rapport au cycle précédent) ─────────────
+        prev_rx, prev_tx = self._prev_net.get(container_name, (rx_bytes, tx_bytes))
+        delta_rx = max(0.0, rx_bytes - prev_rx)
+        delta_tx = max(0.0, tx_bytes - prev_tx)
+        self._prev_net[container_name] = (rx_bytes, tx_bytes)
+
+        interval = METRICS_INTERVAL_S or 15
+        rx_mbps = round((delta_rx * 8) / (interval * 1_000_000), 4)
+        tx_mbps = round((delta_tx * 8) / (interval * 1_000_000), 4)
+        total   = rx_mbps + tx_mbps
+
+        if delta_rx > 0 or delta_tx > 0:
+            sev = "CRITICAL" if total > NET_ALERT_THRESHOLD_MBPS else "INFO"
+            self._publish(_build_metric_event(service, "METRIC_NET", {
+                "rx_mbps":   rx_mbps,
+                "tx_mbps":   tx_mbps,
+                "threshold": NET_ALERT_THRESHOLD_MBPS,
+                "alert":     sev == "CRITICAL",
+                "container": container_name,
+            }, sev))
+
+    # ------------------------------------------------------------------
+    # Simulation (fallback si Docker absent)
+    # ------------------------------------------------------------------
+
+    def _simulate_once(self) -> None:
+        """Métriques simulées — uniquement si Docker est complètement absent."""
+        for service in self._topo_services:
+            cpu_pct = round(random.triangular(2.0, 60.0, 20.0), 2)
+            sev = "CRITICAL" if cpu_pct > CPU_ALERT_THRESHOLD_PCT else "INFO"
+            self._publish(_build_metric_event(service, "METRIC_CPU", {
+                "cpu_percent": cpu_pct, "threshold": CPU_ALERT_THRESHOLD_PCT,
+                "alert": sev == "CRITICAL", "simulated": True,
+            }, sev))
+
+            ram_pct = round(random.triangular(10.0, 80.0, 35.0), 2)
+            sev = "CRITICAL" if ram_pct > RAM_ALERT_THRESHOLD_PCT else "INFO"
+            self._publish(_build_metric_event(service, "METRIC_RAM", {
+                "ram_percent": ram_pct, "threshold": RAM_ALERT_THRESHOLD_PCT,
+                "alert": sev == "CRITICAL", "simulated": True,
+            }, sev))
+
+        self._stats["scrapes"] += 1
+
+    # ------------------------------------------------------------------
+    # Commun
+    # ------------------------------------------------------------------
+
     def _publish(self, event: dict) -> None:
         try:
             payload = json.dumps(event, ensure_ascii=False).encode("utf-8")
             self.producer.send(self.topic, value=payload)
             self._stats["published"] += 1
         except KafkaError as exc:
-            logger.warning(f"Erreur publication Kafka : {exc}")
+            logger.warning(f"Erreur publication Kafka métriques : {exc}")
             self._stats["errors"] += 1
-
-    def _scrape_once(self) -> None:
-        """Un cycle de scraping : interroge cAdvisor et publie les métriques."""
-        data = _safe_get(CADVISOR_CONTAINERS_API)
-        if data is None:
-            self._stats["errors"] += 1
-            return
-
-        self._stats["scrapes"] += 1
-
-        for container_id, info in data.items():
-            if not isinstance(info, dict):
-                continue
-
-            service = _extract_service_name(
-                info.get("aliases", ["unknown"])[0]
-                if info.get("aliases") else container_id[:12]
-            )
-
-            # Ignorer les conteneurs d'infrastructure
-            if any(kw in service.lower()
-                   for kw in ["kafka", "zookeeper", "cadvisor", "prometheus"]):
-                continue
-
-            stats_list    = info.get("stats", [])
-            memory_limit  = info.get("spec", {}).get("memory", {}).get("limit", 0)
-
-            # ── CPU ──────────────────────────────────────────
-            cpu_pct = _compute_cpu_percent(stats_list)
-            if cpu_pct is not None:
-                severity = "CRITICAL" if cpu_pct > CPU_ALERT_THRESHOLD_PCT else "INFO"
-                if severity == "CRITICAL":
-                    self._stats["alerts_triggered"] += 1
-                self._publish(_build_metric_event(
-                    service=service,
-                    event_type="METRIC_CPU",
-                    severity=severity,
-                    fields={
-                        "cpu_percent": cpu_pct,
-                        "threshold":   CPU_ALERT_THRESHOLD_PCT,
-                        "alert":       severity == "CRITICAL",
-                    }
-                ))
-
-            # ── RAM ──────────────────────────────────────────
-            ram_pct = _compute_ram_percent(stats_list, memory_limit)
-            if ram_pct is not None:
-                severity = "CRITICAL" if ram_pct > RAM_ALERT_THRESHOLD_PCT else "INFO"
-                if severity == "CRITICAL":
-                    self._stats["alerts_triggered"] += 1
-                self._publish(_build_metric_event(
-                    service=service,
-                    event_type="METRIC_RAM",
-                    severity=severity,
-                    fields={
-                        "ram_percent":    ram_pct,
-                        "memory_limit_mb": round(memory_limit / 1_048_576, 1),
-                        "threshold":      RAM_ALERT_THRESHOLD_PCT,
-                        "alert":          severity == "CRITICAL",
-                    }
-                ))
-
-            # ── Réseau ───────────────────────────────────────
-            net = _compute_net_mbps(stats_list)
-            if net is not None:
-                total_mbps = net["rx_mbps"] + net["tx_mbps"]
-                severity = ("CRITICAL"
-                            if total_mbps > NET_ALERT_THRESHOLD_MBPS
-                            else "INFO")
-                if severity == "CRITICAL":
-                    self._stats["alerts_triggered"] += 1
-                self._publish(_build_metric_event(
-                    service=service,
-                    event_type="METRIC_NET",
-                    severity=severity,
-                    fields={
-                        "rx_mbps":   net["rx_mbps"],
-                        "tx_mbps":   net["tx_mbps"],
-                        "threshold": NET_ALERT_THRESHOLD_MBPS,
-                        "alert":     severity == "CRITICAL",
-                    }
-                ))
 
     def _run_loop(self) -> None:
-        """Boucle de scraping principale."""
-        logger.info(f"Scraping cAdvisor démarré (intervalle={METRICS_INTERVAL_S}s)")
+        mode = "SIMULATION" if self.simulation_mode else "Docker stats API"
+        logger.info(f"PrometheusCollector démarré en mode {mode}.")
+
         while self._running:
             try:
-                self._scrape_once()
+                if self.simulation_mode:
+                    self._simulate_once()
+                else:
+                    self._scrape_once()
             except Exception as exc:
-                logger.error(f"Erreur cycle scraping : {exc}")
+                logger.error(f"Erreur cycle métriques : {exc}")
                 self._stats["errors"] += 1
             time.sleep(METRICS_INTERVAL_S)
 
@@ -302,7 +429,6 @@ class PrometheusCollector:
             target=self._run_loop, daemon=True, name="metrics-scraper"
         )
         self._thread.start()
-        logger.info("PrometheusCollector démarré.")
 
     def stop(self) -> None:
         self._running = False

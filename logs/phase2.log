@@ -1,0 +1,16 @@
+2026-05-18 14:12:08,559 | INFO     | phase2.falco_generator         | Topologie G0 chargee : 15 services, 1 exposes, 0 relations autorisees
+2026-05-18 14:12:08,585 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-05-18 14:12:08,587 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-05-18 14:12:08,589 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-05-18 14:12:08,763 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-05-18 14:12:08,763 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-05-18 14:12:08,764 | INFO     | kafka.conn                     | Probing node bootstrap-0 broker version
+2026-05-18 14:12:08,880 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-05-18 14:12:08,881 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-05-18 14:12:08,917 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: connecting to localhost:9092 [('::1', 9092, 0, 0) IPv6]
+2026-05-18 14:12:08,918 | INFO     | kafka.conn                     | Probing node 1 broker version
+2026-05-18 14:12:08,920 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connecting> [IPv6 ('::1', 9092, 0, 0)]>: Connection complete.
+2026-05-18 14:12:08,922 | INFO     | kafka.conn                     | <BrokerConnection node_id=bootstrap-0 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
+2026-05-18 14:12:09,037 | INFO     | kafka.conn                     | Broker version identified as 2.6.0
+2026-05-18 14:12:09,037 | INFO     | kafka.conn                     | Set configuration api_version=(2, 6, 0) to skip auto check_version requests on startup
+2026-05-18 14:12:09,046 | INFO     | kafka.conn                     | <BrokerConnection node_id=1 host=localhost:9092 <connected> [IPv6 ('::1', 9092, 0, 0)]>: Closing connection. 
